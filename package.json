@@ -1,5 +1,5 @@
 {
-  "name": "hopium-v2",
+  "name": "hopium-v1",
   "private": true,
   "scripts": {
     "build": "turbo run build",

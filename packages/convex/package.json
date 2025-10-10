@@ -1,0 +1,29 @@
+{
+  "name": "@repo/convex",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./*": "./convex/*"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/node": "^22.15.3",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.1",
+    "eslint": "^9.34.0",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "assert": "^2.1.0",
+    "convex": "^1.27.5",
+    "ethers": "^6.15.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}

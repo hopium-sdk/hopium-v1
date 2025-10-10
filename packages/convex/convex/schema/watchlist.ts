@@ -1,0 +1,23 @@
+import { v } from "convex/values";
+import { Doc } from "../_generated/dataModel";
+import { C_Etf } from "./etf";
+import { defineTable } from "convex/server";
+
+const watchlistItemSchema = v.object({
+  index_id: v.string(),
+  index: v.number(),
+});
+
+const WatchlistSchema = {
+  user_address: v.string(),
+  items: v.array(watchlistItemSchema),
+};
+
+export const watchlistTable = defineTable(WatchlistSchema).index("by_user_address", ["user_address"]);
+
+export type C_Watchlist = Doc<"watchlist">;
+export type T_Watchlist = Omit<Doc<"watchlist">, "_id" | "_creationTime">;
+
+export type C_WatchlistWithEtf = Omit<C_Watchlist, "items"> & {
+  items: (C_Watchlist["items"][number] & { etf: C_Etf })[];
+};
