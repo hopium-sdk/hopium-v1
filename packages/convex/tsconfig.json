@@ -4,6 +4,6 @@
     "outDir": "dist"
   },
 
-  "include": ["src", "convex"],
+  "include": ["convex/src", "convex"],
   "exclude": ["node_modules", "dist"]
 }
