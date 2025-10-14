@@ -7,4 +7,5 @@ export const _addresses = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: st
   indexFactory: _fetchFromDirectory({ key: "index-factory", network, rpcUrl }),
   indexPriceOracle: _fetchFromDirectory({ key: "index-price-oracle", network, rpcUrl }),
   etfTokenEvents: _fetchFromDirectory({ key: "etf-token-events", network, rpcUrl }),
+  etfRouter: _fetchFromDirectory({ key: "etf-router", network, rpcUrl }),
 });

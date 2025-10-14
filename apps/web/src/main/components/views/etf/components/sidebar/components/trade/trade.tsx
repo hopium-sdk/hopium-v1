@@ -4,24 +4,27 @@ import z from "zod";
 import { Icons } from "@/main/utils/icons";
 import { C_Etf } from "@repo/convex/schema";
 import { useForm, useWatch } from "react-hook-form";
-import { previewToast } from "@/main/components/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useBalance } from "@/main/hooks/use-balance";
 import { ActionButtons } from "./components/action-buttons";
 import { WalletBalanceButton } from "./components/wallet-balance-button";
 import { TradeForm } from "./components/form";
 import { BalancesBox } from "./components/balances-box";
+import { useHopiumContracts } from "@/main/hooks/use-hopium-contracts";
 
+const MIN_AMOUNT = 0.00001;
 export const TradeFormSchema = z.object({
-  amount: z.coerce.number("Enter a valid amount").nonnegative("Enter a valid amount").min(0.0001, "Enter a valid amount"),
+  amount: z.coerce.number("Enter a valid amount").nonnegative("Enter a valid amount").min(MIN_AMOUNT, "Enter a valid amount"),
 });
 
 export const actionOptions = ["Buy", "Sell"];
 export type T_ActionSelected = (typeof actionOptions)[number];
 
 export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
-  const { balanceEthNumber, balanceTokenNumber, updateBalances } = useBalance({ tokenAddress: etf.contracts.etfTokenAddress as `0x${string}`, pollMs: 5000 });
   const [loading, setLoading] = useState<string | null>(null);
+  const { buyEtf, sellEtf } = useHopiumContracts({ setLoading });
+
+  const { balanceEthNumber, balanceTokenNumber, updateBalances } = useBalance({ tokenAddress: etf.contracts.etfTokenAddress as `0x${string}`, pollMs: 5000 });
   const [actionSelected, setActionSelected] = useState<(typeof actionOptions)[number]>("Buy");
 
   const form = useForm({
@@ -34,7 +37,7 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
   const handleClick = async () => {
     const amount = Number(formData.amount);
 
-    if (isNaN(amount) || amount < 0.0001) {
+    if (isNaN(amount) || amount < MIN_AMOUNT) {
       form.setError("amount", { message: "Enter a valid amount" });
     }
 
@@ -42,35 +45,11 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
       form.setError("amount", { message: "Amount greater than balance" });
     }
 
-    // if (!onlyRugs.fns.bumpCoin) {
-    //   form.setError("amount", { message: "Something went wrong" });
-    //   setLoading(null);
-    //   return;
-    // }
-
-    previewToast();
-
-    // const fn = coinStatus == "queued" ? onlyRugs.fns.bumpCoin : raydium.fn.tradeCoin;
-    // const { txHash, error } = await fn({ coin, amount, type: actionSelected, setLoading });
-
-    // if (error) {
-    //   form.setError("amount", { message: error });
-    //   setLoading(null);
-    //   return;
-    // }
-
-    // if (txHash) {
-    //   setLoading(null);
-    //   form.clearErrors("amount");
-
-    //   const toastParams = getToastParams();
-    //   successToast({
-    //     title: toastParams?.title ?? "",
-    //     description: toastParams?.description ?? "",
-    //     url: SOLANA_COMMON.utils.tx.getSolscanTxHashUrl({ txHash }),
-    //     urlType: "external",
-    //   });
-    // }
+    if (actionSelected == "Buy") {
+      await buyEtf({ etf, inputAmount: amount });
+    } else {
+      await sellEtf({ etf, inputAmount: amount });
+    }
 
     await updateBalances();
   };
@@ -81,21 +60,6 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
     }
 
     return balanceEthNumber;
-  };
-
-  const getToastParams = () => {
-    switch (actionSelected) {
-      case "Buy":
-        return {
-          title: "Coin Bought",
-          description: `You bought ${etf.index.ticker} for ${formData.amount} ETH`,
-        };
-      case "Sell":
-        return {
-          title: "Coin Sold",
-          description: `You sold ${formData.amount} ${etf.index.ticker}`,
-        };
-    }
   };
 
   return (

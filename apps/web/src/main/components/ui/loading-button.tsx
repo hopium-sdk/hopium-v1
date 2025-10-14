@@ -10,7 +10,7 @@ export const LoadingButton = ({ loading, children, ...props }: T_LoadingButton) 
     <Button disabled={loading ? true : false} {...props}>
       {loading ? (
         <>
-          <Icons.Loading className="animate-spin" />
+          <Icons.Loading className="animate-spin size-4" />
           <p className="">{loading}</p>
         </>
       ) : (

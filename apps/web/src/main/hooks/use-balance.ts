@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { getBalance } from "@wagmi/core";
 import { useAccount } from "wagmi";
 import { formatUnits } from "viem";
-import { getViemClient, getChainId } from "@/main/lib/viem";
+import { getWagmiClient, getChainId } from "@/main/lib/wagmi";
 import { CONSTANTS } from "../lib/constants";
 
 type UseBalanceOpts = {
@@ -31,7 +31,7 @@ export const useBalance = ({ tokenAddress, pollMs = 0, refetchOnWindowFocus = tr
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const inFlightRef = useRef(0);
 
-  const client = getViemClient();
+  const client = getWagmiClient();
   const chainId = getChainId(CONSTANTS.networkSelected);
 
   const reset = () => {

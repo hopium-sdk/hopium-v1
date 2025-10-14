@@ -31,6 +31,8 @@ export { TbHourglassEmpty as Empty } from "react-icons/tb";
 export { PiPencilSimpleBold as Edit } from "react-icons/pi";
 export { CgTrashEmpty as Trash } from "react-icons/cg";
 export { RxDragHandleDots2 as DragHandle } from "react-icons/rx";
+export { BiError as Error } from "react-icons/bi";
+export { BiX as X } from "react-icons/bi";
 
 //Profile
 export { PiGhostBold as User } from "react-icons/pi";

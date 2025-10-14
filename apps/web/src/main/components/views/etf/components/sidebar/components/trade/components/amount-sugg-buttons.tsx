@@ -44,9 +44,9 @@ export const AmountSuggestionButtons = ({ form, amount, balanceEth, balanceToken
     }
 
     const result = (suggestion / 100) * balanceAmount;
-    if (suggestion == 100) {
-      return balanceAmount;
-    }
+    // if (suggestion == 100) {
+    //   return balanceAmount;
+    // }
 
     return NUMBERS_WEB.truncateDecimals(result, result < 1 ? 7 : 3);
   };

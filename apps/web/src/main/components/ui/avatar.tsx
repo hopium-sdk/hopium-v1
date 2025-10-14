@@ -3,7 +3,6 @@ import { getExplorerAddressUrl } from "@repo/common/utils/explorer";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
 import Link from "next/link";
-import { T_Network } from "@repo/common/utils/network";
 import { CONSTANTS } from "@/main/lib/constants";
 
 const options = [
@@ -31,11 +30,11 @@ export const getStaticColor = (address: string) => {
     return acc + char.charCodeAt(0);
   }, 0);
 
-  return options[hash % options.length];
+  return options[hash % options.length] ?? options[0];
 };
 
 export const getRandomColor = () => {
-  return options[Math.floor(Math.random() * options.length)];
+  return options[Math.floor(Math.random() * options.length)] ?? options[0];
 };
 
 export const getAddressColor = getStaticColor;
@@ -52,11 +51,11 @@ export const AvatarImage = ({ address, boxClassName, iconClassName, iconColor, w
   const color = getAddressColor(address);
 
   const render = () => {
-    return <Icons.User className={cn("size-4", iconColor ?? color.text, iconClassName)} />;
+    return <Icons.User className={cn("size-4", iconColor ?? color?.text, iconClassName)} />;
   };
 
   if (withBox) {
-    return <div className={cn("w-6 h-6 rounded-sm flex items-center justify-center", color.bg950, boxClassName)}>{render()}</div>;
+    return <div className={cn("w-6 h-6 rounded-sm flex items-center justify-center", color?.bg950, boxClassName)}>{render()}</div>;
   }
 
   return render();
@@ -93,7 +92,7 @@ export const Avatar = ({
 
   const render = () => {
     return (
-      <div className={cn("flex items-center gap-2 px-3 py-1 rounded-full w-fit", withLinkColor ? "bg-main-900" : color.bg950, className)}>
+      <div className={cn("flex items-center gap-2 px-3 py-1 rounded-full w-fit", withLinkColor ? "bg-main-900" : color?.bg950, className)}>
         {withImage && (
           <AvatarImage
             address={address}
@@ -102,8 +101,8 @@ export const Avatar = ({
             iconColor={withLinkColor ? "text-main" : undefined}
           />
         )}
-        <p className={cn("text-xs font-medium", withLinkColor ? "text-main" : color.text, pClassName)}>{formatAddress(address)}</p>
-        {withLinkIcon && <Icons.ArrowUpRight className={cn("w-3.5 h-3.5 text-main -ml-0.5", withLinkColor ? "text-main" : color.text, linkIconClassName)} />}
+        <p className={cn("text-xs font-medium", withLinkColor ? "text-main" : color?.text, pClassName)}>{formatAddress(address)}</p>
+        {withLinkIcon && <Icons.ArrowUpRight className={cn("w-3.5 h-3.5 text-main -ml-0.5", withLinkColor ? "text-main" : color?.text, linkIconClassName)} />}
       </div>
     );
   };
