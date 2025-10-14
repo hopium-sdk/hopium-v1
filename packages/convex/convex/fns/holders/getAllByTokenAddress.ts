@@ -1,7 +1,7 @@
-import { normalizeAddress } from "../../src/utils/normalizeAddress";
+import { normalizeAddress } from "../../../src/utils/normalizeAddress";
 import { query } from "../../_generated/server";
 import { v } from "convex/values";
-import { getAllHoldersByTokenAddress } from "../../src/fns/holders/getAllHoldersByTokenAddress";
+import { getAllHoldersByTokenAddress } from "../../../src/fns/holders/getAllHoldersByTokenAddress";
 
 export default query({
   args: {

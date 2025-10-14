@@ -26,6 +26,6 @@ export const etfTokenTransfersTable = defineTable(EtfTokenTransfersSchema)
 export type C_EtfTokenTransfer = Doc<"etf_token_transfers">;
 export type T_EtfTokenTransfer = Omit<Doc<"etf_token_transfers">, "_id" | "_creationTime">;
 
-export const _getEtfTokenTransferId = ({ txHash, logIndex }: { txHash: string; logIndex: number }) => {
+export const getEtfTokenTransferId = ({ txHash, logIndex }: { txHash: string; logIndex: number }) => {
   return `${txHash}-${logIndex}`;
 };

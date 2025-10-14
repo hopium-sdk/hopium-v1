@@ -1,7 +1,7 @@
 import { query } from "../../_generated/server";
 import { v } from "convex/values";
-import { getAllHoldingsOfAddress } from "../../src/fns/holdings/getAllHoldingsOfAddress";
-import { normalizeAddress } from "../../src/utils/normalizeAddress";
+import { getAllHoldingsOfAddress } from "../../../src/fns/holdings/getAllHoldingsOfAddress";
+import { normalizeAddress } from "../../../src/utils/normalizeAddress";
 
 export default query({
   args: {

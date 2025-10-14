@@ -35,10 +35,6 @@ import type * as schema_etfTokenTranfers from "../schema/etfTokenTranfers.js";
 import type * as schema_holdingTokens from "../schema/holdingTokens.js";
 import type * as schema_syncStatus from "../schema/syncStatus.js";
 import type * as schema_watchlist from "../schema/watchlist.js";
-import type * as src_fns_holders_getAllHoldersByTokenAddress from "../src/fns/holders/getAllHoldersByTokenAddress.js";
-import type * as src_fns_holdings_getAllHoldingsOfAddress from "../src/fns/holdings/getAllHoldingsOfAddress.js";
-import type * as src_utils_normalizeAddress from "../src/utils/normalizeAddress.js";
-import type * as src_utils_sortTransfer from "../src/utils/sortTransfer.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -71,10 +67,6 @@ declare const fullApi: ApiFromModules<{
   "schema/holdingTokens": typeof schema_holdingTokens;
   "schema/syncStatus": typeof schema_syncStatus;
   "schema/watchlist": typeof schema_watchlist;
-  "src/fns/holders/getAllHoldersByTokenAddress": typeof src_fns_holders_getAllHoldersByTokenAddress;
-  "src/fns/holdings/getAllHoldingsOfAddress": typeof src_fns_holdings_getAllHoldingsOfAddress;
-  "src/utils/normalizeAddress": typeof src_utils_normalizeAddress;
-  "src/utils/sortTransfer": typeof src_utils_sortTransfer;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

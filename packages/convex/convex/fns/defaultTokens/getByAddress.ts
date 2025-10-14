@@ -1,6 +1,6 @@
 import { query } from "../../_generated/server";
 import { v } from "convex/values";
-import { normalizeAddress } from "../../src/utils/normalizeAddress";
+import { normalizeAddress } from "../../../src/utils/normalizeAddress";
 
 export default query({
   args: {

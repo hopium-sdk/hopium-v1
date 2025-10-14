@@ -20,6 +20,6 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["./**/*"],
+  "include": ["./**/*", "../exports/index.ts", "../src/utils", "../src/fns"],
   "exclude": ["./_generated"]
 }

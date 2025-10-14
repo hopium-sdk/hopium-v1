@@ -1,7 +1,7 @@
 import { C_HoldingToken, HoldingTokensSchema } from "../../schema/holdingTokens";
 import { mutation } from "../../_generated/server";
 import { v } from "convex/values";
-import { normalizeAddress } from "../../src/utils/normalizeAddress";
+import { normalizeAddress } from "../../../src/utils/normalizeAddress";
 import assert from "assert";
 
 export default mutation({

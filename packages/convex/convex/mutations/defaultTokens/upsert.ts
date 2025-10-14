@@ -1,7 +1,7 @@
 import { mutation } from "../../_generated/server";
 import { v } from "convex/values";
 import assert from "assert";
-import { normalizeAddress } from "../../src/utils/normalizeAddress";
+import { normalizeAddress } from "../../../src/utils/normalizeAddress";
 import { C_DefaultToken, DefaultTokenSchema } from "../../schema/defaultTokensList";
 
 export default mutation({

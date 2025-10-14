@@ -1,7 +1,7 @@
 import { mutation } from "../../_generated/server";
 import { v } from "convex/values";
 import assert from "assert";
-import { normalizeAddress } from "../../src/utils/normalizeAddress";
+import { normalizeAddress } from "../../../src/utils/normalizeAddress";
 import { EtfSchema, C_Etf } from "../../schema/etf";
 
 export default mutation({
