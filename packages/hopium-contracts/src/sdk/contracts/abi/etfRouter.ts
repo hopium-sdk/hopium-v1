@@ -1,26 +1,103 @@
 export const etfRouterAbi = [
-  { inputs: [{ internalType: "address", name: "_directory", type: "address" }], stateMutability: "nonpayable", type: "constructor" },
-  { inputs: [], name: "AllowanceTooLow", type: "error" },
-  { inputs: [], name: "ETHSendFailed", type: "error" },
-  { inputs: [], name: "FeeTooLarge", type: "error" },
-  { inputs: [], name: "InsufficientETH", type: "error" },
-  { inputs: [], name: "NothingReceived", type: "error" },
-  { inputs: [], name: "NothingToWithdraw", type: "error" },
-  { inputs: [], name: "RedeemTooLarge", type: "error" },
-  { inputs: [], name: "SupplyZero", type: "error" },
-  { inputs: [], name: "ZeroAmount", type: "error" },
-  { inputs: [], name: "ZeroIndexPrice", type: "error" },
-  { inputs: [], name: "ZeroMsgValue", type: "error" },
-  { inputs: [], name: "ZeroNav", type: "error" },
-  { inputs: [], name: "ZeroReceiver", type: "error" },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "ETHSendFailed",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InsufficientETH",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidBips",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NothingToWithdraw",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "RedeemTooLarge",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "SupplyZero",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroAmount",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroIndexPrice",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroMsgValue",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroNav",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroReceiver",
+    type: "error",
+  },
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: "uint256", name: "indexId", type: "uint256" },
-      { indexed: false, internalType: "address", name: "caller", type: "address" },
-      { indexed: false, internalType: "address", name: "receiver", type: "address" },
-      { indexed: false, internalType: "uint256", name: "etfTokenAmount", type: "uint256" },
-      { indexed: false, internalType: "uint256", name: "ethAmount", type: "uint256" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "etfTokenAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "ethAmount",
+        type: "uint256",
+      },
     ],
     name: "EtfTokensMinted",
     type: "event",
@@ -28,56 +105,193 @@ export const etfRouterAbi = [
   {
     anonymous: false,
     inputs: [
-      { indexed: false, internalType: "uint256", name: "indexId", type: "uint256" },
-      { indexed: false, internalType: "address", name: "caller", type: "address" },
-      { indexed: false, internalType: "address", name: "receiver", type: "address" },
-      { indexed: false, internalType: "uint256", name: "etfTokenAmount", type: "uint256" },
-      { indexed: false, internalType: "uint256", name: "ethAmount", type: "uint256" },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "etfTokenAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "ethAmount",
+        type: "uint256",
+      },
     ],
     name: "EtfTokensRedeemed",
     type: "event",
   },
-  { inputs: [], name: "Directory", outputs: [{ internalType: "contract IDirectory", name: "", type: "address" }], stateMutability: "view", type: "function" },
   {
-    inputs: [{ internalType: "address", name: "_directory", type: "address" }],
+    inputs: [],
+    name: "DEFAULT_SLIPPAGE_BIPS",
+    outputs: [
+      {
+        internalType: "uint32",
+        name: "",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "Directory",
+    outputs: [
+      {
+        internalType: "contract IDirectory",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
+        name: "newSlippageBips",
+        type: "uint32",
+      },
+    ],
+    name: "changeDefaultSlippage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
     name: "changeDirectoryAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint16", name: "newFee", type: "uint16" }],
+    inputs: [
+      {
+        internalType: "uint16",
+        name: "newFee",
+        type: "uint16",
+      },
+    ],
     name: "changePlatformFee",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "_key", type: "string" }],
+    inputs: [
+      {
+        internalType: "string",
+        name: "_key",
+        type: "string",
+      },
+    ],
     name: "fetchFromDirectory",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
-  { inputs: [], name: "isActive", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" },
+  {
+    inputs: [],
+    name: "isActive",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
   {
     inputs: [
-      { internalType: "uint256", name: "indexId", type: "uint256" },
-      { internalType: "address", name: "receiver", type: "address" },
-      { internalType: "uint256", name: "slippageBips", type: "uint256" },
-      { internalType: "uint256", name: "deadlineInSec", type: "uint256" },
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "receiver",
+        type: "address",
+      },
     ],
     name: "mintEtfTokens",
     outputs: [],
     stateMutability: "payable",
     type: "function",
   },
-  { inputs: [], name: "owner", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "platformFee", outputs: [{ internalType: "uint16", name: "", type: "uint16" }], stateMutability: "view", type: "function" },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "platformFee",
+    outputs: [
+      {
+        internalType: "uint16",
+        name: "",
+        type: "uint16",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
   {
     inputs: [
-      { internalType: "address", name: "tokenAddress", type: "address" },
-      { internalType: "address", name: "toAddress", type: "address" },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "toAddress",
+        type: "address",
+      },
     ],
     name: "recoverAsset",
     outputs: [],
@@ -86,17 +300,42 @@ export const etfRouterAbi = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "indexId", type: "uint256" },
-      { internalType: "uint256", name: "etfTokenAmount", type: "uint256" },
-      { internalType: "address payable", name: "receiver", type: "address" },
-      { internalType: "uint256", name: "slippageBips", type: "uint256" },
-      { internalType: "uint256", name: "deadlineInSec", type: "uint256" },
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "etfTokenAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "address payable",
+        name: "receiver",
+        type: "address",
+      },
     ],
     name: "redeemEtfTokens",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
-  { inputs: [{ internalType: "bool", name: "_active", type: "bool" }], name: "setActive", outputs: [], stateMutability: "nonpayable", type: "function" },
-  { stateMutability: "payable", type: "receive" },
+  {
+    inputs: [
+      {
+        internalType: "bool",
+        name: "_active",
+        type: "bool",
+      },
+    ],
+    name: "setActive",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
+  },
 ] as const;

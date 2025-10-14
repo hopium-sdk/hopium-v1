@@ -1,73 +1,304 @@
 export const priceOracleAbi = [
   {
     inputs: [
-      { internalType: "address", name: "_wethAddress", type: "address" },
-      { internalType: "address", name: "_wethUsdPairAddress", type: "address" },
-      { internalType: "address", name: "_uniswapV2FactoryAddress", type: "address" },
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_wethAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_wethUsdPairAddress",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "_isWethUsdPairV3",
+        type: "bool",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
   },
-  { inputs: [], name: "PairDoesNotContainBase", type: "error" },
-  { inputs: [], name: "PairDoesNotExist", type: "error" },
   {
     inputs: [],
-    name: "UNISWAP_V2_FACTORY_ADDRESS",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "EmptyReserves",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "PairDoesNotContainBase",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "PairDoesNotExist",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "Directory",
+    outputs: [
+      {
+        internalType: "contract IDirectory",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
-  { inputs: [], name: "WETH_ADDRESS", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "WETH_DECIMALS", outputs: [{ internalType: "uint8", name: "", type: "uint8" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "WETH_USD_PAIR_ADDRESS", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [],
+    name: "IS_WETH_USD_PAIR_ADDRESS_V3",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "WETH_ADDRESS",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "WETH_DECIMALS",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "WETH_USD_PAIR_ADDRESS",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
+    name: "changeDirectoryAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_key",
+        type: "string",
+      },
+    ],
+    name: "fetchFromDirectory",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenLiquidityUsd",
-    outputs: [{ internalType: "uint256", name: "totalLiquidityUsd18", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "totalLiquidityUsd18",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenLiquidityWeth",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenMarketCapUsd",
-    outputs: [{ internalType: "uint256", name: "marketCapUsd18", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "marketCapUsd18",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenMarketCapWeth",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenUsdPrice",
-    outputs: [{ internalType: "uint256", name: "price18", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "price18",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenWethPairAddress",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "bool",
+        name: "isV3Pool",
+        type: "bool",
+      },
+      {
+        internalType: "address",
+        name: "pairAddress",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "tokenAddress", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+    ],
     name: "getTokenWethPrice",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
-  { inputs: [], name: "getWethUsdPrice", outputs: [{ internalType: "uint256", name: "price18", type: "uint256" }], stateMutability: "view", type: "function" },
+  {
+    inputs: [],
+    name: "getWethUsdPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "price18",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ] as const;

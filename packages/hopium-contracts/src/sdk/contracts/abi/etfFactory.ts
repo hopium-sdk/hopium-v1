@@ -1,30 +1,71 @@
 export const etfFactoryAbi = [
-  { inputs: [{ internalType: "address", name: "_directory", type: "address" }], stateMutability: "nonpayable", type: "constructor" },
-  { inputs: [], name: "ZeroTradeValue", type: "error" },
-  { inputs: [], name: "ZeroWethUsdPrice", type: "error" },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "ZeroTradeValue",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroWethUsdPrice",
+    type: "error",
+  },
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: "uint256", name: "indexId", type: "uint256" },
-      { indexed: false, internalType: "address", name: "etfTokenAddress", type: "address" },
-      { indexed: false, internalType: "address", name: "etfVaultAddress", type: "address" },
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "etfTokenAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "etfVaultAddress",
+        type: "address",
+      },
     ],
     name: "EtfDeployed",
     type: "event",
   },
   {
-    anonymous: false,
-    inputs: [
-      { indexed: false, internalType: "uint256", name: "indexId", type: "uint256" },
-      { indexed: false, internalType: "uint256", name: "amountWeth", type: "uint256" },
-      { indexed: false, internalType: "uint256", name: "amountUsd", type: "uint256" },
+    inputs: [],
+    name: "Directory",
+    outputs: [
+      {
+        internalType: "contract IDirectory",
+        name: "",
+        type: "address",
+      },
     ],
-    name: "EtfVolumeUpdated",
-    type: "event",
+    stateMutability: "view",
+    type: "function",
   },
-  { inputs: [], name: "Directory", outputs: [{ internalType: "contract IDirectory", name: "", type: "address" }], stateMutability: "view", type: "function" },
   {
-    inputs: [{ internalType: "address", name: "_directory", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
     name: "changeDirectoryAddress",
     outputs: [],
     stateMutability: "nonpayable",
@@ -34,12 +75,28 @@ export const etfFactoryAbi = [
     inputs: [
       {
         components: [
-          { internalType: "string", name: "name", type: "string" },
-          { internalType: "string", name: "ticker", type: "string" },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
           {
             components: [
-              { internalType: "address", name: "tokenAddress", type: "address" },
-              { internalType: "uint16", name: "weightBips", type: "uint16" },
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
             ],
             internalType: "struct Holding[]",
             name: "holdings",
@@ -58,64 +115,192 @@ export const etfFactoryAbi = [
   },
   {
     inputs: [
-      { internalType: "uint256", name: "indexId", type: "uint256" },
-      { internalType: "uint256", name: "ethAmount", type: "uint256" },
+      {
+        internalType: "string",
+        name: "_key",
+        type: "string",
+      },
     ],
-    name: "emitEtfVolumeEvent",
+    name: "fetchFromDirectory",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfNavUsd",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "navUsd",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfNavWeth",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "nav",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfTokenAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfTotalVolumeUsd",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfTotalVolumeWeth",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfVaultAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isActive",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bool",
+        name: "_active",
+        type: "bool",
+      },
+    ],
+    name: "setActive",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "_key", type: "string" }],
-    name: "fetchFromDirectory",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "ethAmount",
+        type: "uint256",
+      },
+    ],
+    name: "updateEtfVolume",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
-  {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
-    name: "getEtfNavUsd",
-    outputs: [{ internalType: "uint256", name: "navUsd", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
-    name: "getEtfNavWeth",
-    outputs: [{ internalType: "uint256", name: "nav", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
-    name: "getEtfTokenAddress",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
-    name: "getEtfTotalVolumeUsd",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
-    name: "getEtfTotalVolumeWeth",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
-    name: "getEtfVaultAddress",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  { inputs: [], name: "isActive", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "owner", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
-  { inputs: [{ internalType: "bool", name: "_active", type: "bool" }], name: "setActive", outputs: [], stateMutability: "nonpayable", type: "function" },
 ] as const;

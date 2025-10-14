@@ -1,20 +1,109 @@
 export const indexFactoryAbi = [
-  { inputs: [{ internalType: "address", name: "_directory", type: "address" }], stateMutability: "nonpayable", type: "constructor" },
-  { inputs: [], name: "DuplicateToken", type: "error" },
-  { inputs: [], name: "EmptyTicker", type: "error" },
-  { inputs: [], name: "IndexExists", type: "error" },
-  { inputs: [], name: "InvalidId", type: "error" },
-  { inputs: [], name: "NoHoldings", type: "error" },
-  { inputs: [], name: "NotHundred", type: "error" },
-  { inputs: [], name: "OverWeight", type: "error" },
-  { inputs: [], name: "TickerExists", type: "error" },
-  { inputs: [], name: "UnknownTicker", type: "error" },
-  { inputs: [], name: "ZeroToken", type: "error" },
-  { inputs: [], name: "ZeroWeight", type: "error" },
-  { anonymous: false, inputs: [{ indexed: true, internalType: "uint256", name: "indexId", type: "uint256" }], name: "IndexCreated", type: "event" },
-  { inputs: [], name: "Directory", outputs: [{ internalType: "contract IDirectory", name: "", type: "address" }], stateMutability: "view", type: "function" },
   {
-    inputs: [{ internalType: "address", name: "_directory", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "DuplicateToken",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "EmptyTicker",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "IndexExists",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidId",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NoHoldings",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NoPoolFound",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotHundred",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OverWeight",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "TickerExists",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "UnknownTicker",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroToken",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroWeight",
+    type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
+    name: "IndexCreated",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "Directory",
+    outputs: [
+      {
+        internalType: "contract IDirectory",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_directory",
+        type: "address",
+      },
+    ],
     name: "changeDirectoryAddress",
     outputs: [],
     stateMutability: "nonpayable",
@@ -24,12 +113,28 @@ export const indexFactoryAbi = [
     inputs: [
       {
         components: [
-          { internalType: "string", name: "name", type: "string" },
-          { internalType: "string", name: "ticker", type: "string" },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
           {
             components: [
-              { internalType: "address", name: "tokenAddress", type: "address" },
-              { internalType: "uint16", name: "weightBips", type: "uint16" },
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
             ],
             internalType: "struct Holding[]",
             name: "holdings",
@@ -42,29 +147,69 @@ export const indexFactoryAbi = [
       },
     ],
     name: "createIndex",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "_key", type: "string" }],
+    inputs: [
+      {
+        internalType: "string",
+        name: "_key",
+        type: "string",
+      },
+    ],
     name: "fetchFromDirectory",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "indexId", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "indexId",
+        type: "uint256",
+      },
+    ],
     name: "getIndexById",
     outputs: [
       {
         components: [
-          { internalType: "string", name: "name", type: "string" },
-          { internalType: "string", name: "ticker", type: "string" },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
           {
             components: [
-              { internalType: "address", name: "tokenAddress", type: "address" },
-              { internalType: "uint16", name: "weightBips", type: "uint16" },
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
             ],
             internalType: "struct Holding[]",
             name: "holdings",
@@ -80,17 +225,39 @@ export const indexFactoryAbi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "string", name: "ticker", type: "string" }],
+    inputs: [
+      {
+        internalType: "string",
+        name: "ticker",
+        type: "string",
+      },
+    ],
     name: "getIndexByTicker",
     outputs: [
       {
         components: [
-          { internalType: "string", name: "name", type: "string" },
-          { internalType: "string", name: "ticker", type: "string" },
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
           {
             components: [
-              { internalType: "address", name: "tokenAddress", type: "address" },
-              { internalType: "uint16", name: "weightBips", type: "uint16" },
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
             ],
             internalType: "struct Holding[]",
             name: "holdings",
@@ -105,8 +272,56 @@ export const indexFactoryAbi = [
     stateMutability: "view",
     type: "function",
   },
-  { inputs: [], name: "isActive", outputs: [{ internalType: "bool", name: "", type: "bool" }], stateMutability: "view", type: "function" },
-  { inputs: [], name: "owner", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
-  { inputs: [{ internalType: "bool", name: "_active", type: "bool" }], name: "setActive", outputs: [], stateMutability: "nonpayable", type: "function" },
-  { inputs: [], name: "totalIndexes", outputs: [{ internalType: "uint256", name: "", type: "uint256" }], stateMutability: "view", type: "function" },
+  {
+    inputs: [],
+    name: "isActive",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bool",
+        name: "_active",
+        type: "bool",
+      },
+    ],
+    name: "setActive",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalIndexes",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ] as const;

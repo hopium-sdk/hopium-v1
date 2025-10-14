@@ -1,16 +1,9 @@
-export type T_NETWORK = "mainnet" | "base";
+import { T_Network } from "@repo/common/utils/network";
 
 type T_CONSTANTS = {
-  networkSelected: T_NETWORK;
-  rpcUrl: {
-    [key in T_NETWORK]: string;
-  };
+  networkSelected: T_Network;
 };
 
 export const CONSTANTS: T_CONSTANTS = {
-  networkSelected: "base" as T_NETWORK,
-  rpcUrl: {
-    mainnet: "https://ethereum-rpc.publicnode.com",
-    base: "https://base-rpc.publicnode.com",
-  },
+  networkSelected: "base" as T_Network,
 };
