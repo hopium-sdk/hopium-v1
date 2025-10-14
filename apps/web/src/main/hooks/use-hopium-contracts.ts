@@ -7,6 +7,7 @@ import { getChainId, waitForTx } from "../lib/wagmi";
 import { CONSTANTS } from "../lib/constants";
 import { TOAST } from "../components/ui/toast/toast";
 import { C_Etf } from "@repo/convex/schema";
+import { normalizeError } from "../utils/error";
 
 export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: string | null) => void }) => {
   const { walletAddress } = useAddress();
@@ -25,8 +26,6 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
   const _throwError = () => {
     TOAST.showErrorToast({ description: "Something went wrong" });
   };
-
-  const safeStringify = (value: unknown) => JSON.stringify(value, (_, v) => (typeof v === "bigint" ? v.toString() : v));
 
   const _executeFn = async ({ etf, isBuy, inputAmount }: { etf: C_Etf; isBuy: boolean; inputAmount: number }) => {
     try {
@@ -72,7 +71,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
         _throwError();
       }
     } catch (e) {
-      console.error(safeStringify(e));
+      console.error(normalizeError(e));
       _throwError();
     } finally {
       setLoading(null);

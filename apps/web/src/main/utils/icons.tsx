@@ -75,4 +75,7 @@ export { BiChart as Stats } from "react-icons/bi";
 export { TbBrandTabler as Details } from "react-icons/tb";
 export { PiStarBold as Watchlist } from "react-icons/pi";
 
+//Rewards
+export { PiLightningBold as Rewards } from "react-icons/pi";
+
 export * as Icons from "./icons";

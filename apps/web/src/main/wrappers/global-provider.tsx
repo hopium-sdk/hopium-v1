@@ -3,17 +3,20 @@ import NavigationBarProvider from "@/main/wrappers/components/navigation-bar-pro
 import { WalletProvider } from "./components/wallet/wallet-provider";
 import { ConvexClientProvider } from "./components/convex-provider";
 import { PricesProvider } from "./components/prices-provider";
+import { BalanceProvider } from "./components/balance-provider";
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ConvexClientProvider>
-      <PricesProvider>
-        <ThemeProvider>
-          <WalletProvider>
-            <NavigationBarProvider>{children}</NavigationBarProvider>
-          </WalletProvider>
-        </ThemeProvider>
-      </PricesProvider>
+      <ThemeProvider>
+        <WalletProvider>
+          <BalanceProvider>
+            <PricesProvider>
+              <NavigationBarProvider>{children}</NavigationBarProvider>
+            </PricesProvider>
+          </BalanceProvider>
+        </WalletProvider>
+      </ThemeProvider>
     </ConvexClientProvider>
   );
 };

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { usePrices } from "@/main/wrappers/components/prices-provider";
 import { LoadingButton } from "@/main/components/ui/loading-button";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
+import { numberToUsd } from "@repo/common/utils/currency";
 
 type T_TradeForm = {
   form: UseFormReturn<z.input<typeof TradeFormSchema>>;
@@ -70,14 +71,7 @@ export const TradeForm = ({ form, formData, amount, handleClick, loading, balanc
             )}
           />
 
-          {actionSelected == "Sell" ? null : (
-            <p className="text-xs font-medium text-subtext text-end">
-              ≈ $
-              {(Number(amount) * ethPrice).toLocaleString("en", {
-                currency: "usd",
-              })}
-            </p>
-          )}
+          {actionSelected == "Sell" ? null : <p className="text-xs font-medium text-subtext text-end">≈ ${numberToUsd(Number(amount) * ethPrice)}</p>}
 
           <AmountSuggestionButtons form={form} amount={amount} balanceEth={balanceEth} balanceToken={balanceToken} actionSelected={actionSelected} />
 

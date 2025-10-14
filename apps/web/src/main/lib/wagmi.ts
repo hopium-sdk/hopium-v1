@@ -4,9 +4,14 @@ import { NETWORK } from "@repo/common/utils/network";
 import { T_Network } from "@repo/common/utils/network";
 import { CONSTANTS } from "./constants";
 
+const networks = {
+  mainnet: mainnet,
+  base: base,
+};
+
 export const getWagmiClient = () => {
   return createConfig({
-    chains: [mainnet, base],
+    chains: [networks[CONSTANTS.networkSelected]],
     transports: {
       [mainnet.id]: http(NETWORK.rpcUrl.mainnet),
       [base.id]: http(NETWORK.rpcUrl.base),
