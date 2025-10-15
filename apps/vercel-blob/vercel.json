@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/:blobPath*",
+      "destination": "https://rhzo270gblcou0le.public.blob.vercel-storage.com/:blobPath*"
+    }
+  ]
+}
