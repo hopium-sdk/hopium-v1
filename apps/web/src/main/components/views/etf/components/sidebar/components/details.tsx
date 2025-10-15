@@ -14,11 +14,7 @@ export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <SidebarBox.Box>
-      <SidebarBox.Header>
-        <SidebarBox.Title title="Details" icon={<Icons.Details className="text-subtext" />} />
-      </SidebarBox.Header>
-
+    <SidebarBox title="Details" icon={<Icons.Details className="text-subtext" />}>
       <div className="w-full border-b">
         {options.map((option) => (
           <div key={option} className="w-full flex items-center justify-between border-t py-2">
@@ -47,6 +43,6 @@ export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
           </div>
         ))}
       </div>
-    </SidebarBox.Box>
+    </SidebarBox>
   );
 };

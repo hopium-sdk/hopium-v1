@@ -8,9 +8,6 @@ import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
 
 export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
-  const [watchlistLoading, setWatchlistLoading] = useState(false);
-  const { addToWatchlist, isInWatchlist, removeFromWatchlist } = useWatchlist();
-
   const getValue = (option: number): number => {
     switch (option) {
       case 0:
@@ -21,6 +18,30 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
         return 0;
     }
   };
+
+  return (
+    <SidebarBox title="Overview" icon={<Icons.Overview className="text-subtext" />} right={<WatchlistButton etf={etf} />}>
+      <div className="w-full grid grid-cols-2 gap-2">
+        <NumberTab
+          title={"Price USD"}
+          value={getValue(0)}
+          color={getValue(0) == 0 ? "text-subtext" : getValue(0) > 0 ? "text-green-500" : "text-red-500"}
+          symbolType={"usd"}
+        />
+        <NumberTab
+          title={"Price ETH"}
+          value={getValue(1)}
+          color={getValue(1) == 0 ? "text-subtext" : getValue(1) > 0 ? "text-green-500" : "text-red-500"}
+          symbolType={"eth"}
+        />
+      </div>
+    </SidebarBox>
+  );
+};
+
+const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
+  const [watchlistLoading, setWatchlistLoading] = useState(false);
+  const { addToWatchlist, isInWatchlist, removeFromWatchlist } = useWatchlist();
 
   const handleWatchlist = async () => {
     if (watchlistLoading) return;
@@ -36,46 +57,24 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <SidebarBox.Box>
-      <SidebarBox.Header>
-        <SidebarBox.Title title="Overview" icon={<Icons.Overview className="text-subtext" />} />
-        <SidebarBox.Right>
-          <div
-            onClick={handleWatchlist}
-            className={cn(
-              "flex items-center gap-2 rounded-full px-3 py-1 border cursor-pointer",
-              !isInWatchlist({ index_id: etf.index.indexId }) ? "border-main text-main hover:bg-main-900" : "border-red text-red hover:bg-red-900",
-              watchlistLoading && "opacity-70"
-            )}
-          >
-            {watchlistLoading ? (
-              <Icons.Loading className="size-3.5 animate-spin" />
-            ) : (
-              <SubscriptDiv
-                baseItem={<Icons.Watchlist className="size-3.5" />}
-                subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ index_id: etf.index.indexId }) ? "-" : "+"}</p>}
-                subscriptClassName="-top-2"
-              />
-            )}
-            <p className="text-xs font-medium">Watchlist</p>
-          </div>
-        </SidebarBox.Right>
-      </SidebarBox.Header>
-
-      <div className="w-full grid grid-cols-2 gap-2">
-        <NumberTab
-          title={"Price USD"}
-          value={getValue(0)}
-          color={getValue(0) == 0 ? "text-subtext" : getValue(0) > 0 ? "text-green-500" : "text-red-500"}
-          symbolType={"usd"}
+    <div
+      onClick={handleWatchlist}
+      className={cn(
+        "flex items-center gap-2 rounded-full px-3 py-1 border cursor-pointer",
+        !isInWatchlist({ index_id: etf.index.indexId }) ? "border-main text-main hover:bg-main-900" : "border-red text-red hover:bg-red-900",
+        watchlistLoading && "opacity-70"
+      )}
+    >
+      {watchlistLoading ? (
+        <Icons.Loading className="size-3.5 animate-spin" />
+      ) : (
+        <SubscriptDiv
+          baseItem={<Icons.Watchlist className="size-3.5" />}
+          subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ index_id: etf.index.indexId }) ? "-" : "+"}</p>}
+          subscriptClassName="-top-2"
         />
-        <NumberTab
-          title={"Price ETH"}
-          value={getValue(1)}
-          color={getValue(1) == 0 ? "text-subtext" : getValue(1) > 0 ? "text-green-500" : "text-red-500"}
-          symbolType={"eth"}
-        />
-      </div>
-    </SidebarBox.Box>
+      )}
+      <p className="text-xs font-medium">Watchlist</p>
+    </div>
   );
 };
