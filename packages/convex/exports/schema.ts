@@ -4,3 +4,4 @@ export { type C_EtfTokenTransfer, type T_EtfTokenTransfer, getEtfTokenTransferId
 export { type C_HoldingToken, type T_HoldingToken } from "../convex/schema/holdingTokens";
 export { type C_SyncStatus, type T_SyncStatus } from "../convex/schema/syncStatus";
 export { type C_Watchlist, type T_Watchlist, type C_WatchlistWithEtf } from "../convex/schema/watchlist";
+export { type T_Holder } from "../src/fns/holders/getAllHoldersByTokenAddress";

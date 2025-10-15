@@ -34,7 +34,7 @@ export function ThemeToggle({ withBox = true }: { withBox?: boolean }) {
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="border-none">
+      <DropdownMenuContent align="end">
         {themeOptions.map(({ value, label, Icon }) => (
           <DropdownMenuItem key={value} onClick={() => setTheme(value)} className="flex items-center gap-2 text-subtext hover:text-foreground">
             <Icon className="h-[1.2rem] w-[1.2rem]" />

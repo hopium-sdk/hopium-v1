@@ -17,10 +17,10 @@ export const ActionButtons = ({ actionSelected, setActionSelected }: T_ActionBut
   return (
     <Tabs value={actionSelected} onValueChange={(value) => setActionSelected(value)}>
       <TabsList className="w-full">
-        <TabsTrigger value="Buy" className={cn(css.action_button_div, css.buy_base)}>
+        <TabsTrigger value="Buy" className={cn(css.action_button_div)}>
           <p className={cn(css.action_button_p)}>Buy</p>
         </TabsTrigger>
-        <TabsTrigger value="Sell" className={cn(css.action_button_div, css.sell_base)}>
+        <TabsTrigger value="Sell" className={cn(css.action_button_div)}>
           <p className={cn(css.action_button_p)}>Sell</p>
         </TabsTrigger>
       </TabsList>

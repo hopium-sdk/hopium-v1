@@ -6,6 +6,11 @@ export const indexFactoryAbi = [
         name: "_directory",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "_wethAddress",
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
@@ -89,6 +94,19 @@ export const indexFactoryAbi = [
     outputs: [
       {
         internalType: "contract IDirectory",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "WETH_ADDRESS",
+    outputs: [
+      {
+        internalType: "address",
         name: "",
         type: "address",
       },

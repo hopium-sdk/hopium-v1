@@ -2,18 +2,41 @@ import { C_Etf } from "@repo/convex/schema";
 import { useWatchlist } from "@/main/hooks/use-watchlist";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumberTab } from "@/main/components/ui/number-tab";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
+import { HOPIUM } from "@/main/lib/hopium";
+
+type T_IndexPrice = {
+  indexPriceUsd: number;
+  indexPriceWeth: number;
+};
 
 export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
+  const [indexPrice, setIndexPrice] = useState<T_IndexPrice>({ indexPriceUsd: 0, indexPriceWeth: 0 });
+
+  const fetchIndexPrice = async () => {
+    const price = await HOPIUM.fns.indexPriceOracle.fetchIndexPrice({ indexId: BigInt(etf.index.indexId) });
+    setIndexPrice(price);
+  };
+
+  useEffect(() => {
+    fetchIndexPrice();
+
+    const interval = setInterval(() => {
+      fetchIndexPrice();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [etf.index.indexId]);
+
   const getValue = (option: number): number => {
     switch (option) {
       case 0:
-        return etf.stats.price.usd;
+        return indexPrice.indexPriceUsd;
       case 1:
-        return etf.stats.price.eth;
+        return indexPrice.indexPriceWeth;
       default:
         return 0;
     }

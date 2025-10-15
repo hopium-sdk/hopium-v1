@@ -1,23 +1,19 @@
 "use client";
 import { CoinImage } from "@/main/components/ui/coin-image";
 import { CONSTANTS } from "@/main/lib/constants";
-import { CONVEX } from "@/main/lib/convex";
 import { Table, TableCell, TableRow, TableHead, TableHeader, TableBody } from "@/main/shadcn/components/ui/table";
 import { Icons } from "@/main/utils/icons";
 import { getExplorerTokenUrl } from "@repo/common/utils/explorer";
 import { C_Etf, T_HoldingToken } from "@repo/convex/schema";
-import { useQuery } from "convex/react";
 import { SidebarBox } from "../ui/box";
 
-type T_UnderlyingToken = T_HoldingToken & {
+export type T_UnderlyingTokenWithWeight = T_HoldingToken & {
   weightBips: number;
 };
 
-export const EtfUnderlyingTokens = ({ etf }: { etf: C_Etf }) => {
-  const tokens = useQuery(CONVEX.api.fns.etf.getEtfUnderlyingTokens.default, { indexId: etf.index.indexId });
-
-  const underlyingTokens: T_UnderlyingToken[] =
-    tokens?.map((token) => ({
+export const EtfUnderlyingTokens = ({ etf, underlyingTokens }: { etf: C_Etf; underlyingTokens: T_HoldingToken[] }) => {
+  const underlyingTokensWithWeight: T_UnderlyingTokenWithWeight[] =
+    underlyingTokens?.map((token) => ({
       ...token,
       weightBips: etf.index.holdings?.find((holding) => holding.tokenAddress === token.address)?.weightBips || 0,
     })) || [];
@@ -25,30 +21,30 @@ export const EtfUnderlyingTokens = ({ etf }: { etf: C_Etf }) => {
   return (
     <SidebarBox title="Underlying Assets" icon={<Icons.Assets />}>
       <div className="w-full border rounded-md">
-        <TokenTable underlyingTokens={underlyingTokens} />
+        <TokenTable underlyingTokensWithWeight={underlyingTokensWithWeight} />
       </div>
     </SidebarBox>
   );
 };
 
-const TokenTable = ({ underlyingTokens }: { underlyingTokens: T_UnderlyingToken[] }) => {
+const TokenTable = ({ underlyingTokensWithWeight }: { underlyingTokensWithWeight: T_UnderlyingTokenWithWeight[] }) => {
   return (
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent">
-          <TableHead className="w-5/12 h-8 pl-3 text-subtext font-medium text-xs">Token</TableHead>
-          <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-xs text-right">Weight</TableHead>
+          <TableHead className="w-5/12 h-8 pl-3 text-subtext font-medium text-2xs">Token</TableHead>
+          <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-2xs text-right">Weight</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {underlyingTokens.map((token, index) => (
+        {underlyingTokensWithWeight.map((token, index) => (
           <UnderlyingToken key={index} index={index} token={token} />
         ))}
       </TableBody>
     </Table>
   );
 };
-const UnderlyingToken = ({ token, index }: { token: T_UnderlyingToken; index: number }) => {
+const UnderlyingToken = ({ token, index }: { token: T_UnderlyingTokenWithWeight; index: number }) => {
   const percent = (token.weightBips / 100).toFixed(2);
 
   const handleClick = () => {

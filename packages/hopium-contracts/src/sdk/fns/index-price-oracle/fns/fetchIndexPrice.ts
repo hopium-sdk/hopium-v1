@@ -5,8 +5,8 @@ export const _fetchIndexPrice = async ({ indexId, network, rpcUrl }: { indexId: 
   const indexPriceOracleContract = await _contracts({ network, rpcUrl }).contracts.indexPriceOracle();
 
   const [indexPriceWeth, indexPriceUsd] = await Promise.all([
-    indexPriceOracleContract.read.getIndexLiquidityWeth([indexId]),
-    indexPriceOracleContract.read.getIndexLiquidityUsd([indexId]),
+    indexPriceOracleContract.read.getIndexWethPrice([indexId]),
+    indexPriceOracleContract.read.getIndexUsdPrice([indexId]),
   ]);
 
   return {

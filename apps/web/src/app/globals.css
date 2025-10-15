@@ -8,10 +8,11 @@
   --text-xs: 0.8rem;
   --color-main: var(--main);
   --color-main-900: var(--main-900);
+  --color-rewards: var(--rewards);
+  --color-rewards-900: var(--rewards-900);
 
   --color-buy: var(--buy);
   --color-buy-900: var(--buy-900);
-
   --color-sell: var(--sell);
   --color-sell-900: var(--sell-900);
 
@@ -83,15 +84,18 @@
   --fg-900: oklch(0.141 0.005 285.823);
   --fg-800: oklch(0.21 0.006 285.885);
   --main: var(--color-indigo-500);
-  --main-900: var(--color-indigo-100);
+  --main-900: var(--color-indigo-200);
+
+  --rewards: var(--color-teal-500);
+  --rewards-900: var(--color-teal-200);
 
   --buy: var(--color-green-500);
-  --buy-900: var(--color-green-100);
+  --buy-900: var(--color-green-200);
   --sell: var(--color-rose-500);
-  --sell-900: var(--color-rose-100);
+  --sell-900: var(--color-rose-200);
 
   --red: var(--color-rose-500);
-  --red-900: var(--color-rose-100);
+  --red-900: var(--color-rose-200);
 
   --mid: oklch(0.552 0.016 285.938);
   --mid2: oklch(0.705 0.015 286.067);
@@ -146,6 +150,9 @@
   --fg-800: oklch(0.92 0.004 286.32);
   --main: var(--color-indigo-500);
   --main-900: var(--color-indigo-950);
+
+  --rewards: var(--color-teal-500);
+  --rewards-900: var(--color-teal-950);
 
   --buy: var(--color-green-500);
   --buy-900: var(--color-green-950);
@@ -268,4 +275,17 @@ svg {
 
 .sc-imWYAI {
   font-size: 90% !important;
+}
+
+.rotate {
+  animation: rotate 1.5s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

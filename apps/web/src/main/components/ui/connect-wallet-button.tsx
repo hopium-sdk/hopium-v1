@@ -45,7 +45,7 @@ const ConnectedBox = ({ address }: { address: string }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className={cn("flex items-center gap-2 cursor-pointer hover:bg-bg-900 rounded-md px-4 h-10")}>
+        <div className={cn("flex items-center gap-2 cursor-pointer hover:bg-bg-900 rounded-md px-4 h-10 border")}>
           <AvatarAddress />
           <Icons.ChevronDown className="size-4" />
         </div>

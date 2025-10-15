@@ -2,7 +2,7 @@ import { C_EtfTokenTransfer } from "../../../convex/schema/etfTokenTranfers";
 import { normalizeAddress } from "../../utils/normalizeAddress";
 import { sortTransferByChainOrder } from "../../utils/sortTransfer";
 
-type Holder = {
+export type T_Holder = {
   address: string;
   amount: number;
 };
@@ -15,7 +15,7 @@ export const getAllHoldersByTokenAddress = async ({
 }: {
   allTransfers: C_EtfTokenTransfer[];
   tokenAddress: string;
-}): Promise<Holder[]> => {
+}): Promise<T_Holder[]> => {
   const token = normalizeAddress(tokenAddress);
 
   // in case caller didn’t pre-filter, ensure we only process this token
@@ -37,7 +37,7 @@ export const getAllHoldersByTokenAddress = async ({
   }
 
   // build holder list, excluding zero address and zero balances
-  const holders: Holder[] = [];
+  const holders: T_Holder[] = [];
   for (const [address, amount] of balances.entries()) {
     if (address === ZERO_ADDRESS) continue; // exclude mint/burn address
     if (amount === 0) continue;
@@ -45,7 +45,7 @@ export const getAllHoldersByTokenAddress = async ({
   }
 
   // sort by amount desc, then address asc for determinism
-  holders.sort((a, b) => b.amount - a.amount || a.address.localeCompare(b.address));
+  holders.sort((a, b) => b.amount - a.amount);
 
   return holders;
 };

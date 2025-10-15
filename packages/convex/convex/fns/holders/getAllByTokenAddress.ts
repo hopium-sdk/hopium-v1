@@ -13,8 +13,8 @@ export default query({
       .withIndex("by_etfTokenAddress", (q) => q.eq("etfTokenAddress", normalizeAddress(args.tokenAddress)))
       .collect();
 
-    const holders = getAllHoldersByTokenAddress({ allTransfers, tokenAddress: args.tokenAddress });
+    const allHolders = await getAllHoldersByTokenAddress({ allTransfers, tokenAddress: args.tokenAddress });
 
-    return holders;
+    return allHolders;
   },
 });

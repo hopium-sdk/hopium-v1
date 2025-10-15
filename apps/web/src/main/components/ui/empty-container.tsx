@@ -7,10 +7,10 @@ export const EmptyContainerVariants = {
     description: "There's nothing here",
     icon: Icons.Empty,
   },
-  emptyTokenList: {
-    label: "No tokens found",
-    description: "Try a different search",
-    icon: Icons.Search,
+  holders: {
+    label: "No holders yet",
+    description: "There's a buy button right there",
+    icon: Icons.Holders,
   },
 };
 
@@ -23,6 +23,7 @@ type T_EmptyContainer = {
   descriptionClassName?: string;
   cssVariant?: keyof typeof EmptyContainerCssVariants;
   labelVariant?: keyof typeof EmptyContainerVariants;
+  showSubtext?: boolean;
 };
 
 export const EmptyContainerCssVariants = {
@@ -47,11 +48,12 @@ export const EmptyContainer = ({
   descriptionClassName,
   cssVariant = "default",
   labelVariant = "default",
+  showSubtext = false,
 }: T_EmptyContainer) => {
   const defaultCss = {
-    label: "font-medium",
+    label: "font-medium text-subtext",
     description: "max-w-md text-subtext",
-    icon: "",
+    icon: "text-subtext",
   };
 
   const Icon = icon ?? EmptyContainerVariants[labelVariant].icon;
@@ -63,9 +65,11 @@ export const EmptyContainer = ({
         <p className={cn(defaultCss.label, EmptyContainerCssVariants[cssVariant].label, labelClassName)}>
           {label ? label : EmptyContainerVariants[labelVariant].label}
         </p>
-        <p className={cn(defaultCss.description, EmptyContainerCssVariants[cssVariant].description, descriptionClassName)}>
-          {description ? description : EmptyContainerVariants[labelVariant].description}
-        </p>
+        {showSubtext && (
+          <p className={cn(defaultCss.description, EmptyContainerCssVariants[cssVariant].description, descriptionClassName)}>
+            {description ? description : EmptyContainerVariants[labelVariant].description}
+          </p>
+        )}
       </div>
     </div>
   );

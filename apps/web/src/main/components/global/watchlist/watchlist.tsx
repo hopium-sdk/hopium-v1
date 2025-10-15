@@ -130,7 +130,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
               <EtfImage address={item.etf.contracts.etfTokenAddress} withBox boxClassName="size-8" iconClassName="size-5" />
             </div>
             <div className="flex flex-col">
-              <p className="text-xs font-medium">{item.etf.index.ticker}</p>
+              <p className="text-xs font-medium uppercase">{item.etf.index.ticker}</p>
               <p className="text-xs text-subtext">{item.etf.index.name}</p>
             </div>
           </div>

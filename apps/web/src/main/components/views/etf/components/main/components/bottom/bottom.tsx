@@ -1,16 +1,18 @@
 import { EtfTabsBar } from "./components/tabs-bar/tabs-bar";
 import { T_Tab_Option } from "./components/tabs-bar/tabs-options";
 import { C_Etf } from "@repo/convex/schema";
+import { EtfHolders } from "./components/tabs/holders/holders";
+import { useState } from "react";
 
 type T_EtfBottom = {
   etf: C_Etf;
   etfBottomCollapsed: boolean;
   setEtfBottomCollapsed: (etfBottomCollapsed: boolean) => void;
-  tabSelected: T_Tab_Option;
-  setTabSelected: (tabSelected: T_Tab_Option) => void;
 };
 
-export const EtfBottom = ({ etf, etfBottomCollapsed, setEtfBottomCollapsed, tabSelected, setTabSelected }: T_EtfBottom) => {
+export const EtfBottom = ({ etf, etfBottomCollapsed, setEtfBottomCollapsed }: T_EtfBottom) => {
+  const [tabSelected, setTabSelected] = useState<T_Tab_Option>("Holders");
+
   return (
     <div className="flex h-full flex-col overflow-hidden">
       <EtfTabsBar
@@ -21,9 +23,9 @@ export const EtfBottom = ({ etf, etfBottomCollapsed, setEtfBottomCollapsed, tabS
       />
       {!etfBottomCollapsed && (
         <>
-          {/* {tabSelected === "Positions" && (CONSTANTS.env.isDev ? <CoinActivity coin={coin} /> : <CoinActivitySample coin={coin} />)}
-          {tabSelected === "Holders" && (CONSTANTS.env.isDev ? <CoinBumpers coin={coin} /> : <CoinBumpersSample coin={coin} />)}
-          {tabSelected === "Holders" && (CONSTANTS.env.isDev ? <CoinHolders coin={coin} /> : <CoinHolders coin={coin} />)} */}
+          {/* {tabSelected === "Positions" && <EtfPositions etf={etf} />} */}
+          {tabSelected === "Holders" && <EtfHolders etf={etf} />}
+          {/* {tabSelected === "Vault" && <EtfVault etf={etf} />} */}
         </>
       )}
     </div>
