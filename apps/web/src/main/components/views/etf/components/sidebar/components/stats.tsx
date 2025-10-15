@@ -5,7 +5,7 @@ import { SidebarBox } from "../ui/box";
 
 export const EtfStats = ({ etf }: { etf: C_Etf }) => {
   return (
-    <SidebarBox title="Stats" icon={<Icons.Stats className="text-subtext" />}>
+    <SidebarBox title="Stats" icon={<Icons.Stats />}>
       <div className="w-full grid grid-cols-2 gap-2">
         <NumberTab title="Liquidity" symbolType="usd" value={etf.stats.assets_liquidity_usd} />
         {/* <NumberTab title="FDV" symbolType="usd" value={etf.stats.assets_mcap_usd} /> */}

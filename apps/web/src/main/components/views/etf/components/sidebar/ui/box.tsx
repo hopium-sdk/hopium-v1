@@ -16,9 +16,9 @@ const Header = ({ children }: { children: React.ReactNode }) => {
 
 const Title = ({ title, icon }: { title: string; icon: React.ReactNode }) => {
   return (
-    <div className="flex items-center gap-2 pb-1">
+    <div className="flex items-center gap-2 pb-1 text-subtext">
       {icon}
-      <p className="text-xs font-medium text-subtext">{title}</p>
+      <p className="text-xs font-medium">{title}</p>
     </div>
   );
 };

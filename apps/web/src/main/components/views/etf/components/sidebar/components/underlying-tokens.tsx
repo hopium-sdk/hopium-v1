@@ -23,7 +23,7 @@ export const EtfUnderlyingTokens = ({ etf }: { etf: C_Etf }) => {
     })) || [];
 
   return (
-    <SidebarBox title="Underlying Assets" icon={<Icons.Assets className="text-subtext" />}>
+    <SidebarBox title="Underlying Assets" icon={<Icons.Assets />}>
       <div className="w-full border rounded-md">
         <TokenTable underlyingTokens={underlyingTokens} />
       </div>

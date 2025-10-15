@@ -20,7 +20,7 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <SidebarBox title="Overview" icon={<Icons.Overview className="text-subtext" />} right={<WatchlistButton etf={etf} />}>
+    <SidebarBox title="Overview" icon={<Icons.Overview />} right={<WatchlistButton etf={etf} />}>
       <div className="w-full grid grid-cols-2 gap-2">
         <NumberTab
           title={"Price USD"}

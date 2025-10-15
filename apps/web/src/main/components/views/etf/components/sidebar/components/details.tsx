@@ -14,7 +14,7 @@ export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <SidebarBox title="Details" icon={<Icons.Details className="text-subtext" />}>
+    <SidebarBox title="Details" icon={<Icons.Details />}>
       <div className="w-full border-b">
         {options.map((option) => (
           <div key={option} className="w-full flex items-center justify-between border-t py-2">

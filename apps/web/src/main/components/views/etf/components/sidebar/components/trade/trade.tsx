@@ -12,6 +12,7 @@ import { TradeForm } from "./components/form";
 import { BalancesBox } from "./components/balances-box";
 import { useHopiumContracts } from "@/main/hooks/use-hopium-contracts";
 import { useBalanceEth } from "@/main/wrappers/components/balance-provider";
+import { SidebarBox } from "../../ui/box";
 
 const MIN_AMOUNT = 0.00001;
 export const TradeFormSchema = z.object({
@@ -66,40 +67,37 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-2">
-      <div className="flex items-center gap-2 pb-1">
-        <Icons.Trade className="size-4 text-subtext" />
-        <p className="text-xs font-medium text-subtext">Trade</p>
-      </div>
+    <SidebarBox title="Trade" icon={<Icons.Trade />}>
+      <div className="w-full">
+        <ActionButtons actionSelected={actionSelected} setActionSelected={setActionSelected} />
 
-      <ActionButtons actionSelected={actionSelected} setActionSelected={setActionSelected} />
+        <div className="flex items-center justify-end">
+          <WalletBalanceButton
+            form={form}
+            amount={formData.amount as number}
+            balanceEth={balanceEth}
+            balanceToken={balanceToken}
+            actionSelected={actionSelected}
+            getBalanceAmount={getBalanceAmount}
+          />
+        </div>
 
-      <div className="flex items-center justify-end">
-        <WalletBalanceButton
+        <TradeForm
           form={form}
+          formData={formData}
           amount={formData.amount as number}
+          handleClick={handleClick}
+          loading={loading}
           balanceEth={balanceEth}
           balanceToken={balanceToken}
           actionSelected={actionSelected}
           getBalanceAmount={getBalanceAmount}
         />
-      </div>
 
-      <TradeForm
-        form={form}
-        formData={formData}
-        amount={formData.amount as number}
-        handleClick={handleClick}
-        loading={loading}
-        balanceEth={balanceEth}
-        balanceToken={balanceToken}
-        actionSelected={actionSelected}
-        getBalanceAmount={getBalanceAmount}
-      />
-
-      <div className="w-full pt-2">
-        <BalancesBox balanceEth={balanceEth} balanceToken={balanceToken} />
+        <div className="w-full pt-2">
+          <BalancesBox balanceEth={balanceEth} balanceToken={balanceToken} />
+        </div>
       </div>
-    </div>
+    </SidebarBox>
   );
 };
