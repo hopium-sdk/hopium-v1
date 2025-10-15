@@ -1,5 +1,14 @@
 import { C_Etf } from "@repo/convex/schema";
+import { EtfMetadata } from "./components/metadata";
+import { EtfChart } from "./components/chart";
 
 export const EtfTop = ({ etf }: { etf: C_Etf }) => {
-  return <div></div>;
+  return (
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <EtfMetadata etf={etf} />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <EtfChart etf={etf} />
+      </div>
+    </div>
+  );
 };

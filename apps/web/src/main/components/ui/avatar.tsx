@@ -6,23 +6,23 @@ import Link from "next/link";
 import { CONSTANTS } from "@/main/lib/constants";
 
 const options = [
-  { bg950: "bg-blue-950", bg500: "bg-blue-500", text: "text-blue-500" },
-  { bg950: "bg-green-950", bg500: "bg-green-500", text: "text-green-500" },
-  { bg950: "bg-yellow-950", bg500: "bg-yellow-500", text: "text-yellow-500" },
-  { bg950: "bg-red-950", bg500: "bg-red-500", text: "text-red-500" },
-  { bg950: "bg-orange-950", bg500: "bg-orange-500", text: "text-orange-500" },
-  { bg950: "bg-pink-950", bg500: "bg-pink-500", text: "text-pink-500" },
-  { bg950: "bg-gray-950", bg500: "bg-gray-500", text: "text-gray-500" },
-  { bg950: "bg-teal-950", bg500: "bg-teal-500", text: "text-teal-500" },
-  { bg950: "bg-lime-950", bg500: "bg-lime-500", text: "text-lime-500" },
-  { bg950: "bg-indigo-950", bg500: "bg-indigo-500", text: "text-indigo-500" },
-  { bg950: "bg-fuchsia-950", bg500: "bg-fuchsia-500", text: "text-fuchsia-500" },
-  { bg950: "bg-violet-950", bg500: "bg-violet-500", text: "text-violet-500" },
-  { bg950: "bg-cyan-950", bg500: "bg-cyan-500", text: "text-cyan-500" },
-  { bg950: "bg-emerald-950", bg500: "bg-emerald-500", text: "text-emerald-500" },
-  { bg950: "bg-sky-950", bg500: "bg-sky-500", text: "text-sky-500" },
-  { bg950: "bg-amber-950", bg500: "bg-amber-500", text: "text-amber-500" },
-  { bg950: "bg-rose-950", bg500: "bg-rose-500", text: "text-rose-500" },
+  { bg950: "bg-blue-100 dark:bg-blue-950", bg500: "bg-blue-500", text: "text-blue-500" },
+  { bg950: "bg-green-100 dark:bg-green-950", bg500: "bg-green-500", text: "text-green-500" },
+  { bg950: "bg-yellow-100 dark:bg-yellow-950", bg500: "bg-yellow-500", text: "text-yellow-500" },
+  { bg950: "bg-red-100 dark:bg-red-950", bg500: "bg-red-500", text: "text-red-500" },
+  { bg950: "bg-orange-100 dark:bg-orange-950", bg500: "bg-orange-500", text: "text-orange-500" },
+  { bg950: "bg-pink-100 dark:bg-pink-950", bg500: "bg-pink-500", text: "text-pink-500" },
+  { bg950: "bg-gray-100 dark:bg-gray-950", bg500: "bg-gray-500", text: "text-gray-500" },
+  { bg950: "bg-teal-100 dark:bg-teal-950", bg500: "bg-teal-500", text: "text-teal-500" },
+  { bg950: "bg-lime-100 dark:bg-lime-950", bg500: "bg-lime-500", text: "text-lime-500" },
+  { bg950: "bg-indigo-100 dark:bg-indigo-950", bg500: "bg-indigo-500", text: "text-indigo-500" },
+  { bg950: "bg-fuchsia-100 dark:bg-fuchsia-950", bg500: "bg-fuchsia-500", text: "text-fuchsia-500" },
+  { bg950: "bg-violet-100 dark:bg-violet-950", bg500: "bg-violet-500", text: "text-violet-500" },
+  { bg950: "bg-cyan-100 dark:bg-cyan-950", bg500: "bg-cyan-500", text: "text-cyan-500" },
+  { bg950: "bg-emerald-100 dark:bg-emerald-950", bg500: "bg-emerald-500", text: "text-emerald-500" },
+  { bg950: "bg-sky-100 dark:bg-sky-950", bg500: "bg-sky-500", text: "text-sky-500" },
+  { bg950: "bg-amber-100 dark:bg-amber-950", bg500: "bg-amber-500", text: "text-amber-500" },
+  { bg950: "bg-rose-100 dark:bg-rose-950", bg500: "bg-rose-500", text: "text-rose-500" },
 ];
 
 export const getStaticColor = (address: string) => {
@@ -39,23 +39,31 @@ export const getRandomColor = () => {
 
 export const getAddressColor = getStaticColor;
 
-type T_AvatarImage = {
+export type T_AvatarImage = {
   address: string;
+  iconVariant?: "user" | "coin" | "contract";
   iconClassName?: string;
   iconColor?: string;
   withBox?: boolean;
   boxClassName?: string;
 };
 
-export const AvatarImage = ({ address, boxClassName, iconClassName, iconColor, withBox = false }: T_AvatarImage) => {
+export const AvatarImage = ({ address, boxClassName, iconClassName, iconColor, withBox = false, iconVariant = "user" }: T_AvatarImage) => {
   const color = getAddressColor(address);
 
+  const icons = {
+    user: Icons.User,
+    coin: Icons.Coin,
+    contract: Icons.Contract,
+  };
+
   const render = () => {
-    return <Icons.User className={cn("size-4", iconColor ?? color?.text, iconClassName)} />;
+    const IconComponent = icons[iconVariant];
+    return <IconComponent className={cn("size-4", iconColor ?? color?.text, iconClassName)} />;
   };
 
   if (withBox) {
-    return <div className={cn("w-6 h-6 rounded-sm flex items-center justify-center", color?.bg950, boxClassName)}>{render()}</div>;
+    return <div className={cn("size-6 rounded-sm flex items-center justify-center", color?.bg950, boxClassName)}>{render()}</div>;
   }
 
   return render();
@@ -73,6 +81,7 @@ type T_Avatar = {
   imageIconClassName?: string;
   pClassName?: string;
   linkIconClassName?: string;
+  iconVariant?: "user" | "coin" | "contract";
 };
 
 export const Avatar = ({
@@ -87,6 +96,7 @@ export const Avatar = ({
   pClassName,
   linkType = "explorer",
   linkIconClassName,
+  iconVariant = "user",
 }: T_Avatar) => {
   const color = getAddressColor(address);
 
@@ -99,6 +109,7 @@ export const Avatar = ({
             boxClassName={imageBoxClassName}
             iconClassName={imageIconClassName}
             iconColor={withLinkColor ? "text-main" : undefined}
+            iconVariant={iconVariant}
           />
         )}
         <p className={cn("text-xs font-medium", withLinkColor ? "text-main" : color?.text, pClassName)}>{formatAddress(address)}</p>

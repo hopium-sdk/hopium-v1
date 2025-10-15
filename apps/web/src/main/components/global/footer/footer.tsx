@@ -19,7 +19,7 @@ export const Footer = () => {
       <div className="flex items-center gap-2.5">
         <div className="flex items-center gap-1 text-subtext">
           <Icons.Ether />
-          <p className="text-xs">{numberToUsd(ethPrice)}</p>
+          <p className="text-xs font-medium">{numberToUsd(ethPrice)}</p>
         </div>
         <p className="text-subtext pl-1">|</p>
         <Button variant="ghost" size="icon" className="text-subtext p-0">

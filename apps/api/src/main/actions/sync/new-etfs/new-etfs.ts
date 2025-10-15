@@ -69,7 +69,7 @@ const saveNewTokens = async ({ etfs }: { etfs: T_Etf[] }) => {
 };
 
 const processLogs = async ({ logs }: { logs: T_QnLog[] }) => {
-  const etfFactoryAddress = await HOPIUM.contracts.addresses.etfFactory;
+  const etfFactoryAddress = await HOPIUM.contracts.addresses.etfFactory();
 
   const allEtfs: T_Etf[] = (
     await Promise.all(

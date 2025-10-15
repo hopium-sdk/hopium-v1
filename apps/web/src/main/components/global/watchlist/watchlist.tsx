@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { CoinImage } from "@/main/components/ui/coin-image";
 import { C_WatchlistWithEtf } from "@repo/convex/schema";
 import { ReorderList, ReorderListItem } from "@/main/components/ui/reorder-list";
+import { EtfImage } from "../../ui/etf-image";
 
 type T_Watchlist = {
   collapsed: {
@@ -126,7 +127,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
               </div>
             )}
             <div className="size-8">
-              <CoinImage address={""} boxClassName="[border-width:0.2cqw]" />
+              <EtfImage address={item.etf.contracts.etfTokenAddress} withBox boxClassName="size-8" iconClassName="size-5" />
             </div>
             <div className="flex flex-col">
               <p className="text-xs font-medium">{item.etf.index.ticker}</p>

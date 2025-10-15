@@ -73,6 +73,7 @@ export { RiLayoutBottom2Line as Overview } from "react-icons/ri";
 export { BiChart as Stats } from "react-icons/bi";
 export { TbBrandTabler as Details } from "react-icons/tb";
 export { PiStarBold as Watchlist } from "react-icons/pi";
+export { TbBrandTabler as Contract } from "react-icons/tb";
 
 //Rewards
 export { PiLightningBold as Rewards } from "react-icons/pi";

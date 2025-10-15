@@ -24,7 +24,7 @@ export const _syncEtfTokenTransfers = async ({ logs }: { logs: T_QnLog[] }) => {
 };
 
 const processLogs = async ({ logs }: { logs: T_QnLog[] }) => {
-  const etfTokenEventsAddress = await HOPIUM.contracts.addresses.etfTokenEvents;
+  const etfTokenEventsAddress = await HOPIUM.contracts.addresses.etfTokenEvents();
 
   const allEtfTokenTransfers = (
     await Promise.all(

@@ -68,7 +68,7 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
 
   return (
     <SidebarBox title="Trade" icon={<Icons.Trade />}>
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-2">
         <ActionButtons actionSelected={actionSelected} setActionSelected={setActionSelected} />
 
         <div className="flex items-center justify-end">

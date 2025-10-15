@@ -17,9 +17,9 @@ export const EtfSidebar = ({ etf }: { etf: C_Etf }) => {
           <EtfTrade etf={etf} />
         </div>
 
-        <div className="py-5 px-6 border-b">
+        {/* <div className="py-5 px-6 border-b">
           <EtfStats etf={etf} />
-        </div>
+        </div> */}
 
         <div className="py-5 px-6 border-b">
           <EtfUnderlyingTokens etf={etf} />

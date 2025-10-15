@@ -4,14 +4,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "hover:opacity-70 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        default: "bg-main-900 border border-main text-text hover:opacity-80",
-        ghost: "hover:opacity-80",
-        sell: "border border-sell bg-sell-900 hover:opacity-80",
-        buy: "border border-buy bg-buy-900 hover:opacity-80",
+        default: "bg-main-900 border border-main text-text",
+        ghost: "",
+        sell: "border border-sell bg-sell-900",
+        buy: "border border-buy bg-buy-900",
       },
       size: {
         default: "h-9 px-4 py-2",

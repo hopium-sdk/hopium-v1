@@ -31,7 +31,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
     try {
       setLoading("Loading...");
       await _ensureCorrectChain();
-      const etfRouterAddress = await HOPIUM.contracts.addresses.etfRouter;
+      const etfRouterAddress = await HOPIUM.contracts.addresses.etfRouter();
 
       setLoading("Confirm tx...");
       let hash: `0x${string}`;

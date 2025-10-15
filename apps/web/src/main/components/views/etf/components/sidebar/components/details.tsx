@@ -6,7 +6,7 @@ import { Avatar } from "@/main/components/ui/avatar";
 import { SidebarBox } from "../ui/box";
 
 export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
-  const options = ["Created", "Token", "Vault"];
+  const options = ["Token", "Vault"];
 
   const css = {
     title: "text-xs font-medium text-subtext",
@@ -14,7 +14,7 @@ export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <SidebarBox title="Details" icon={<Icons.Details />}>
+    <SidebarBox title="Contracts" icon={<Icons.Details />}>
       <div className="w-full border-b">
         {options.map((option) => (
           <div key={option} className="w-full flex items-center justify-between border-t py-2">
@@ -33,6 +33,7 @@ export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
                         withLink
                         withLinkColor
                         withLinkIcon
+                        iconVariant="contract"
                       />
                       <CopyIcon data={option === "Token" ? (etf.contracts.etfTokenAddress ?? "") : (etf.contracts.etfVaultAddress ?? "")} />
                     </>

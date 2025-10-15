@@ -63,7 +63,7 @@ const UnderlyingToken = ({ token, index }: { token: T_UnderlyingToken; index: nu
           <CoinImage address={token.address} boxClassName="size-6" />
           <div className="flex flex-col gap-0">
             <p className="text-2xs font-medium">{token.symbol}</p>
-            <p className="text-2xs font-medium text-subtext">{token.name}</p>
+            <p className="text-2xs font-medium text-subtext truncate">{token.name}</p>
           </div>
         </div>
       </TableCell>

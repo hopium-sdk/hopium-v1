@@ -133,10 +133,12 @@
 .dark {
   --text: var(--fg);
   --subtext: var(--mid);
-  --bg: #0e0e12;
-  /* --bg: #141415; */
-  --bg-900: var(--color-zinc-900);
-  --bg-800: var(--color-zinc-800);
+  --bg: #0f0f0f;
+  /* --bg: #0e0e12; */
+  --bg-900: #2e2e2e;
+  --bg-800: #3d3d3d;
+  /* --bg-900: var(--color-zinc-900); */
+  /* --bg-800: var(--color-zinc-800); */
   --bg-700: var(--color-zinc-700);
   --bg-600: var(--color-zinc-600);
   --fg: oklch(1 0 0);

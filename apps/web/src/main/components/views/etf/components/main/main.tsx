@@ -14,14 +14,14 @@ export const EtfMain = ({ etf }: { etf: C_Etf }) => {
   return (
     <>
       {!etfBottomCollapsed ? (
-        <ResizablePanelGroup direction="vertical" className="w-full h-full flex flex-col overflow-hidden gap-0.75" autoSaveId="coin-chart">
-          <ResizablePanel defaultSize={60} className="min-h-[300px]">
+        <ResizablePanelGroup direction="vertical" className="w-full h-full flex flex-col overflow-hidden" autoSaveId="coin-chart">
+          <ResizablePanel defaultSize={70} className="min-h-[300px]">
             <div className="w-full h-full flex flex-col overflow-hidden">
               <EtfTop etf={etf} />
             </div>
           </ResizablePanel>
           <ResizableHandle className="bg-transparent hover:bg-transparent" />
-          <ResizablePanel defaultSize={40} className="min-h-[150px]">
+          <ResizablePanel defaultSize={30} className="min-h-[150px]">
             <div className="w-full h-full flex flex-col overflow-hidden border-t">
               <EtfBottom
                 etf={etf}
@@ -34,7 +34,7 @@ export const EtfMain = ({ etf }: { etf: C_Etf }) => {
           </ResizablePanel>
         </ResizablePanelGroup>
       ) : (
-        <div className="flex flex-1 flex-col gap-2 overflow-hidden">
+        <div className="flex flex-1 flex-col gap-0 overflow-hidden">
           <div className="w-full flex flex-1 flex-col overflow-hidden">
             <EtfTop etf={etf} />
           </div>

@@ -4,8 +4,11 @@ import { Search } from "@/main/components/global/search/search";
 import { Icons } from "@/main/utils/icons";
 import { cn } from "@/main/shadcn/lib/utils";
 import { useBalanceEth } from "@/main/wrappers/components/balance-provider";
+import { useAccount } from "wagmi";
 
 export const Header = () => {
+  const { address } = useAccount();
+
   return (
     <div className="h-14 border-b flex items-center justify-between px-6">
       <div className="w-full flex items-center">
@@ -14,8 +17,12 @@ export const Header = () => {
       <div className="flex items-center justify-end gap-4">
         <Rewards />
         <p className="text-border">|</p>
-        <Balance />
-        <p className="text-border">|</p>
+        {address && (
+          <>
+            <Balance />
+            <p className="text-border">|</p>
+          </>
+        )}
         <ConnectWalletButton />
       </div>
     </div>
@@ -36,7 +43,7 @@ const Balance = () => {
 
 const Rewards = () => {
   return (
-    <div className={cn("w-fit flex items-center gap-1.5 cursor-pointer hover:bg-bg-900 rounded-md px-4 h-10 border border-main text-main")}>
+    <div className={cn("w-fit flex items-center gap-1.5 cursor-pointer hover:bg-main-900 rounded-md px-4 h-8 border border-main text-main")}>
       <div className="flex items-center justify-center">
         <Icons.Rewards className="size-4" />
       </div>
