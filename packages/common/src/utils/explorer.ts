@@ -10,3 +10,8 @@ export const getExplorerAddressUrl = ({ address, network }: { address: string; n
   const baseUrl = NETWORK.explorer[network];
   return baseUrl + "/address/" + address;
 };
+
+export const getExplorerTokenUrl = ({ address, network }: { address: string; network: T_Network }) => {
+  const baseUrl = NETWORK.explorer[network];
+  return baseUrl + "/token/" + address;
+};

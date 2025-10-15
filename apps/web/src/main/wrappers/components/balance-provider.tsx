@@ -1,5 +1,4 @@
 "use client";
-import { useAddress } from "@/main/hooks/use-address";
 import getViemClient from "@/main/lib/viem";
 import { normalizeError } from "@/main/utils/error";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -30,7 +29,11 @@ export const BalanceProvider = ({ children }: { children: React.ReactNode }) => 
         address: address as `0x${string}`,
       });
 
-      setBalanceEth(Number(formatEther(balanceInWei)));
+      const balanceInEth = Number(formatEther(balanceInWei));
+
+      if (balanceEth !== balanceInEth) {
+        setBalanceEth(balanceInEth);
+      }
     } catch (e) {
       console.error(normalizeError(e));
     }

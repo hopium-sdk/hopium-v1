@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as fns_defaultTokens_getByAddress from "../fns/defaultTokens/getByAddress.js";
 import type * as fns_etf_getEtf from "../fns/etf/getEtf.js";
+import type * as fns_etf_getEtfUnderlyingTokens from "../fns/etf/getEtfUnderlyingTokens.js";
 import type * as fns_holders_getAllByTokenAddress from "../fns/holders/getAllByTokenAddress.js";
 import type * as fns_holdingTokens_getFromAddresses from "../fns/holdingTokens/getFromAddresses.js";
 import type * as fns_holdings_getAllByAddress from "../fns/holdings/getAllByAddress.js";
@@ -47,6 +48,7 @@ import type * as schema_watchlist from "../schema/watchlist.js";
 declare const fullApi: ApiFromModules<{
   "fns/defaultTokens/getByAddress": typeof fns_defaultTokens_getByAddress;
   "fns/etf/getEtf": typeof fns_etf_getEtf;
+  "fns/etf/getEtfUnderlyingTokens": typeof fns_etf_getEtfUnderlyingTokens;
   "fns/holders/getAllByTokenAddress": typeof fns_holders_getAllByTokenAddress;
   "fns/holdingTokens/getFromAddresses": typeof fns_holdingTokens_getFromAddresses;
   "fns/holdings/getAllByAddress": typeof fns_holdings_getAllByAddress;

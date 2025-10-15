@@ -5,6 +5,7 @@ import { Icons } from "@/main/utils/icons";
 import { useState } from "react";
 import { NumberTab } from "@/main/components/ui/number-tab";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
+import { SidebarBox } from "../ui/box";
 
 export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
   const [watchlistLoading, setWatchlistLoading] = useState(false);
@@ -35,13 +36,10 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-2">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Icons.Overview className="text-subtext" />
-          <p className="text-xs font-medium text-subtext">Overview</p>
-        </div>
-        <div className="flex items-center gap-2">
+    <SidebarBox.Box>
+      <SidebarBox.Header>
+        <SidebarBox.Title title="Overview" icon={<Icons.Overview className="text-subtext" />} />
+        <SidebarBox.Right>
           <div
             onClick={handleWatchlist}
             className={cn(
@@ -61,8 +59,8 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
             )}
             <p className="text-xs font-medium">Watchlist</p>
           </div>
-        </div>
-      </div>
+        </SidebarBox.Right>
+      </SidebarBox.Header>
 
       <div className="w-full grid grid-cols-2 gap-2">
         <NumberTab
@@ -78,6 +76,6 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
           symbolType={"eth"}
         />
       </div>
-    </div>
+    </SidebarBox.Box>
   );
 };

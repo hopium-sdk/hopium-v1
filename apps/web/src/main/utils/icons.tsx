@@ -69,7 +69,6 @@ export { LuSquareChartGantt as Dex } from "react-icons/lu";
 
 //Trade Page
 export { PiDiamondBold as Holders } from "react-icons/pi";
-export { TbLayoutList as Activity } from "react-icons/tb";
 export { RiLayoutBottom2Line as Overview } from "react-icons/ri";
 export { BiChart as Stats } from "react-icons/bi";
 export { TbBrandTabler as Details } from "react-icons/tb";
@@ -77,5 +76,8 @@ export { PiStarBold as Watchlist } from "react-icons/pi";
 
 //Rewards
 export { PiLightningBold as Rewards } from "react-icons/pi";
+export { LuSquareChartGantt as Positions } from "react-icons/lu";
+export { TbCircleSquare as Vault } from "react-icons/tb";
+export { TbCircleSquare as Assets } from "react-icons/tb";
 
 export * as Icons from "./icons";

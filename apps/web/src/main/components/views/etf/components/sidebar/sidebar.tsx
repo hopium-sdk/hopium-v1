@@ -3,6 +3,7 @@ import { EtfOverview } from "./components/overview";
 import { EtfStats } from "./components/stats";
 import { EtfDetails } from "./components/details";
 import { EtfTrade } from "./components/trade/trade";
+import { EtfUnderlyingTokens } from "./components/underlying-tokens";
 
 export const EtfSidebar = ({ etf }: { etf: C_Etf }) => {
   return (
@@ -18,6 +19,10 @@ export const EtfSidebar = ({ etf }: { etf: C_Etf }) => {
 
         <div className="py-5 px-6 border-b">
           <EtfStats etf={etf} />
+        </div>
+
+        <div className="py-5 px-6 border-b">
+          <EtfUnderlyingTokens etf={etf} />
         </div>
 
         <div className="py-5 px-6">

@@ -5,6 +5,7 @@ import z from "zod";
 import { C_Etf } from "@repo/convex/schema";
 import { T_Tab_Option } from "./components/bottom/components/tabs-bar/tabs-options";
 import { EtfBottom } from "./components/bottom/bottom";
+import { EtfTop } from "./components/top/top";
 
 export const EtfMain = ({ etf }: { etf: C_Etf }) => {
   const [tabSelected, setTabSelected] = useState<T_Tab_Option>("Positions");
@@ -15,7 +16,9 @@ export const EtfMain = ({ etf }: { etf: C_Etf }) => {
       {!etfBottomCollapsed ? (
         <ResizablePanelGroup direction="vertical" className="w-full h-full flex flex-col overflow-hidden gap-0.75" autoSaveId="coin-chart">
           <ResizablePanel defaultSize={60} className="min-h-[300px]">
-            <div className="w-full h-full flex flex-col overflow-hidden">{/* <EtfTop etf={etf} /> */}</div>
+            <div className="w-full h-full flex flex-col overflow-hidden">
+              <EtfTop etf={etf} />
+            </div>
           </ResizablePanel>
           <ResizableHandle className="bg-transparent hover:bg-transparent" />
           <ResizablePanel defaultSize={40} className="min-h-[150px]">
@@ -32,7 +35,9 @@ export const EtfMain = ({ etf }: { etf: C_Etf }) => {
         </ResizablePanelGroup>
       ) : (
         <div className="flex flex-1 flex-col gap-2 overflow-hidden">
-          <div className="w-full flex flex-1 flex-col overflow-hidden">{/* <EtfTop etf={etf} /> */}</div>
+          <div className="w-full flex flex-1 flex-col overflow-hidden">
+            <EtfTop etf={etf} />
+          </div>
           <div className="w-full flex flex-col overflow-hidden border-t">
             <EtfBottom
               etf={etf}

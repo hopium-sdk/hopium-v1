@@ -25,7 +25,11 @@ export const useBalanceToken = ({ tokenAddress }: { tokenAddress?: `0x${string}`
         chainId,
       });
 
-      setBalanceToken(Number(formatUnits(result.value, result.decimals)));
+      const balanceInToken = Number(formatUnits(result.value, result.decimals));
+
+      if (balanceToken !== balanceInToken) {
+        setBalanceToken(balanceInToken);
+      }
     } catch (e) {
       console.error(normalizeError(e));
     }
