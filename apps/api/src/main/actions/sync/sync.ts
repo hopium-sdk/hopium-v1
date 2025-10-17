@@ -6,24 +6,29 @@ import { CONVEX } from "@/main/lib/convex";
 
 export const sync = async ({ body }: { body: any }) => {
   const payload = qnPayloadSchema.parse(body);
-
   const logs = payload.logs;
 
+  //Handle reorg
   await handleReorg({ logs });
 
+  //Filter logs
   const newEtfLogs = filterNewEtfLogs({ logs });
   const etfTokenTransferLogs = filterEtfTokenTransferLogs({ logs });
 
-  if (newEtfLogs.length > 0) {
-    await _syncNewEtfs({ logs: newEtfLogs });
-  }
+  //Sync new etfs and token transfers
+  const { newAssets, allEtfs } = await _syncNewEtfs({ logs: newEtfLogs });
+  const allEtfTokenTransfers = await _syncEtfTokenTransfers({ logs: etfTokenTransferLogs });
 
-  if (etfTokenTransferLogs.length > 0) {
-    await _syncEtfTokenTransfers({ logs: etfTokenTransferLogs });
-  }
+  //Update db
+  if (newAssets.length > 0 || allEtfs.length > 0 || allEtfTokenTransfers.length > 0) {
+    const maxBlockNumber = Math.max(...logs.map((log) => Number(log.blockNumber)));
 
-  if (newEtfLogs.length > 0 || etfTokenTransferLogs.length > 0) {
-    await updateSyncStatus({ logs });
+    await CONVEX.httpClient.mutation(CONVEX.api.mutations.sync.sync.default, {
+      etfs: allEtfs,
+      etfTokenTransfers: allEtfTokenTransfers,
+      assets: newAssets,
+      lastBlockNumber: maxBlockNumber,
+    });
   }
 };
 
@@ -40,13 +45,4 @@ const handleReorg = async ({ logs }: { logs: T_QnLog[] }) => {
       safeBlockNumber: minBlockNumber - 1,
     });
   }
-};
-
-const updateSyncStatus = async ({ logs }: { logs: T_QnLog[] }) => {
-  //get the highest block number from the logs
-  const maxBlockNumber = Math.max(...logs.map((log) => Number(log.blockNumber)));
-
-  await CONVEX.httpClient.mutation(CONVEX.api.mutations.syncStatus.update.default, {
-    lastBlockNumber: maxBlockNumber,
-  });
 };

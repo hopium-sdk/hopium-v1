@@ -1,5 +1,6 @@
-import { mutation } from "../../_generated/server";
+import { mutation, MutationCtx } from "../../_generated/server";
 import { v } from "convex/values";
+import { C_Etf } from "../../schema/etf";
 
 export default mutation({
   args: {
@@ -13,7 +14,7 @@ export default mutation({
       .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
       .collect();
 
-    const unsafeEtf = await ctx.db
+    const unsafeEtfs = await ctx.db
       .query("etfs")
       .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
       .collect();
@@ -29,7 +30,7 @@ export default mutation({
     }
 
     //delete all unsafe etfs
-    for (const etf of unsafeEtf) {
+    for (const etf of unsafeEtfs) {
       await ctx.db.delete(etf._id);
     }
 
@@ -37,5 +38,27 @@ export default mutation({
     for (const asset of unsafeAssets) {
       await ctx.db.delete(asset._id);
     }
+
+    await _updateWatchlists(ctx, unsafeEtfs);
   },
 });
+
+const _updateWatchlists = async (ctx: MutationCtx, unsafeEtfs: C_Etf[]) => {
+  const unsafeEtfIds = new Set<number>(unsafeEtfs.map((e: C_Etf) => e.details.etfId).filter((x: unknown): x is number => typeof x === "number"));
+
+  if (unsafeEtfIds.size > 0) {
+    // Pull all watchlists (use an index if you have one to scope further)
+    const watchlists = await ctx.db.query("watchlist").collect();
+
+    for (const wl of watchlists) {
+      // Remove any items that reference an unsafe ETF id
+      const filtered = wl.items.filter((it: { etfId: number }) => !unsafeEtfIds.has(it.etfId));
+
+      if (filtered.length !== wl.items.length) {
+        // Reindex to keep `index` contiguous and ordered
+        const reindexed = filtered.map((it, i) => ({ ...it, index: i }));
+        await ctx.db.patch(wl._id, { items: reindexed });
+      }
+    }
+  }
+};
