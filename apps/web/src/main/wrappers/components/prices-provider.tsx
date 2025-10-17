@@ -14,7 +14,7 @@ export const PricesProvider = ({ children }: { children: React.ReactNode }) => {
   const [ethPrice, setEthPrice] = useState<number>(0);
 
   const updateEthPrice = async () => {
-    const price = await HOPIUM.fns.priceOracle.fetchWethUsdPrice();
+    const price = await HOPIUM.fns.uniswapOracle.fetchWethUsdPrice();
     if (ethPrice !== price) {
       setEthPrice(price);
     }

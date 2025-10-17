@@ -12,7 +12,22 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
+    name: "DeltaError",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "ETHSendFailed",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "EmptyBuf",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "EmptyCand",
     type: "error",
   },
   {
@@ -27,12 +42,17 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
-    name: "NothingToWithdraw",
+    name: "NoEtfTokenAddress",
     type: "error",
   },
   {
     inputs: [],
-    name: "RedeemTooLarge",
+    name: "NoEtfVaultAddress",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NoMintedAmount",
     type: "error",
   },
   {
@@ -47,17 +67,12 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
-    name: "ZeroIndexPrice",
+    name: "ZeroAmount",
     type: "error",
   },
   {
     inputs: [],
-    name: "ZeroMsgValue",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "ZeroNav",
+    name: "ZeroEtfPrice",
     type: "error",
   },
   {
@@ -71,7 +86,7 @@ export const etfRouterAbi = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
       {
@@ -108,7 +123,7 @@ export const etfRouterAbi = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
       {
@@ -160,6 +175,19 @@ export const etfRouterAbi = [
         internalType: "contract IDirectory",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "PLATFORM_FEE",
+    outputs: [
+      {
+        internalType: "uint16",
+        name: "",
+        type: "uint16",
       },
     ],
     stateMutability: "view",
@@ -240,7 +268,7 @@ export const etfRouterAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
       {
@@ -268,16 +296,16 @@ export const etfRouterAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "platformFee",
-    outputs: [
+    inputs: [
       {
-        internalType: "uint16",
-        name: "",
-        type: "uint16",
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
       },
     ],
-    stateMutability: "view",
+    name: "rebalance",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -302,7 +330,7 @@ export const etfRouterAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
       {

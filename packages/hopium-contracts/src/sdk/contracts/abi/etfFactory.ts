@@ -6,13 +6,78 @@ export const etfFactoryAbi = [
         name: "_directory",
         type: "address",
       },
+      {
+        internalType: "address",
+        name: "_wethAddress",
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
   },
   {
     inputs: [],
+    name: "DuplicateToken",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "EmptyTicker",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "EtfExists",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidAddress",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidId",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NoAssets",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NoPoolFound",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotHundred",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OverWeight",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "TickerExists",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroToken",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "ZeroTradeValue",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroWeight",
     type: "error",
   },
   {
@@ -26,7 +91,20 @@ export const etfFactoryAbi = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
+    name: "EtfCreated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "etfId",
         type: "uint256",
       },
       {
@@ -51,6 +129,19 @@ export const etfFactoryAbi = [
     outputs: [
       {
         internalType: "contract IDirectory",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "WETH_ADDRESS",
+    outputs: [
+      {
+        internalType: "address",
         name: "",
         type: "address",
       },
@@ -98,18 +189,24 @@ export const etfFactoryAbi = [
                 type: "uint16",
               },
             ],
-            internalType: "struct Holding[]",
-            name: "holdings",
+            internalType: "struct Asset[]",
+            name: "assets",
             type: "tuple[]",
           },
         ],
-        internalType: "struct Index",
-        name: "index",
+        internalType: "struct Etf",
+        name: "etf",
         type: "tuple",
       },
     ],
-    name: "createIndexAndEtf",
-    outputs: [],
+    name: "createEtf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "function",
   },
@@ -136,16 +233,45 @@ export const etfFactoryAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
     ],
-    name: "getEtfNavUsd",
+    name: "getEtfById",
     outputs: [
       {
-        internalType: "uint256",
-        name: "navUsd",
-        type: "uint256",
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
+            ],
+            internalType: "struct Asset[]",
+            name: "assets",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Etf",
+        name: "",
+        type: "tuple",
       },
     ],
     stateMutability: "view",
@@ -155,16 +281,55 @@ export const etfFactoryAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
     ],
-    name: "getEtfNavWeth",
+    name: "getEtfByIdAndAddresses",
     outputs: [
       {
-        internalType: "uint256",
-        name: "nav",
-        type: "uint256",
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
+            ],
+            internalType: "struct Asset[]",
+            name: "assets",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Etf",
+        name: "etf",
+        type: "tuple",
+      },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "vaultAddress",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -174,7 +339,60 @@ export const etfFactoryAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfByIdAndVault",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
+            ],
+            internalType: "struct Asset[]",
+            name: "assets",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Etf",
+        name: "etf",
+        type: "tuple",
+      },
+      {
+        internalType: "address",
+        name: "vaultAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
         type: "uint256",
       },
     ],
@@ -182,7 +400,7 @@ export const etfFactoryAbi = [
     outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "tokenAddress",
         type: "address",
       },
     ],
@@ -193,15 +411,20 @@ export const etfFactoryAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
     ],
-    name: "getEtfTotalVolumeUsd",
+    name: "getEtfTotalVolume",
     outputs: [
       {
         internalType: "uint256",
-        name: "",
+        name: "volWeth",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "volUsd",
         type: "uint256",
       },
     ],
@@ -212,26 +435,7 @@ export const etfFactoryAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
-        type: "uint256",
-      },
-    ],
-    name: "getEtfTotalVolumeWeth",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
     ],
@@ -239,21 +443,8 @@ export const etfFactoryAbi = [
     outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "vaultAddress",
         type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "isActive",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -275,21 +466,8 @@ export const etfFactoryAbi = [
   {
     inputs: [
       {
-        internalType: "bool",
-        name: "_active",
-        type: "bool",
-      },
-    ],
-    name: "setActive",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
       {

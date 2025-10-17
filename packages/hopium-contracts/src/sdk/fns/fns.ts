@@ -1,14 +1,14 @@
 import type { T_NETWORK } from "../utils/constants";
 import { _directory } from "./directory/directory";
-import { _indexFactory } from "./index-factory/index-factory";
-import { _indexPriceOracle } from "./index-price-oracle/index-price-oracle";
+import { _etfFactory } from "./etf-factory/etf-factory";
 import { _erc20 } from "./erc20/erc20";
-import { _priceOracle } from "./price-oracle/price-oracle";
+import { _uniswapOracle } from "./uniswap-oracle/uniswap-oracle";
+import { _etfOracle } from "./etf-oracle/etf-oracle";
 
 export const _fns = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: string }) => ({
   directory: _directory({ network, rpcUrl }),
-  indexFactory: _indexFactory({ network, rpcUrl }),
-  indexPriceOracle: _indexPriceOracle({ network, rpcUrl }),
+  etfFactory: _etfFactory({ network, rpcUrl }),
+  etfOracle: _etfOracle({ network, rpcUrl }),
   erc20: _erc20({ network, rpcUrl }),
-  priceOracle: _priceOracle({ network, rpcUrl }),
+  uniswapOracle: _uniswapOracle({ network, rpcUrl }),
 });

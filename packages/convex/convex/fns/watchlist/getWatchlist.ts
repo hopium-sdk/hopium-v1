@@ -3,11 +3,11 @@ import { query } from "../../_generated/server";
 import { v } from "convex/values";
 
 export const getWatchlist = query({
-  args: { user_address: v.string() },
+  args: { userAddress: v.string() },
   handler: async (ctx, args) => {
     const watchlist = await ctx.db
       .query("watchlist")
-      .withIndex("by_user_address", (q) => q.eq("user_address", args.user_address))
+      .withIndex("by_userAddress", (q) => q.eq("userAddress", args.userAddress))
       .first();
 
     if (!watchlist) return null;
@@ -17,7 +17,7 @@ export const getWatchlist = query({
         watchlist?.items.map(async (item) => {
           const etf = await ctx.db
             .query("etfs")
-            .withIndex("by_indexId", (q) => q.eq("index.indexId", item.index_id))
+            .withIndex("by_etfId", (q) => q.eq("details.etfId", item.etfId))
             .first();
 
           if (!etf) return null;

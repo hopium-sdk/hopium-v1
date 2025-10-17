@@ -42,7 +42,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
           abi: HOPIUM.contracts.abis.etfRouter,
           address: etfRouterAddress,
           functionName: "mintEtfTokens",
-          args: [BigInt(etf.index.indexId), walletAddress as `0x${string}`],
+          args: [BigInt(etf.details.etfId), walletAddress as `0x${string}`],
           value: amount,
           chainId,
         });
@@ -52,7 +52,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
           abi: HOPIUM.contracts.abis.etfRouter,
           address: etfRouterAddress,
           functionName: "redeemEtfTokens",
-          args: [BigInt(etf.index.indexId), amount, walletAddress as `0x${string}`],
+          args: [BigInt(etf.details.etfId), amount, walletAddress as `0x${string}`],
           chainId,
         });
       }
@@ -64,8 +64,8 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
         TOAST.showSuccessToast({
           title: isBuy ? "Buy successful" : "Sell successful",
           description: isBuy
-            ? `You successfully bought ${etf.index.ticker} for ${inputAmount} ETH`
-            : `You successfully sold ${inputAmount} ${etf.index.ticker}`,
+            ? `You successfully bought ${etf.details.ticker} for ${inputAmount} ETH`
+            : `You successfully sold ${inputAmount} ${etf.details.ticker}`,
         });
       } else {
         _throwError();

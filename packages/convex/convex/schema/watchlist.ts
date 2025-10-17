@@ -4,16 +4,16 @@ import { C_Etf } from "./etf";
 import { defineTable } from "convex/server";
 
 const watchlistItemSchema = v.object({
-  index_id: v.string(),
+  etfId: v.number(),
   index: v.number(),
 });
 
 const WatchlistSchema = {
-  user_address: v.string(),
+  userAddress: v.string(),
   items: v.array(watchlistItemSchema),
 };
 
-export const watchlistTable = defineTable(WatchlistSchema).index("by_user_address", ["user_address"]);
+export const watchlistTable = defineTable(WatchlistSchema).index("by_userAddress", ["userAddress"]);
 
 export type C_Watchlist = Doc<"watchlist">;
 export type T_Watchlist = Omit<Doc<"watchlist">, "_id" | "_creationTime">;

@@ -45,7 +45,7 @@ export const getHoldersColumns = ({ etf, etfSupply }: { etf: C_Etf; etfSupply: n
         return (
           <div className="flex flex-col items-start gap-1">
             <NumberDiv number={value} symbolType={"percent"} displayZero={true} color={"text-subtext"} />
-            <Progress value={value} className="w-2/3 bg-background-900 h-1.25" progressClassName="bg-main" />
+            <Progress value={value} className="w-2/3 bg-bg-900 h-1.25" progressClassName="bg-main" />
           </div>
         );
       },

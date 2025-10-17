@@ -1,31 +1,31 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import type { C_Etf } from "@repo/convex/schema";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
-import { T_HoldingToken } from "@repo/convex/schema";
-import { T_UnderlyingTokenWithWeight } from "../../../../sidebar/components/underlying-tokens";
+import { C_Asset } from "@repo/convex/schema";
+import { T_AssetWithWeight } from "../../../../sidebar/components/assets";
 
-export const buildUsdIndexFormula = ({ etf, underlyingTokens }: { etf: C_Etf; underlyingTokens: T_HoldingToken[] }): string => {
-  const underlyingTokensWithWeight: T_UnderlyingTokenWithWeight[] =
-    underlyingTokens?.map((token) => ({
-      ...token,
-      weightBips: etf.index.holdings?.find((holding) => holding.tokenAddress === token.address)?.weightBips || 0,
+export const buildUsdIndexFormula = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }): string => {
+  const assetsWithWeight: T_AssetWithWeight[] =
+    assets?.map((asset) => ({
+      ...asset,
+      weightBips: etf.details.assets?.find((a) => a.tokenAddress === asset.address)?.targetWeightBips || 0,
     })) || [];
 
   if (
-    underlyingTokensWithWeight.length === 0 ||
-    underlyingTokensWithWeight.some((token) => token.weightBips === 0) ||
-    underlyingTokensWithWeight.some((token) => token.tv_ticker === "") ||
-    underlyingTokensWithWeight.some((token) => token.tv_ticker === null)
+    assetsWithWeight.length === 0 ||
+    assetsWithWeight.some((asset) => asset.weightBips === 0) ||
+    assetsWithWeight.some((asset) => asset.symbol === "") ||
+    assetsWithWeight.some((asset) => asset.symbol === null)
   ) {
     return "";
   }
 
-  const symbol = underlyingTokensWithWeight
+  const symbol = assetsWithWeight
     .map((h) => {
       const weight = h.weightBips / 10000; // convert bips → fraction
-      const symbol = h.tv_ticker;
+      const symbol = h.symbol;
       return `${weight} * ${symbol}`;
     })
     .join(" + ");
@@ -33,9 +33,9 @@ export const buildUsdIndexFormula = ({ etf, underlyingTokens }: { etf: C_Etf; un
   return symbol;
 };
 
-export const EtfChart = ({ etf, underlyingTokens }: { etf: C_Etf; underlyingTokens: T_HoldingToken[] }) => {
+export const EtfChart = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
   const { theme } = useSafeTheme();
-  const symbol = buildUsdIndexFormula({ etf, underlyingTokens });
+  const symbol = buildUsdIndexFormula({ etf, assets });
   console.log(symbol);
   if (symbol === "") {
     return null;

@@ -7,17 +7,17 @@ export default query({
     addresses: v.array(v.string()),
   },
   handler: async (ctx, args) => {
-    const allTokens = await Promise.all(
+    const allAssets = await Promise.all(
       args.addresses.map(async (address) => {
-        const token = await ctx.db
-          .query("holding_tokens")
+        const asset = await ctx.db
+          .query("assets")
           .withIndex("by_address", (q) => q.eq("address", normalizeAddress(address)))
           .first();
 
-        return token;
+        return asset;
       })
     );
 
-    return allTokens.filter((token) => token !== null);
+    return allAssets.filter((asset) => asset !== null);
   },
 });

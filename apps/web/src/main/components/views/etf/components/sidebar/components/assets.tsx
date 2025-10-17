@@ -4,30 +4,31 @@ import { CONSTANTS } from "@/main/lib/constants";
 import { Table, TableCell, TableRow, TableHead, TableHeader, TableBody } from "@/main/shadcn/components/ui/table";
 import { Icons } from "@/main/utils/icons";
 import { getExplorerTokenUrl } from "@repo/common/utils/explorer";
-import { C_Etf, T_HoldingToken } from "@repo/convex/schema";
+import { C_Asset, C_Etf } from "@repo/convex/schema";
 import { SidebarBox } from "../ui/box";
+import { Progress } from "@/main/shadcn/components/ui/progress";
 
-export type T_UnderlyingTokenWithWeight = T_HoldingToken & {
+export type T_AssetWithWeight = C_Asset & {
   weightBips: number;
 };
 
-export const EtfUnderlyingTokens = ({ etf, underlyingTokens }: { etf: C_Etf; underlyingTokens: T_HoldingToken[] }) => {
-  const underlyingTokensWithWeight: T_UnderlyingTokenWithWeight[] =
-    underlyingTokens?.map((token) => ({
-      ...token,
-      weightBips: etf.index.holdings?.find((holding) => holding.tokenAddress === token.address)?.weightBips || 0,
+export const EtfAssets = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
+  const assetsWithWeight: T_AssetWithWeight[] =
+    assets?.map((asset) => ({
+      ...asset,
+      weightBips: etf.details.assets?.find((a) => a.tokenAddress === asset.address)?.targetWeightBips || 0,
     })) || [];
 
   return (
     <SidebarBox title="Underlying Assets" icon={<Icons.Assets />}>
       <div className="w-full border rounded-md">
-        <TokenTable underlyingTokensWithWeight={underlyingTokensWithWeight} />
+        <TokenTable assetsWithWeight={assetsWithWeight} />
       </div>
     </SidebarBox>
   );
 };
 
-const TokenTable = ({ underlyingTokensWithWeight }: { underlyingTokensWithWeight: T_UnderlyingTokenWithWeight[] }) => {
+const TokenTable = ({ assetsWithWeight }: { assetsWithWeight: T_AssetWithWeight[] }) => {
   return (
     <Table>
       <TableHeader>
@@ -37,18 +38,18 @@ const TokenTable = ({ underlyingTokensWithWeight }: { underlyingTokensWithWeight
         </TableRow>
       </TableHeader>
       <TableBody>
-        {underlyingTokensWithWeight.map((token, index) => (
-          <UnderlyingToken key={index} index={index} token={token} />
+        {assetsWithWeight.map((asset, index) => (
+          <AssetItem key={index} index={index} asset={asset} />
         ))}
       </TableBody>
     </Table>
   );
 };
-const UnderlyingToken = ({ token, index }: { token: T_UnderlyingTokenWithWeight; index: number }) => {
-  const percent = (token.weightBips / 100).toFixed(2);
+const AssetItem = ({ asset, index }: { asset: T_AssetWithWeight; index: number }) => {
+  const percent = (asset.weightBips / 100).toFixed(2);
 
   const handleClick = () => {
-    const url = getExplorerTokenUrl({ address: token.address, network: CONSTANTS.networkSelected });
+    const url = getExplorerTokenUrl({ address: asset.address, network: CONSTANTS.networkSelected });
     window.open(url, "_blank");
   };
 
@@ -56,10 +57,10 @@ const UnderlyingToken = ({ token, index }: { token: T_UnderlyingTokenWithWeight;
     <TableRow key={index} onClick={handleClick} className="cursor-pointer px-4">
       <TableCell className="w-5/12 pl-3">
         <div className="flex items-center gap-2">
-          <CoinImage address={token.address} boxClassName="size-6" />
+          <CoinImage address={asset.address} boxClassName="size-6" />
           <div className="flex flex-col gap-0">
-            <p className="text-2xs font-medium">{token.symbol}</p>
-            <p className="text-2xs font-medium text-subtext truncate">{token.name}</p>
+            <p className="text-2xs font-medium">{asset.symbol}</p>
+            <p className="text-2xs font-medium text-subtext truncate">{asset.name}</p>
           </div>
         </div>
       </TableCell>
@@ -67,10 +68,7 @@ const UnderlyingToken = ({ token, index }: { token: T_UnderlyingTokenWithWeight;
         <div className="flex flex-col gap-1">
           <p className="text-2xs font-medium text-subtext">{percent}%</p>
 
-          <div className="w-full h-1 rounded-full flex items-center overflow-hidden">
-            <div className="h-full bg-main" style={{ width: `${percent}%` }} />
-            <div className="h-full bg-bg-900" style={{ width: `${100 - parseFloat(percent)}%` }} />
-          </div>
+          <Progress value={parseFloat(percent)} className="w-full bg-bg-900 h-1.25" progressClassName="bg-main" />
         </div>
       </TableCell>
     </TableRow>

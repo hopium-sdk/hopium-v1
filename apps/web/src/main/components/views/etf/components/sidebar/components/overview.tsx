@@ -8,35 +8,35 @@ import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
 import { HOPIUM } from "@/main/lib/hopium";
 
-type T_IndexPrice = {
-  indexPriceUsd: number;
-  indexPriceWeth: number;
+type T_EtfPrice = {
+  etfPriceUsd: number;
+  etfPriceWeth: number;
 };
 
 export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
-  const [indexPrice, setIndexPrice] = useState<T_IndexPrice>({ indexPriceUsd: 0, indexPriceWeth: 0 });
+  const [etfPrice, setEtfPrice] = useState<T_EtfPrice>({ etfPriceUsd: 0, etfPriceWeth: 0 });
 
-  const fetchIndexPrice = async () => {
-    const price = await HOPIUM.fns.indexPriceOracle.fetchIndexPrice({ indexId: BigInt(etf.index.indexId) });
-    setIndexPrice(price);
+  const fetchEtfPrice = async () => {
+    const price = await HOPIUM.fns.etfOracle.fetchEtfPrice({ etfId: BigInt(etf.details.etfId) });
+    setEtfPrice(price);
   };
 
   useEffect(() => {
-    fetchIndexPrice();
+    fetchEtfPrice();
 
     const interval = setInterval(() => {
-      fetchIndexPrice();
+      fetchEtfPrice();
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [etf.index.indexId]);
+  }, [etf.details.etfId]);
 
   const getValue = (option: number): number => {
     switch (option) {
       case 0:
-        return indexPrice.indexPriceUsd;
+        return etfPrice.etfPriceUsd;
       case 1:
-        return indexPrice.indexPriceWeth;
+        return etfPrice.etfPriceWeth;
       default:
         return 0;
     }
@@ -71,10 +71,10 @@ const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
 
     setWatchlistLoading(true);
 
-    if (isInWatchlist({ index_id: etf.index.indexId })) {
-      await removeFromWatchlist({ index_id: etf.index.indexId });
+    if (isInWatchlist({ etfId: etf.details.etfId })) {
+      await removeFromWatchlist({ etfId: etf.details.etfId });
     } else {
-      await addToWatchlist({ index_id: etf.index.indexId });
+      await addToWatchlist({ etfId: etf.details.etfId });
     }
     setWatchlistLoading(false);
   };
@@ -84,7 +84,7 @@ const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
       onClick={handleWatchlist}
       className={cn(
         "flex items-center gap-2 rounded-full px-3 py-1 border cursor-pointer",
-        !isInWatchlist({ index_id: etf.index.indexId }) ? "border-main text-main hover:bg-main-900" : "border-red text-red hover:bg-red-900",
+        !isInWatchlist({ etfId: etf.details.etfId }) ? "border-main text-main hover:bg-main-900" : "border-red text-red hover:bg-red-900",
         watchlistLoading && "opacity-70"
       )}
     >
@@ -93,7 +93,7 @@ const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
       ) : (
         <SubscriptDiv
           baseItem={<Icons.Watchlist className="size-3.5" />}
-          subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ index_id: etf.index.indexId }) ? "-" : "+"}</p>}
+          subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ etfId: etf.details.etfId }) ? "-" : "+"}</p>}
           subscriptClassName="-top-2"
         />
       )}

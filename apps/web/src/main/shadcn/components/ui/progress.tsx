@@ -16,5 +16,5 @@ function Progress({ className, progressClassName, value, ...props }: React.Compo
     </ProgressPrimitive.Root>
   );
 }
-s;
+
 export { Progress };

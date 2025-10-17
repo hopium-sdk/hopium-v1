@@ -17,10 +17,9 @@ export const _contracts = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: st
     abis: ABI,
     addresses,
     contracts: {
-      priceOracle: lazy(ABI.priceOracle, addresses.priceOracle),
+      uniswapOracle: lazy(ABI.uniswapOracle, addresses.uniswapOracle),
       etfFactory: lazy(ABI.etfFactory, addresses.etfFactory),
-      indexFactory: lazy(ABI.indexFactory, addresses.indexFactory),
-      indexPriceOracle: lazy(ABI.indexPriceOracle, addresses.indexPriceOracle),
+      etfOracle: lazy(ABI.etfOracle, addresses.etfOracle),
       etfTokenEvents: lazy(ABI.etfTokenEvents, addresses.etfTokenEvents),
       // no directory lookup needed; keep it tiny:
       erc20: ({ address }: { address: `0x${string}` }) => Promise.resolve(getContract({ address, abi: ABI.erc20, client })),

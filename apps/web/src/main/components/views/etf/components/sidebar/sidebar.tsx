@@ -1,11 +1,10 @@
-import { C_Etf, T_HoldingToken } from "@repo/convex/schema";
+import { C_Asset, C_Etf } from "@repo/convex/schema";
 import { EtfOverview } from "./components/overview";
-import { EtfStats } from "./components/stats";
 import { EtfDetails } from "./components/details";
 import { EtfTrade } from "./components/trade/trade";
-import { EtfUnderlyingTokens } from "./components/underlying-tokens";
+import { EtfAssets } from "./components/assets";
 
-export const EtfSidebar = ({ etf, underlyingTokens }: { etf: C_Etf; underlyingTokens: T_HoldingToken[] }) => {
+export const EtfSidebar = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] | undefined }) => {
   return (
     <div className="w-full flex flex-1 flex-col overflow-hidden">
       <div className="py-3 px-6 border-b">
@@ -21,9 +20,11 @@ export const EtfSidebar = ({ etf, underlyingTokens }: { etf: C_Etf; underlyingTo
           <EtfStats etf={etf} />
         </div> */}
 
-        <div className="py-5 px-6 border-b">
-          <EtfUnderlyingTokens etf={etf} underlyingTokens={underlyingTokens} />
-        </div>
+        {assets && (
+          <div className="py-5 px-6 border-b">
+            <EtfAssets etf={etf} assets={assets} />
+          </div>
+        )}
 
         <div className="py-5 px-6">
           <EtfDetails etf={etf} />

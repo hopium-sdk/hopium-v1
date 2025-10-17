@@ -23,7 +23,7 @@ export const EtfDetails = ({ etf }: { etf: C_Etf }) => {
             </div>
             <div className="w-8/12 flex flex-col items-end">
               {option === "Created" ? (
-                <Timestamp timestamp={etf.index.createdAt} className={css.value} color="text-subtext" withLink={false} />
+                <Timestamp timestamp={etf.details.createdAt} className={css.value} color="text-subtext" withLink={false} />
               ) : (
                 <div className="flex items-center justify-end gap-2">
                   {

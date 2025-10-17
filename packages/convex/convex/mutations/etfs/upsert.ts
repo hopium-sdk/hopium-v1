@@ -13,11 +13,11 @@ export default mutation({
 
     const normalizedEtfs = etfs.map((etf) => ({
       ...etf,
-      index: {
-        ...etf.index,
-        holdings: etf.index.holdings.map((holding) => ({
-          ...holding,
-          tokenAddress: normalizeAddress(holding.tokenAddress),
+      details: {
+        ...etf.details,
+        assets: etf.details.assets.map((asset) => ({
+          ...asset,
+          tokenAddress: normalizeAddress(asset.tokenAddress),
         })),
       },
       contracts: {
@@ -31,13 +31,13 @@ export default mutation({
         normalizedEtfs.map(async (etf) => {
           return await ctx.db
             .query("etfs")
-            .withIndex("by_indexId", (q) => q.eq("index.indexId", etf.index.indexId))
+            .withIndex("by_etfId", (q) => q.eq("details.etfId", etf.details.etfId))
             .first();
         })
       )
     ).filter((etf) => etf !== null) as C_Etf[];
 
-    const not_found = normalizedEtfs.filter((etf) => !found.find((c: C_Etf) => c.index.indexId === etf.index.indexId));
+    const not_found = normalizedEtfs.filter((etf) => !found.find((c: C_Etf) => c.details.etfId === etf.details.etfId));
 
     if (not_found.length > 0) {
       for (const etf of not_found) {
@@ -47,9 +47,9 @@ export default mutation({
 
     if (found.length > 0) {
       for (const etf of found) {
-        const new_etf = normalizedEtfs.find((c) => c.index.indexId === etf.index.indexId);
+        const new_etf = normalizedEtfs.find((c) => c.details.etfId === etf.details.etfId);
 
-        assert(new_etf, `Etf ${etf.index.indexId} not found`);
+        assert(new_etf, `Etf ${etf.details.etfId} not found`);
 
         await ctx.db.patch(etf._id, { ...new_etf });
       }

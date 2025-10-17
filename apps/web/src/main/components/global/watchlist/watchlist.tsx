@@ -5,7 +5,6 @@ import { cn } from "@/main/shadcn/lib/utils";
 import { useWatchlist } from "@/main/hooks/use-watchlist";
 import { NumberDiv } from "@/main/components/ui/number-div";
 import { useRouter } from "next/navigation";
-import { CoinImage } from "@/main/components/ui/coin-image";
 import { C_WatchlistWithEtf } from "@repo/convex/schema";
 import { ReorderList, ReorderListItem } from "@/main/components/ui/reorder-list";
 import { EtfImage } from "../../ui/etf-image";
@@ -74,14 +73,14 @@ const WatchlistContent = ({ watchlist, editMode }: { watchlist: C_WatchlistWithE
   }, [watchlist]);
 
   const handleReorder = async ({ id, index }: { id: string; index: number }) => {
-    await reorderWatchlist({ index_id: id, new_index: index });
+    await reorderWatchlist({ etfId: Number(id), newIndex: index });
   };
 
   return (
-    <ReorderList items={items} setItems={setItems} handleReorder={handleReorder} id_key="index_id">
+    <ReorderList items={items} setItems={setItems} handleReorder={handleReorder} id_key="etfId">
       <div className="flex flex-col">
         {items.map((item) => (
-          <WatchlistItem key={item.index_id} item={item} editMode={editMode} removeFromWatchlist={removeFromWatchlist} />
+          <WatchlistItem key={item.etfId} item={item} editMode={editMode} removeFromWatchlist={removeFromWatchlist} />
         ))}
       </div>
     </ReorderList>
@@ -91,7 +90,7 @@ const WatchlistContent = ({ watchlist, editMode }: { watchlist: C_WatchlistWithE
 type T_WatchlistItem = {
   item: C_WatchlistWithEtf["items"][number];
   editMode: boolean;
-  removeFromWatchlist: ({ index_id }: { index_id: string }) => Promise<void>;
+  removeFromWatchlist: ({ etfId }: { etfId: number }) => Promise<void>;
 };
 
 const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem) => {
@@ -104,7 +103,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
 
   const handleClick = () => {
     if (!editMode) {
-      router.push(`/etf/${item.etf.index.indexId}`);
+      router.push(`/etf/${item.etfId}`);
     }
   };
 
@@ -112,7 +111,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
     if (removeLoading) return;
 
     setRemoveLoading(true);
-    await removeFromWatchlist({ index_id: item.index_id });
+    await removeFromWatchlist({ etfId: item.etfId });
     setRemoveLoading(false);
   };
 
@@ -130,8 +129,8 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
               <EtfImage address={item.etf.contracts.etfTokenAddress} withBox boxClassName="size-8" iconClassName="size-5" />
             </div>
             <div className="flex flex-col">
-              <p className="text-xs font-medium uppercase">{item.etf.index.ticker}</p>
-              <p className="text-xs text-subtext">{item.etf.index.name}</p>
+              <p className="text-xs font-medium uppercase">{item.etf.details.ticker}</p>
+              <p className="text-xs text-subtext">{item.etf.details.name}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -140,7 +139,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
                 <div className="flex items-center gap-1">
                   <NumberDiv
                     symbolType={"usd"}
-                    number={item.etf.stats.assets_mcap_usd}
+                    number={item.etf.stats.assetsMcapUsd}
                     className={cn("gap-1")}
                     iconClassName="size-2.5"
                     pClassName={cn("text-2xs")}
@@ -171,7 +170,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
 
   if (editMode) {
     return (
-      <ReorderListItem item={item} id_key="index_id">
+      <ReorderListItem item={item} id_key="etfId">
         {renderItem()}
       </ReorderListItem>
     );

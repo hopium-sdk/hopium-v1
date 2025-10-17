@@ -40,7 +40,7 @@ export const etfTokenEventsAbi = [
       {
         indexed: false,
         internalType: "uint256",
-        name: "indexWethPrice",
+        name: "etfWethPrice",
         type: "uint256",
       },
     ],
@@ -77,7 +77,7 @@ export const etfTokenEventsAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "indexId",
+        name: "etfId",
         type: "uint256",
       },
       {

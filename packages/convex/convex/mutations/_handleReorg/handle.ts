@@ -18,8 +18,8 @@ export default mutation({
       .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
       .collect();
 
-    const unsafeHoldingTokens = await ctx.db
-      .query("holding_tokens")
+    const unsafeAssets = await ctx.db
+      .query("assets")
       .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
       .collect();
 
@@ -33,9 +33,9 @@ export default mutation({
       await ctx.db.delete(etf._id);
     }
 
-    //delete all unsafe holding tokens
-    for (const holdingToken of unsafeHoldingTokens) {
-      await ctx.db.delete(holdingToken._id);
+    //delete all unsafe assets
+    for (const asset of unsafeAssets) {
+      await ctx.db.delete(asset._id);
     }
   },
 });

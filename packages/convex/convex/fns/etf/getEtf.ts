@@ -3,13 +3,15 @@ import { v } from "convex/values";
 
 export default query({
   args: {
-    indexId: v.string(),
+    etfId: v.number(),
   },
   handler: async (ctx, args) => {
     const etf = await ctx.db
       .query("etfs")
-      .withIndex("by_indexId", (q) => q.eq("index.indexId", args.indexId))
+      .withIndex("by_etfId", (q) => q.eq("details.etfId", args.etfId))
       .first();
+
+    console.log("etf", args.etfId, etf);
 
     return etf;
   },
