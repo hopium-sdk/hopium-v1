@@ -1,24 +1,24 @@
-import { useAddress } from "@/main/hooks/use-address";
 import { useMutation, useQuery } from "convex/react";
 import { CONVEX } from "@/main/lib/convex";
 import { C_WatchlistWithEtf } from "@repo/convex/schema";
+import { useAccount } from "wagmi";
 
 export const useWatchlist = () => {
-  const { walletAddress } = useAddress();
-  const watchlist = useQuery(CONVEX.api.fns.watchlist.getWatchlist.getWatchlist, walletAddress ? { userAddress: walletAddress } : "skip");
+  const { address } = useAccount();
+  const watchlist = useQuery(CONVEX.api.fns.watchlist.getWatchlist.getWatchlist, address ? { userAddress: address } : "skip");
 
   const addToWatchlistMutation = useMutation(CONVEX.api.mutations.watchlist.addToWatchlist.addToWatchlist);
   const removeFromWatchlistMutation = useMutation(CONVEX.api.mutations.watchlist.removeFromWatchlist.removeFromWatchlist);
   const reorderWatchlistMutation = useMutation(CONVEX.api.mutations.watchlist.reorderWatchlist.reorderWatchlist);
 
   const addToWatchlist = async ({ etfId }: { etfId: number }) => {
-    if (!walletAddress || !addToWatchlistMutation) return;
-    await addToWatchlistMutation({ userAddress: walletAddress, etfId });
+    if (!address || !addToWatchlistMutation) return;
+    await addToWatchlistMutation({ userAddress: address, etfId });
   };
 
   const removeFromWatchlist = async ({ etfId }: { etfId: number }) => {
-    if (!walletAddress || !removeFromWatchlistMutation) return;
-    await removeFromWatchlistMutation({ userAddress: walletAddress, etfId });
+    if (!address || !removeFromWatchlistMutation) return;
+    await removeFromWatchlistMutation({ userAddress: address, etfId });
   };
 
   const isInWatchlist = ({ etfId }: { etfId: number }) => {
@@ -27,8 +27,8 @@ export const useWatchlist = () => {
   };
 
   const reorderWatchlist = async ({ etfId, newIndex }: { etfId: number; newIndex: number }) => {
-    if (!walletAddress || !reorderWatchlistMutation) return;
-    await reorderWatchlistMutation({ userAddress: walletAddress, etfId, newIndex });
+    if (!address || !reorderWatchlistMutation) return;
+    await reorderWatchlistMutation({ userAddress: address, etfId, newIndex });
   };
 
   return { addToWatchlist, removeFromWatchlist, isInWatchlist, watchlist, reorderWatchlist };

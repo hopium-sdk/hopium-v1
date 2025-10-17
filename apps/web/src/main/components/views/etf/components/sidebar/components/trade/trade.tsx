@@ -5,7 +5,6 @@ import { Icons } from "@/main/utils/icons";
 import { C_Etf } from "@repo/convex/schema";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useBalanceToken } from "@/main/hooks/use-balance-token";
 import { ActionButtons } from "./components/action-buttons";
 import { WalletBalanceButton } from "./components/wallet-balance-button";
 import { TradeForm } from "./components/form";
@@ -13,6 +12,7 @@ import { BalancesBox } from "./components/balances-box";
 import { useHopiumContracts } from "@/main/hooks/use-hopium-contracts";
 import { useBalanceEth } from "@/main/wrappers/components/balance-provider";
 import { SidebarBox } from "../../ui/box";
+import { useBalanceEtf } from "@/main/hooks/use-balance-etf";
 
 const MIN_AMOUNT = 0.00001;
 export const TradeFormSchema = z.object({
@@ -26,7 +26,7 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
   const [loading, setLoading] = useState<string | null>(null);
   const { buyEtf, sellEtf } = useHopiumContracts({ setLoading });
 
-  const { balanceToken, updateBalanceToken } = useBalanceToken({ tokenAddress: etf.contracts.etfTokenAddress as `0x${string}` });
+  const { balanceEtf } = useBalanceEtf({ etfTokenAddress: etf.contracts.etfTokenAddress as `0x${string}` });
   const { balanceEth, updateBalanceEth } = useBalanceEth();
 
   const [actionSelected, setActionSelected] = useState<(typeof actionOptions)[number]>("Buy");
@@ -55,12 +55,12 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
       await sellEtf({ etf, inputAmount: amount });
     }
 
-    await Promise.all([updateBalanceToken(), updateBalanceEth()]);
+    await updateBalanceEth();
   };
 
   const getBalanceAmount = (): number => {
     if (actionSelected == "Sell") {
-      return balanceToken ?? 0;
+      return balanceEtf ?? 0;
     }
 
     return balanceEth;
@@ -76,7 +76,7 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
             form={form}
             amount={formData.amount as number}
             balanceEth={balanceEth}
-            balanceToken={balanceToken}
+            balanceToken={balanceEtf}
             actionSelected={actionSelected}
             getBalanceAmount={getBalanceAmount}
           />
@@ -89,13 +89,13 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
           handleClick={handleClick}
           loading={loading}
           balanceEth={balanceEth}
-          balanceToken={balanceToken}
+          balanceToken={balanceEtf}
           actionSelected={actionSelected}
           getBalanceAmount={getBalanceAmount}
         />
 
         <div className="w-full pt-2">
-          <BalancesBox balanceEth={balanceEth} balanceToken={balanceToken} />
+          <BalancesBox balanceEth={balanceEth} balanceToken={balanceEtf} />
         </div>
       </div>
     </SidebarBox>

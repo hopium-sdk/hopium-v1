@@ -13,19 +13,14 @@ export const buildUsdIndexFormula = ({ etf, assets }: { etf: C_Etf; assets: C_As
       weightBips: etf.details.assets?.find((a) => a.tokenAddress === asset.address)?.targetWeightBips || 0,
     })) || [];
 
-  if (
-    assetsWithWeight.length === 0 ||
-    assetsWithWeight.some((asset) => asset.weightBips === 0) ||
-    assetsWithWeight.some((asset) => asset.symbol === "") ||
-    assetsWithWeight.some((asset) => asset.symbol === null)
-  ) {
+  if (assetsWithWeight.length === 0 || assetsWithWeight.some((asset) => asset.weightBips === 0) || assetsWithWeight.some((asset) => asset.tv_ticker === "")) {
     return "";
   }
 
   const symbol = assetsWithWeight
     .map((h) => {
       const weight = h.weightBips / 10000; // convert bips → fraction
-      const symbol = h.symbol;
+      const symbol = h.tv_ticker;
       return `${weight} * ${symbol}`;
     })
     .join(" + ");
@@ -35,10 +30,10 @@ export const buildUsdIndexFormula = ({ etf, assets }: { etf: C_Etf; assets: C_As
 
 export const EtfChart = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
   const { theme } = useSafeTheme();
-  const symbol = buildUsdIndexFormula({ etf, assets });
-  console.log(symbol);
+  let symbol: string = buildUsdIndexFormula({ etf, assets });
+
   if (symbol === "") {
-    return null;
+    symbol = "BINANCE:BTCUSD";
   }
 
   return (

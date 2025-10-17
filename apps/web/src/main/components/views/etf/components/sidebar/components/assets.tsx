@@ -14,7 +14,7 @@ export type T_AssetWithWeight = C_Asset & {
 
 export const EtfAssets = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
   const assetsWithWeight: T_AssetWithWeight[] =
-    assets?.map((asset) => ({
+    assets.map((asset) => ({
       ...asset,
       weightBips: etf.details.assets?.find((a) => a.tokenAddress === asset.address)?.targetWeightBips || 0,
     })) || [];
@@ -34,7 +34,7 @@ const TokenTable = ({ assetsWithWeight }: { assetsWithWeight: T_AssetWithWeight[
       <TableHeader>
         <TableRow className="hover:bg-transparent">
           <TableHead className="w-5/12 h-8 pl-3 text-subtext font-medium text-2xs">Token</TableHead>
-          <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-2xs text-right">Weight</TableHead>
+          <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-2xs text-right">Target Weight</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

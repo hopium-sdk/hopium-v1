@@ -25,7 +25,10 @@ export const buildTokenTransfers = async ({ logs }: { logs: T_QnLog[] }) => {
           fromAddress: decodedLog.args.fromAddress,
           toAddress: decodedLog.args.toAddress,
           transferAmount: Number(decodedLog.args.transferAmount) / 1e18,
-          indexEthPrice: Number(decodedLog.args.etfWethPrice) / 1e18,
+          etfPrice: {
+            eth: Number(decodedLog.args.etfWethPrice) / 1e18,
+            usd: Number(decodedLog.args.etfUsdPrice) / 1e18,
+          },
           blockNumber: Number(log.blockNumber),
           transactionIndex: Number(log.transactionIndex),
           logIndex: Number(log.logIndex),

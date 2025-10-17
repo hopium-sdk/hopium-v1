@@ -13,6 +13,8 @@ import { usePrices } from "@/main/wrappers/components/prices-provider";
 import { LoadingButton } from "@/main/components/ui/loading-button";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { numberToUsd } from "@repo/common/utils/currency";
+import { useAccount } from "wagmi";
+import { ConnectWalletButton } from "@/main/components/ui/connect-wallet-button";
 
 type T_TradeForm = {
   form: UseFormReturn<z.input<typeof TradeFormSchema>>;
@@ -28,6 +30,7 @@ type T_TradeForm = {
 
 export const TradeForm = ({ form, formData, amount, handleClick, loading, balanceEth, balanceToken, actionSelected, getBalanceAmount }: T_TradeForm) => {
   const { ethPrice } = usePrices();
+  const { address } = useAccount();
 
   useEffect(() => {
     form.clearErrors("amount");
@@ -76,7 +79,7 @@ export const TradeForm = ({ form, formData, amount, handleClick, loading, balanc
           <AmountSuggestionButtons form={form} amount={amount} balanceEth={balanceEth} balanceToken={balanceToken} actionSelected={actionSelected} />
 
           <div className="w-full flex flex-col gap-2 mt-2">
-            <TradeButton actionSelected={actionSelected} loading={loading} />
+            {address ? <TradeButton actionSelected={actionSelected} loading={loading} /> : <ConnectWalletButton />}
           </div>
         </div>
       </form>

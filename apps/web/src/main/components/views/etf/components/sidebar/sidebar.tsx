@@ -4,7 +4,7 @@ import { EtfDetails } from "./components/details";
 import { EtfTrade } from "./components/trade/trade";
 import { EtfAssets } from "./components/assets";
 
-export const EtfSidebar = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] | undefined }) => {
+export const EtfSidebar = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
   return (
     <div className="w-full flex flex-1 flex-col overflow-hidden">
       <div className="py-3 px-6 border-b">

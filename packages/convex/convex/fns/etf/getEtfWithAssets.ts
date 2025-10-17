@@ -3,6 +3,11 @@ import { v } from "convex/values";
 import { C_Asset } from "../../schema/assets";
 import { C_Etf } from "../../schema/etf";
 
+export type T_EtfWithAssets = {
+  etf: C_Etf;
+  assets: C_Asset[];
+};
+
 export default query({
   args: {
     etfId: v.number(),
@@ -13,7 +18,7 @@ export default query({
       .withIndex("by_etfId", (q) => q.eq("details.etfId", args.etfId))
       .first();
 
-    if (!etf) return [];
+    if (!etf) return null;
 
     const assets = etf?.details.assets;
 
@@ -32,6 +37,6 @@ export default query({
       )
     ).filter((assetData) => assetData !== null);
 
-    return allAssets;
+    return { etf, assets: allAssets };
   },
 });

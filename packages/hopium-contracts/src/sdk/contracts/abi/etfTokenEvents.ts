@@ -43,6 +43,12 @@ export const etfTokenEventsAbi = [
         name: "etfWethPrice",
         type: "uint256",
       },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "etfUsdPrice",
+        type: "uint256",
+      },
     ],
     name: "EtfTokenTransfer",
     type: "event",

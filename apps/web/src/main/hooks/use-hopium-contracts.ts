@@ -1,6 +1,5 @@
 "use client";
 import { HOPIUM } from "../lib/hopium";
-import { useAddress } from "./use-address";
 import { parseEther, parseUnits } from "viem";
 import { useAccount, useWriteContract, useSwitchChain } from "wagmi";
 import { getChainId, waitForTx } from "../lib/wagmi";
@@ -10,7 +9,7 @@ import { C_Etf } from "@repo/convex/schema";
 import { normalizeError } from "../utils/error";
 
 export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: string | null) => void }) => {
-  const { walletAddress } = useAddress();
+  const { address } = useAccount();
   const { chain } = useAccount();
   const { writeContractAsync } = useWriteContract();
   const { switchChainAsync } = useSwitchChain();
@@ -29,6 +28,10 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
 
   const _executeFn = async ({ etf, isBuy, inputAmount }: { etf: C_Etf; isBuy: boolean; inputAmount: number }) => {
     try {
+      if (!address) {
+        throw new Error("No address found");
+      }
+
       setLoading("Loading...");
       await _ensureCorrectChain();
       const etfRouterAddress = await HOPIUM.contracts.addresses.etfRouter();
@@ -42,7 +45,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
           abi: HOPIUM.contracts.abis.etfRouter,
           address: etfRouterAddress,
           functionName: "mintEtfTokens",
-          args: [BigInt(etf.details.etfId), walletAddress as `0x${string}`],
+          args: [BigInt(etf.details.etfId), address as `0x${string}`],
           value: amount,
           chainId,
         });
@@ -52,7 +55,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
           abi: HOPIUM.contracts.abis.etfRouter,
           address: etfRouterAddress,
           functionName: "redeemEtfTokens",
-          args: [BigInt(etf.details.etfId), amount, walletAddress as `0x${string}`],
+          args: [BigInt(etf.details.etfId), amount, address as `0x${string}`],
           chainId,
         });
       }
@@ -68,7 +71,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
             : `You successfully sold ${inputAmount} ${etf.details.ticker}`,
         });
       } else {
-        _throwError();
+        throw new Error("Transaction failed");
       }
     } catch (e) {
       console.error(normalizeError(e));

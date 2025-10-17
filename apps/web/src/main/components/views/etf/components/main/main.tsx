@@ -5,7 +5,7 @@ import { C_Etf, C_Asset } from "@repo/convex/schema";
 import { EtfBottom } from "./components/bottom/bottom";
 import { EtfTop } from "./components/top/top";
 
-export const EtfMain = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] | undefined }) => {
+export const EtfMain = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
   const [etfBottomCollapsed, setEtfBottomCollapsed] = useLocalStorage({ key: "etfBottomCollapsed", schema: z.boolean(), initialValue: false });
 
   return (
@@ -20,7 +20,7 @@ export const EtfMain = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] | undef
           <ResizableHandle className="bg-transparent hover:bg-transparent" />
           <ResizablePanel defaultSize={30} className="min-h-[150px]">
             <div className="w-full h-full flex flex-col overflow-hidden border-t">
-              <EtfBottom etf={etf} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />
+              <EtfBottom etf={etf} assets={assets} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />
             </div>
           </ResizablePanel>
         </ResizablePanelGroup>
@@ -30,7 +30,7 @@ export const EtfMain = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] | undef
             <EtfTop etf={etf} assets={assets} />
           </div>
           <div className="w-full flex flex-col overflow-hidden border-t">
-            <EtfBottom etf={etf} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />
+            <EtfBottom etf={etf} assets={assets} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />
           </div>
         </div>
       )}

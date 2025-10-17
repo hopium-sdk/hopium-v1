@@ -44,7 +44,8 @@ export const EtfSchema = {
 export const etfsTable = defineTable(EtfSchema)
   .index("by_etfId", ["details.etfId"])
   .index("by_syncBlockNumber", ["syncBlockNumber_"])
-  .index("by_tags", ["tags"]);
+  .index("by_tags", ["tags"])
+  .index("by_token_address", ["contracts.etfTokenAddress"]);
 
 export type C_Etf = Doc<"etfs">;
 export type T_Etf = Omit<Doc<"etfs">, "_id" | "_creationTime">;

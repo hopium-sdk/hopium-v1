@@ -63,6 +63,30 @@ export const etfOracleAbi = [
         type: "uint256",
       },
     ],
+    name: "getEtfPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "wethPrice18",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "usdPrice18",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
     name: "getEtfUsdPrice",
     outputs: [
       {

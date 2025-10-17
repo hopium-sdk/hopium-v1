@@ -12,6 +12,11 @@ export const EmptyContainerVariants = {
     description: "There's a buy button right there",
     icon: Icons.Holders,
   },
+  positions: {
+    label: "No positions yet",
+    description: "There's a buy button right there",
+    icon: Icons.Positions,
+  },
 };
 
 type T_EmptyContainer = {

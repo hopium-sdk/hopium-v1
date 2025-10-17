@@ -11,7 +11,7 @@ export const LoadingRows = ({ num_rows = 10, row_height = "h-10", containerClass
   return (
     <div className={cn("flex flex-col gap-1", containerClassName)}>
       {Array.from({ length: num_rows }).map((_, index) => (
-        <div key={index} className={cn("w-full animate-pulse bg-background-900", row_height, rowClassName)}></div>
+        <div key={index} className={cn("w-full animate-pulse bg-bg-900/20", row_height, rowClassName)}></div>
       ))}
     </div>
   );

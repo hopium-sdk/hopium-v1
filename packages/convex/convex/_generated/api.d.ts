@@ -16,9 +16,10 @@ import type {
 import type * as fns_assets_getFromAddresses from "../fns/assets/getFromAddresses.js";
 import type * as fns_defaultTokens_getByAddress from "../fns/defaultTokens/getByAddress.js";
 import type * as fns_etf_getEtf from "../fns/etf/getEtf.js";
-import type * as fns_etf_getEtfAssets from "../fns/etf/getEtfAssets.js";
-import type * as fns_holders_getAllByTokenAddress from "../fns/holders/getAllByTokenAddress.js";
-import type * as fns_holdings_getAllByAddress from "../fns/holdings/getAllByAddress.js";
+import type * as fns_etf_getEtfWithAssets from "../fns/etf/getEtfWithAssets.js";
+import type * as fns_etfToken_getAllPositionsByAddress from "../fns/etfToken/getAllPositionsByAddress.js";
+import type * as fns_etfToken_getTokenBalanceByAddress from "../fns/etfToken/getTokenBalanceByAddress.js";
+import type * as fns_etfToken_getTokenHolders from "../fns/etfToken/getTokenHolders.js";
 import type * as fns_syncStatus_get from "../fns/syncStatus/get.js";
 import type * as fns_watchlist_getWatchlist from "../fns/watchlist/getWatchlist.js";
 import type * as mutations__handleReorg_handle from "../mutations/_handleReorg/handle.js";
@@ -49,9 +50,10 @@ declare const fullApi: ApiFromModules<{
   "fns/assets/getFromAddresses": typeof fns_assets_getFromAddresses;
   "fns/defaultTokens/getByAddress": typeof fns_defaultTokens_getByAddress;
   "fns/etf/getEtf": typeof fns_etf_getEtf;
-  "fns/etf/getEtfAssets": typeof fns_etf_getEtfAssets;
-  "fns/holders/getAllByTokenAddress": typeof fns_holders_getAllByTokenAddress;
-  "fns/holdings/getAllByAddress": typeof fns_holdings_getAllByAddress;
+  "fns/etf/getEtfWithAssets": typeof fns_etf_getEtfWithAssets;
+  "fns/etfToken/getAllPositionsByAddress": typeof fns_etfToken_getAllPositionsByAddress;
+  "fns/etfToken/getTokenBalanceByAddress": typeof fns_etfToken_getTokenBalanceByAddress;
+  "fns/etfToken/getTokenHolders": typeof fns_etfToken_getTokenHolders;
   "fns/syncStatus/get": typeof fns_syncStatus_get;
   "fns/watchlist/getWatchlist": typeof fns_watchlist_getWatchlist;
   "mutations/_handleReorg/handle": typeof mutations__handleReorg_handle;

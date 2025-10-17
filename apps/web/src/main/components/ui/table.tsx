@@ -225,7 +225,7 @@ export function DataTable<TData, TValue>({
                 {...props}
                 id={index?.toString?.() ?? String(index)}
                 className={cn(
-                  "border-b hover:bg-bg-900",
+                  "border-b",
                   index == 0 && isBlinkable && "blink",
                   handleClick && "cursor-pointer",
                   row !== undefined && getRowClassName?.({ row, index })

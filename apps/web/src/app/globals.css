@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --text-2xs: 0.695rem;
+  --text-2xs: 0.75rem;
   --text-xs: 0.8rem;
   --color-main: var(--main);
   --color-main-900: var(--main-900);
