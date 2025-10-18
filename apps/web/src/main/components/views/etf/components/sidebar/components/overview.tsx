@@ -1,42 +1,19 @@
-import { C_Etf } from "@repo/convex/schema";
+import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useWatchlist } from "@/main/hooks/use-watchlist";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NumberTab } from "@/main/components/ui/number-tab";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
-import { HOPIUM } from "@/main/lib/hopium";
 
-type T_EtfPrice = {
-  etfPriceUsd: number;
-  etfPriceWeth: number;
-};
-
-export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
-  const [etfPrice, setEtfPrice] = useState<T_EtfPrice>({ etfPriceUsd: 0, etfPriceWeth: 0 });
-
-  const fetchEtfPrice = async () => {
-    const price = await HOPIUM.fns.etfOracle.fetchEtfPrice({ etfId: BigInt(etf.details.etfId) });
-    setEtfPrice(price);
-  };
-
-  useEffect(() => {
-    fetchEtfPrice();
-
-    const interval = setInterval(() => {
-      fetchEtfPrice();
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, [etf.details.etfId]);
-
+export const EtfOverview = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   const getValue = (option: number): number => {
     switch (option) {
       case 0:
-        return etfPrice.etfPriceUsd;
+        return etf.etf.stats.price.usd;
       case 1:
-        return etfPrice.etfPriceWeth;
+        return etf.etf.stats.price.eth;
       default:
         return 0;
     }
@@ -50,19 +27,21 @@ export const EtfOverview = ({ etf }: { etf: C_Etf }) => {
           value={getValue(0)}
           color={getValue(0) == 0 ? "text-subtext" : getValue(0) > 0 ? "text-green-500" : "text-red-500"}
           symbolType={"usd"}
+          blink
         />
         <NumberTab
           title={"Price ETH"}
           value={getValue(1)}
           color={getValue(1) == 0 ? "text-subtext" : getValue(1) > 0 ? "text-green-500" : "text-red-500"}
           symbolType={"eth"}
+          blink
         />
       </div>
     </SidebarBox>
   );
 };
 
-const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
+const WatchlistButton = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   const [watchlistLoading, setWatchlistLoading] = useState(false);
   const { addToWatchlist, isInWatchlist, removeFromWatchlist } = useWatchlist();
 
@@ -71,10 +50,10 @@ const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
 
     setWatchlistLoading(true);
 
-    if (isInWatchlist({ etfId: etf.details.etfId })) {
-      await removeFromWatchlist({ etfId: etf.details.etfId });
+    if (isInWatchlist({ etfId: etf.etf.details.etfId })) {
+      await removeFromWatchlist({ etfId: etf.etf.details.etfId });
     } else {
-      await addToWatchlist({ etfId: etf.details.etfId });
+      await addToWatchlist({ etfId: etf.etf.details.etfId });
     }
     setWatchlistLoading(false);
   };
@@ -84,7 +63,7 @@ const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
       onClick={handleWatchlist}
       className={cn(
         "flex items-center gap-2 rounded-full px-3 py-1 border cursor-pointer",
-        !isInWatchlist({ etfId: etf.details.etfId }) ? "border-main text-main hover:bg-main-900" : "border-red text-red hover:bg-red-900",
+        !isInWatchlist({ etfId: etf.etf.details.etfId }) ? "border-main text-main hover:bg-main-900" : "border-red text-red hover:bg-red-900",
         watchlistLoading && "opacity-70"
       )}
     >
@@ -93,7 +72,7 @@ const WatchlistButton = ({ etf }: { etf: C_Etf }) => {
       ) : (
         <SubscriptDiv
           baseItem={<Icons.Watchlist className="size-3.5" />}
-          subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ etfId: etf.details.etfId }) ? "-" : "+"}</p>}
+          subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ etfId: etf.etf.details.etfId }) ? "-" : "+"}</p>}
           subscriptClassName="-top-2"
         />
       )}

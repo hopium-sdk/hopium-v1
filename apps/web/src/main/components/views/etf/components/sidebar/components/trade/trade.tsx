@@ -2,7 +2,7 @@
 import { useState } from "react";
 import z from "zod";
 import { Icons } from "@/main/utils/icons";
-import { C_Etf } from "@repo/convex/schema";
+import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ActionButtons } from "./components/action-buttons";
@@ -22,11 +22,11 @@ export const TradeFormSchema = z.object({
 export const actionOptions = ["Buy", "Sell"];
 export type T_ActionSelected = (typeof actionOptions)[number];
 
-export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
+export const EtfTrade = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   const [loading, setLoading] = useState<string | null>(null);
   const { buyEtf, sellEtf } = useHopiumContracts({ setLoading });
 
-  const { balanceEtf } = useBalanceEtf({ etfTokenAddress: etf.contracts.etfTokenAddress as `0x${string}` });
+  const { balanceEtf } = useBalanceEtf({ etfTokenAddress: etf.etf.contracts.etfTokenAddress as `0x${string}` });
   const { balanceEth, updateBalanceEth } = useBalanceEth();
 
   const [actionSelected, setActionSelected] = useState<(typeof actionOptions)[number]>("Buy");
@@ -50,9 +50,9 @@ export const EtfTrade = ({ etf }: { etf: C_Etf }) => {
     }
 
     if (actionSelected == "Buy") {
-      await buyEtf({ etf, inputAmount: amount });
+      await buyEtf({ etf: etf.etf, inputAmount: amount });
     } else {
-      await sellEtf({ etf, inputAmount: amount });
+      await sellEtf({ etf: etf.etf, inputAmount: amount });
     }
 
     await updateBalanceEth();

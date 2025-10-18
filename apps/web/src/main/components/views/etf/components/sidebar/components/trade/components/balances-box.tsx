@@ -26,6 +26,7 @@ export const BalancesBox = ({ balanceEth, balanceToken }: { balanceEth: number; 
             color={getValue(index) == 0 ? "text-subtext" : getValue(index) > 0 ? "text-green-500" : "text-red-500"}
             pClassName="text-xs truncate"
             iconClassName="size-3.5"
+            blink
           />
         </div>
       ))}

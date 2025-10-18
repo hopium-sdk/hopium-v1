@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
-import type { C_Etf } from "@repo/convex/schema";
+import type { C_Etf, T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
 import { C_Asset } from "@repo/convex/schema";
 import { T_AssetWithWeight } from "../../../../sidebar/components/assets";
@@ -28,9 +28,9 @@ export const buildUsdIndexFormula = ({ etf, assets }: { etf: C_Etf; assets: C_As
   return symbol;
 };
 
-export const EtfChart = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
+export const EtfChart = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   const { theme } = useSafeTheme();
-  let symbol: string = buildUsdIndexFormula({ etf, assets });
+  let symbol: string = buildUsdIndexFormula({ etf: etf.etf, assets: etf.assets });
 
   if (symbol === "") {
     symbol = "BINANCE:BTCUSD";

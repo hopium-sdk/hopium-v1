@@ -16,11 +16,7 @@ export const EtfSchema = {
       v.object({
         tokenAddress: v.string(),
         targetWeightBips: v.number(),
-        currentWeightBips: v.number(),
-        decimals: v.number(),
         balance: v.number(),
-        price: ethUsd,
-        value: ethUsd,
       })
     ),
     createdAt: v.number(),
@@ -31,11 +27,6 @@ export const EtfSchema = {
   }),
   stats: v.object({
     price: ethUsd,
-    volume: ethUsd,
-    tvl: ethUsd,
-    assetsVolumeUsd: v.number(),
-    assetsLiquidityUsd: v.number(),
-    assetsMcapUsd: v.number(),
   }),
   tags: v.array(v.string()),
   syncBlockNumber_: v.number(),

@@ -3,9 +3,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { NumberDiv } from "@/main/components/ui/number-div";
 import { Avatar } from "@/main/components/ui/avatar";
 import { Progress } from "@/main/shadcn/components/ui/progress";
-import { C_Etf, T_EtfTokenHolder } from "@repo/convex/schema";
+import { T_EtfWithAssetsAndPools, T_EtfTokenHolder } from "@repo/convex/schema";
 
-export const getHoldersColumns = ({ etf, etfSupply }: { etf: C_Etf; etfSupply: number }) => {
+export const getHoldersColumns = ({ etf, etfSupply }: { etf: T_EtfWithAssetsAndPools; etfSupply: number }) => {
   const allColumns: ColumnDef<T_EtfTokenHolder>[] = [
     {
       header: "Rank",
@@ -25,14 +25,14 @@ export const getHoldersColumns = ({ etf, etfSupply }: { etf: C_Etf; etfSupply: n
       header: "Balance",
       cell: ({ row }) => {
         const value = row.original.balance;
-        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" />;
+        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" blink />;
       },
     },
     {
       header: "Value",
       cell: ({ row }) => {
-        const value = row.original.balance * etf.stats.price.usd;
-        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" />;
+        const value = row.original.balance * etf.etf.stats.price.usd;
+        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
       },
     },
     {

@@ -1,12 +1,13 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { NumberDiv } from "@/main/components/ui/number-div";
-import { C_Etf } from "@repo/convex/schema";
+import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { CoinImage } from "@/main/components/ui/coin-image";
 import { T_EtfVaultToken } from "../vault";
 import { Progress } from "@/main/shadcn/components/ui/progress";
+import { calcCurrentWeight } from "@/main/utils/calc-etf";
 
-export const getVaultColumns = ({ etf }: { etf: C_Etf }) => {
+export const getVaultColumns = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   const allColumns: ColumnDef<T_EtfVaultToken>[] = [
     {
       accessorKey: "tokenAddress",
@@ -30,27 +31,30 @@ export const getVaultColumns = ({ etf }: { etf: C_Etf }) => {
       header: "Balance",
       cell: ({ row }) => {
         const value = row.original.balance;
-        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" />;
+        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" blink />;
       },
     },
     {
       header: "Value",
       cell: ({ row }) => {
-        const value = row.original.balance * row.original.price.usd;
-        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" />;
+        let value = 0;
+        const pool = etf.pools.find((pool) => pool.details.token0 === row.original.tokenAddress || pool.details.token1 === row.original.tokenAddress);
+        if (pool) {
+          value = row.original.balance * pool.stats.price.usd;
+        }
+        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
       },
     },
     {
       header: "Current Weight",
       cell: ({ row }) => {
-        const tvl = etf.stats.tvl.usd;
-        let value = (row.original.balance / tvl) * 100;
+        let value = calcCurrentWeight({ etf, assetAddress: row.original.tokenAddress });
         if (isNaN(value) || value == Infinity) {
           value = 0;
         }
         return (
           <div className="flex flex-col items-start gap-1">
-            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-xs" />
+            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-xs" blink />
             <Progress value={value} className="w-2/3 bg-bg-900 h-1.25" progressClassName="bg-main" />
           </div>
         );

@@ -4,7 +4,19 @@ import { _addresses } from "./addresses";
 import { ABI } from "./abi";
 import type { T_NETWORK } from "../utils/constants";
 
-export const _contracts = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: string }) => {
+type ContractsReturnType = {
+  abis: typeof ABI;
+  addresses: ReturnType<typeof _addresses>;
+  contracts: {
+    uniswapOracle: () => Promise<GetContractReturnType<typeof ABI.uniswapOracle, Client>>;
+    etfFactory: () => Promise<GetContractReturnType<typeof ABI.etfFactory, Client>>;
+    etfOracle: () => Promise<GetContractReturnType<typeof ABI.etfOracle, Client>>;
+    etfTokenEvents: () => Promise<GetContractReturnType<typeof ABI.etfTokenEvents, Client>>;
+    erc20: ({ address }: { address: `0x${string}` }) => Promise<GetContractReturnType<typeof ABI.erc20, Client>>;
+  };
+};
+
+export const _contracts = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: string }): ContractsReturnType => {
   const client = getViemClient({ network, rpcUrl });
   const addresses = _addresses({ network, rpcUrl });
 

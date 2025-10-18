@@ -7,25 +7,25 @@ import { LoadingDiv } from "../../ui/loading-div";
 import { notFound } from "next/navigation";
 
 export const Etf = ({ etfId }: { etfId: number }) => {
-  const etfWithAssets = useQuery(CONVEX.api.fns.etf.getEtfWithAssets.default, {
+  const etfWithAssetsAndPools = useQuery(CONVEX.api.fns.etf.getEtfWithAssetsAndPools.default, {
     etfId,
   });
 
-  if (etfWithAssets === null) {
+  if (etfWithAssetsAndPools === null) {
     return notFound();
   }
 
-  if (etfWithAssets === undefined) {
+  if (etfWithAssetsAndPools === undefined) {
     return <LoadingDiv />;
   }
 
   return (
     <div className="flex flex-1 overflow-hidden">
       <div className="flex flex-1 flex-col overflow-hidden">
-        <EtfMain etf={etfWithAssets.etf} assets={etfWithAssets.assets} />
+        <EtfMain etf={etfWithAssetsAndPools} />
       </div>
       <div className="flex w-[350px] flex-col overflow-hidden border-l">
-        <EtfSidebar etf={etfWithAssets.etf} assets={etfWithAssets.assets} />
+        <EtfSidebar etf={etfWithAssetsAndPools} />
       </div>
     </div>
   );

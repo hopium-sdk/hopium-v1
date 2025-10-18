@@ -1,12 +1,12 @@
-import { C_Etf, C_Asset } from "@repo/convex/schema";
+import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { EtfMetadata } from "./components/metadata";
 import { EtfChart } from "./components/chart";
 
-export const EtfTop = ({ etf, assets }: { etf: C_Etf; assets: C_Asset[] }) => {
+export const EtfTop = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       <EtfMetadata etf={etf} />
-      <div className="flex-1 flex flex-col overflow-hidden">{assets && <EtfChart etf={etf} assets={assets} />}</div>
+      <div className="flex-1 flex flex-col overflow-hidden">{etf.assets && <EtfChart etf={etf} />}</div>
     </div>
   );
 };

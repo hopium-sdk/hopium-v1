@@ -13,12 +13,12 @@ export const uniswapOracleAbi = [
       },
       {
         internalType: "address",
-        name: "_wethUsdPairAddress",
+        name: "_wethUsdPoolAddress",
         type: "address",
       },
       {
         internalType: "bool",
-        name: "_isWethUsdPairV3",
+        name: "_isWethUsdPoolV3",
         type: "bool",
       },
     ],
@@ -32,12 +32,17 @@ export const uniswapOracleAbi = [
   },
   {
     inputs: [],
-    name: "PairDoesNotContainBase",
+    name: "NotBasePool",
     type: "error",
   },
   {
     inputs: [],
-    name: "PairDoesNotExist",
+    name: "PoolDoesNotExist",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroLiquidity",
     type: "error",
   },
   {
@@ -61,6 +66,19 @@ export const uniswapOracleAbi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "USD_ADDRESS",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -100,6 +118,54 @@ export const uniswapOracleAbi = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "poolAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "baseAddress",
+        type: "address",
+      },
+    ],
+    name: "_getTokenPriceV2",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "price18",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "poolAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "baseAddress",
+        type: "address",
+      },
+    ],
+    name: "_getTokenPriceV3",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "price18",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -240,7 +306,7 @@ export const uniswapOracleAbi = [
         type: "address",
       },
     ],
-    name: "getTokenWethPairAddress",
+    name: "getTokenWethPoolAddress",
     outputs: [
       {
         internalType: "bool",
@@ -249,7 +315,7 @@ export const uniswapOracleAbi = [
       },
       {
         internalType: "address",
-        name: "pairAddress",
+        name: "poolAddress",
         type: "address",
       },
     ],
@@ -265,6 +331,35 @@ export const uniswapOracleAbi = [
       },
     ],
     name: "getTokenWethPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "poolAddress",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "isV3Pool",
+        type: "bool",
+      },
+    ],
+    name: "getTokenWethPriceByPool",
     outputs: [
       {
         internalType: "uint256",

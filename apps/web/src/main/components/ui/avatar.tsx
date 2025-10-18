@@ -3,7 +3,7 @@ import { getExplorerAddressUrl } from "@repo/common/utils/explorer";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
 import Link from "next/link";
-import { CONSTANTS } from "@/main/lib/constants";
+import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 
 const options = [
   { bg950: "bg-blue-200 dark:bg-blue-950", bg500: "bg-blue-500", text: "text-blue-500" },
@@ -118,7 +118,7 @@ export const Avatar = ({
     );
   };
 
-  const explorerLink = getExplorerAddressUrl({ address, network: CONSTANTS.networkSelected });
+  const explorerLink = getExplorerAddressUrl({ address, network: COMMON_CONSTANTS.networkSelected });
   const platformLink = `/profile/${address}`;
 
   const href = linkType === "explorer" ? explorerLink : platformLink;

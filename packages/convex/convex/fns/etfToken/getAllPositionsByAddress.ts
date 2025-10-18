@@ -11,6 +11,7 @@ export type T_EtfTokenPosition = {
   tokenName: string; // from etfs.details.name
   balance: number;
   avgEntryPrice: { eth: number; usd: number };
+  currentPrice: { eth: number; usd: number };
   etfId: number;
 };
 
@@ -86,6 +87,7 @@ export default query({
         balance: p.balance,
         avgEntryPrice: p.avgEntryPrice,
         etfId: etf?.details.etfId ?? 0,
+        currentPrice: { eth: etf?.stats.price.eth ?? 0, usd: etf?.stats.price.usd ?? 0 },
       });
     }
 

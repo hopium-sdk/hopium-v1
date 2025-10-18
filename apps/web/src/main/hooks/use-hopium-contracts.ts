@@ -3,7 +3,7 @@ import { HOPIUM } from "../lib/hopium";
 import { parseEther, parseUnits } from "viem";
 import { useAccount, useWriteContract, useSwitchChain } from "wagmi";
 import { getChainId, waitForTx } from "../lib/wagmi";
-import { CONSTANTS } from "../lib/constants";
+import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { TOAST } from "../components/ui/toast/toast";
 import { C_Etf } from "@repo/convex/schema";
 import { normalizeError } from "../utils/error";
@@ -13,7 +13,7 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
   const { chain } = useAccount();
   const { writeContractAsync } = useWriteContract();
   const { switchChainAsync } = useSwitchChain();
-  const chainId = getChainId(CONSTANTS.networkSelected);
+  const chainId = getChainId(COMMON_CONSTANTS.networkSelected);
 
   const _ensureCorrectChain = async () => {
     if (chain?.id !== chainId) {

@@ -63,6 +63,179 @@ export const etfOracleAbi = [
         type: "uint256",
       },
     ],
+    name: "getEtfDetails",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "ticker",
+            type: "string",
+          },
+          {
+            components: [
+              {
+                internalType: "address",
+                name: "tokenAddress",
+                type: "address",
+              },
+              {
+                internalType: "uint16",
+                name: "weightBips",
+                type: "uint16",
+              },
+            ],
+            internalType: "struct Asset[]",
+            name: "assets",
+            type: "tuple[]",
+          },
+        ],
+        internalType: "struct Etf",
+        name: "etf",
+        type: "tuple",
+      },
+      {
+        components: [
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "eth18",
+                type: "uint256",
+              },
+              {
+                internalType: "uint256",
+                name: "usd18",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct EtfStats.EthUsd",
+            name: "price",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "eth18",
+                type: "uint256",
+              },
+              {
+                internalType: "uint256",
+                name: "usd18",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct EtfStats.EthUsd",
+            name: "volume",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "eth18",
+                type: "uint256",
+              },
+              {
+                internalType: "uint256",
+                name: "usd18",
+                type: "uint256",
+              },
+            ],
+            internalType: "struct EtfStats.EthUsd",
+            name: "tvl",
+            type: "tuple",
+          },
+          {
+            internalType: "uint256",
+            name: "assetsLiquidityUsd",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "assetsMcapUsd",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct EtfStats.Stats",
+        name: "st",
+        type: "tuple",
+      },
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "tokenAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint8",
+            name: "tokenDecimals",
+            type: "uint8",
+          },
+          {
+            internalType: "uint16",
+            name: "currentWeight",
+            type: "uint16",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenRawBalance",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenPriceWeth18",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenPriceUsd18",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenValueWeth18",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenValueUsd18",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct SnapshotWithUsd[]",
+        name: "sn",
+        type: "tuple[]",
+      },
+      {
+        internalType: "uint256",
+        name: "etfTvlWeth",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "etfTvlUsd",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
     name: "getEtfPrice",
     outputs: [
       {
@@ -87,45 +260,7 @@ export const etfOracleAbi = [
         type: "uint256",
       },
     ],
-    name: "getEtfUsdPrice",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "etfId",
-        type: "uint256",
-      },
-    ],
-    name: "getEtfWethPrice",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "etfId",
-        type: "uint256",
-      },
-    ],
-    name: "getStats",
+    name: "getEtfStats",
     outputs: [
       {
         components: [
@@ -194,6 +329,44 @@ export const etfOracleAbi = [
         internalType: "struct EtfStats.Stats",
         name: "s",
         type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfUsdPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
+    name: "getEtfWethPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

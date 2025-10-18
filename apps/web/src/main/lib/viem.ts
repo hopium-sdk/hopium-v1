@@ -1,7 +1,6 @@
 import { createPublicClient, http } from "viem";
 import { base, mainnet } from "viem/chains";
-import { CONSTANTS } from "./constants";
-import { NETWORK } from "@repo/common/utils/network";
+import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 
 const networks = {
   mainnet: mainnet,
@@ -10,8 +9,8 @@ const networks = {
 
 const getViemClient = () =>
   createPublicClient({
-    chain: networks[CONSTANTS.networkSelected],
-    transport: http(NETWORK.rpcUrl[CONSTANTS.networkSelected]),
+    chain: networks[COMMON_CONSTANTS.networkSelected],
+    transport: http(COMMON_CONSTANTS.rpcUrl[COMMON_CONSTANTS.networkSelected]),
   });
 
 export default getViemClient;

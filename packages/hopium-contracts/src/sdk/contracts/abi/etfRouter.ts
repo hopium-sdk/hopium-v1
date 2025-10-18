@@ -42,16 +42,6 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
-    name: "NoEtfTokenAddress",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "NoEtfVaultAddress",
-    type: "error",
-  },
-  {
-    inputs: [],
     name: "NoMintedAmount",
     type: "error",
   },
@@ -90,68 +80,25 @@ export const etfRouterAbi = [
         type: "uint256",
       },
       {
+        components: [
+          {
+            internalType: "address",
+            name: "tokenAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenAmount",
+            type: "uint256",
+          },
+        ],
         indexed: false,
-        internalType: "address",
-        name: "caller",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "receiver",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "etfTokenAmount",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "ethAmount",
-        type: "uint256",
+        internalType: "struct Storage.TokenBalance[]",
+        name: "updatedBalances",
+        type: "tuple[]",
       },
     ],
-    name: "EtfTokensMinted",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "etfId",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "caller",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "receiver",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "etfTokenAmount",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "ethAmount",
-        type: "uint256",
-      },
-    ],
-    name: "EtfTokensRedeemed",
+    name: "VaultBalanceChanged",
     type: "event",
   },
   {

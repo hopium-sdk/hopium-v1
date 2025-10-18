@@ -1,13 +1,13 @@
 import { RealtimeTable } from "@/main/components/ui/table";
 import { useQuery } from "convex/react";
-import { C_Etf, T_EtfTokenPosition } from "@repo/convex/schema";
+import { T_EtfTokenPosition } from "@repo/convex/schema";
 import { CONVEX } from "@/main/lib/convex";
 import { getPositionsColumns } from "./components/columns";
 import { useAccount } from "wagmi";
 import { useRouter } from "next/navigation";
 import { Row } from "@tanstack/react-table";
 
-export const EtfPositions = ({ etf }: { etf: C_Etf }) => {
+export const EtfPositions = () => {
   const router = useRouter();
   const { address } = useAccount();
   const result: T_EtfTokenPosition[] | undefined = useQuery(
@@ -19,7 +19,7 @@ export const EtfPositions = ({ etf }: { etf: C_Etf }) => {
       : "skip"
   );
 
-  const columns = getPositionsColumns({ etf });
+  const columns = getPositionsColumns();
 
   const handleClick = (row: Row<T_EtfTokenPosition>) => {
     router.push(`/etf/${row.original.etfId}`);

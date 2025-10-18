@@ -1,12 +1,12 @@
 import { CONVEX } from "@/main/lib/convex";
 import { T_Asset } from "@repo/convex/schema";
 import { HOPIUM } from "@/main/lib/hopium";
-import { CONSTANTS } from "@/main/lib/constants";
 import { uploadImageFromUrl } from "@/main/fns/blob/upload-image-from-url/upload-image-from-url";
+import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 
 export const fetchAssetDetails = async ({ tokenAddress, syncBlockNumber }: { tokenAddress: string; syncBlockNumber: number }) => {
   const find =
-    CONSTANTS.networkSelected == "mainnet"
+    COMMON_CONSTANTS.networkSelected == "mainnet"
       ? await CONVEX.httpClient.query(CONVEX.api.fns.defaultTokens.getByAddress.default, {
           address: tokenAddress,
         })

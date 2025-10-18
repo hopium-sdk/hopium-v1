@@ -24,6 +24,16 @@ export default mutation({
       .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
       .collect();
 
+    const unsafePools = await ctx.db
+      .query("pools")
+      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
+      .collect();
+
+    const unsafeOhlcs = await ctx.db
+      .query("ohlc")
+      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
+      .collect();
+
     //delete all unsafe etf token transfers
     for (const etfTokenTransfer of unsafeEtfTokenTransfers) {
       await ctx.db.delete(etfTokenTransfer._id);
@@ -37,6 +47,16 @@ export default mutation({
     //delete all unsafe assets
     for (const asset of unsafeAssets) {
       await ctx.db.delete(asset._id);
+    }
+
+    //delete all unsafe pools
+    for (const pool of unsafePools) {
+      await ctx.db.delete(pool._id);
+    }
+
+    //delete all unsafe ohlcs
+    for (const ohlc of unsafeOhlcs) {
+      await ctx.db.delete(ohlc._id);
     }
 
     await _updateWatchlists(ctx, unsafeEtfs);

@@ -6,4 +6,6 @@ export { type C_SyncStatus, type T_SyncStatus } from "../convex/schema/syncStatu
 export { type C_Watchlist, type T_Watchlist, type C_WatchlistWithEtf } from "../convex/schema/watchlist";
 export { type T_EtfTokenHolder } from "../convex/fns/etfToken/getTokenHolders";
 export { type T_EtfTokenPosition } from "../convex/fns/etfToken/getAllPositionsByAddress";
-export { type T_EtfWithAssets } from "../convex/fns/etf/getEtfWithAssets";
+export { type T_EtfWithAssetsAndPools } from "../convex/fns/etf/getEtfWithAssetsAndPools";
+export { type C_Pool, type T_Pool } from "../convex/schema/pools";
+export { type T_OhlcUpdates } from "../convex/mutations/sync/fns/updateOhlcs";

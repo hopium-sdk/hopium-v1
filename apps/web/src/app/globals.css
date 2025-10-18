@@ -226,12 +226,13 @@ button {
   cursor: pointer;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge (legacy) */
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 input::-webkit-outer-spin-button,
@@ -287,5 +288,24 @@ svg {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+.blink {
+  /* base: no animation */
+  animation: none;
+}
+
+.blink[data-active="1"] {
+  animation: blinkFlash 0.4s ease-in-out;
+}
+
+@keyframes blinkFlash {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
   }
 }

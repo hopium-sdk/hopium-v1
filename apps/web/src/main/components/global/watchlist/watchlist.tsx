@@ -50,7 +50,7 @@ export const Watchlist = ({ collapsed, setCollapsed }: T_Watchlist) => {
         </div>
       </div>
       {!collapsed.isCollapsed && (
-        <div className="w-full flex flex-col flex-1 overflow-y-auto no-scrollbar">
+        <div className="w-full flex flex-col flex-1 overflow-y-auto">
           {!watchlist || watchlist.items.length === 0 ? (
             <div className="w-full px-4 py-4">
               <p className="text-subtext text-xs">Add coins to your watchlist to keep track of them.</p>
@@ -139,7 +139,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
                 <div className="flex items-center gap-1">
                   <NumberDiv
                     symbolType={"usd"}
-                    number={item.etf.stats.assetsMcapUsd}
+                    number={item.etf.stats.price.usd}
                     className={cn("gap-1")}
                     iconClassName="size-2.5"
                     pClassName={cn("text-2xs")}

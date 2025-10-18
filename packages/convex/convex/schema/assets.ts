@@ -8,6 +8,7 @@ export const AssetSchema = {
   symbol: v.string(),
   decimals: v.number(),
   tv_ticker: v.string(),
+  poolAddress: v.optional(v.string()),
   syncBlockNumber_: v.number(),
 };
 

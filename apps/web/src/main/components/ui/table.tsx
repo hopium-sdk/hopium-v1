@@ -238,7 +238,6 @@ export function DataTable<TData, TValue>({
           },
         }}
         fixedHeaderContent={() => <TableHeaderItems table={table} />}
-        className="no-scrollbar"
         scrollerRef={(el) => {
           if (!isPausable) return;
           // swap listener if element instance changes
