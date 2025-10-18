@@ -9,3 +9,4 @@ export { type T_EtfTokenPosition } from "../convex/fns/etfToken/getAllPositionsB
 export { type T_EtfWithAssetsAndPools } from "../convex/fns/etf/getEtfWithAssetsAndPools";
 export { type C_Pool, type T_Pool } from "../convex/schema/pools";
 export { type T_OhlcUpdates } from "../convex/mutations/sync/fns/updateOhlcs";
+export { OHLC_TIMEFRAMES, type T_OhlcTimeframe } from "../convex/schema/ohlc";

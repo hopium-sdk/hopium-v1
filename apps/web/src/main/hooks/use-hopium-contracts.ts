@@ -7,6 +7,7 @@ import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { TOAST } from "../components/ui/toast/toast";
 import { C_Etf } from "@repo/convex/schema";
 import { normalizeError } from "../utils/error";
+import { NUMBERS_WEB } from "../utils/numbers";
 
 export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: string | null) => void }) => {
   const { address } = useAccount();
@@ -67,8 +68,8 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
         TOAST.showSuccessToast({
           title: isBuy ? "Buy successful" : "Sell successful",
           description: isBuy
-            ? `You successfully bought ${etf.details.ticker} for ${inputAmount} ETH`
-            : `You successfully sold ${inputAmount} ${etf.details.ticker}`,
+            ? `You successfully bought ${etf.details.ticker} for ${NUMBERS_WEB.formatNumber(inputAmount)} ETH`
+            : `You successfully sold ${NUMBERS_WEB.formatNumber(inputAmount)} ${etf.details.ticker}`,
         });
       } else {
         throw new Error("Transaction failed");

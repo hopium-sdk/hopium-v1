@@ -18,6 +18,8 @@ import type * as fns_etf_getEtfWithAssetsAndPools from "../fns/etf/getEtfWithAss
 import type * as fns_etfToken_getAllPositionsByAddress from "../fns/etfToken/getAllPositionsByAddress.js";
 import type * as fns_etfToken_getTokenBalanceByAddress from "../fns/etfToken/getTokenBalanceByAddress.js";
 import type * as fns_etfToken_getTokenHolders from "../fns/etfToken/getTokenHolders.js";
+import type * as fns_ohlc_getHistorical from "../fns/ohlc/getHistorical.js";
+import type * as fns_ohlc_getLatest from "../fns/ohlc/getLatest.js";
 import type * as fns_sync_fns_getAssetsByAddresses from "../fns/sync/fns/getAssetsByAddresses.js";
 import type * as fns_sync_fns_getEtfsAndSupplyByPoolAddreses from "../fns/sync/fns/getEtfsAndSupplyByPoolAddreses.js";
 import type * as fns_sync_fns_getEtfsByIds from "../fns/sync/fns/getEtfsByIds.js";
@@ -61,6 +63,8 @@ declare const fullApi: ApiFromModules<{
   "fns/etfToken/getAllPositionsByAddress": typeof fns_etfToken_getAllPositionsByAddress;
   "fns/etfToken/getTokenBalanceByAddress": typeof fns_etfToken_getTokenBalanceByAddress;
   "fns/etfToken/getTokenHolders": typeof fns_etfToken_getTokenHolders;
+  "fns/ohlc/getHistorical": typeof fns_ohlc_getHistorical;
+  "fns/ohlc/getLatest": typeof fns_ohlc_getLatest;
   "fns/sync/fns/getAssetsByAddresses": typeof fns_sync_fns_getAssetsByAddresses;
   "fns/sync/fns/getEtfsAndSupplyByPoolAddreses": typeof fns_sync_fns_getEtfsAndSupplyByPoolAddreses;
   "fns/sync/fns/getEtfsByIds": typeof fns_sync_fns_getEtfsByIds;

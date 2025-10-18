@@ -77,8 +77,8 @@ const _formatSmallNumbers = ({ value, sign, opts }: { value: number; sign: strin
   // 0 < value < 1: more than threshold decimals e.g 0.000012
   const asFixed = value.toFixed(MAX_EXPANDED_DECIMALS); // e.g. "0.000123450000000"
   const match = asFixed.match(/^0\.(0*)(\d.*)/);
-  const leadingZeroes = match ? match[1].length : 0;
-  const trailingDigits = match ? match[2] : "";
+  const leadingZeroes = match && match[1] ? match[1].length : 0;
+  const trailingDigits = match && match[2] ? match[2] : "";
 
   // If there are more zeroes than threshold, use subscript notation
   if (leadingZeroes > smallNumberSubscriptZeroes) {

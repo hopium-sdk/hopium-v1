@@ -7,6 +7,7 @@ import { getEtfTokenTransferId } from "@repo/convex/schema";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { formatUnits } from "viem";
 
+// NOTE: We don't need to preload etf supply for price update, because we already preload etf supply from swaps (token transfer and swaps always take place together)
 export const _syncEtfTokenTransfer = ({ log, cache }: { log: T_QnLog; cache: CacheManager }) => {
   const decodedLog = decodeEtfTokenTransferLog({ log });
 

@@ -3,8 +3,10 @@ import { CacheManager } from "../../helpers/cache-manager";
 import { T_QnLog } from "../../schema";
 import { decodeVaultBalanceLog } from "../../utils/logs/filter-logs/vault-balance";
 import { formatUnits } from "viem";
+import { _calcEtfPrice } from "../../utils/etf/calc-etf-price";
 
-export const _syncVaultBalance = ({ log, cache }: { log: T_QnLog; cache: CacheManager }) => {
+// NOTE: We don't need to preload pools for price update, because we already preload pool from swaps (vb and swap always take place together)
+export const _syncVaultBalance = ({ log, cache, etfAssetPoolMap }: { log: T_QnLog; cache: CacheManager; etfAssetPoolMap: Map<string, string> }) => {
   const decodedLog = decodeVaultBalanceLog({ log });
 
   const etf = cache.getEntity({ entity: "etf", id: decodedLog.args.etfId.toString() });
@@ -27,6 +29,16 @@ export const _syncVaultBalance = ({ log, cache }: { log: T_QnLog; cache: CacheMa
 
     const updatedBalance = Number(formatUnits(tokenAmount, asset.decimals));
     etfAsset.balance = updatedBalance;
+  }
+
+  //Update ETF price
+  const etfSupply = cache.getEtfSupply({ etfTokenAddress: etf.contracts.etfTokenAddress });
+  const etfPrice = _calcEtfPrice({ etf, cache, etfAssetPoolMap, etfSupply: etfSupply ?? 0 });
+  const ethUsdPrice = cache.getEthPrice();
+
+  if (etfPrice && etfPrice > 0) {
+    etf.stats.price.eth = etfPrice;
+    etf.stats.price.usd = etfPrice * ethUsdPrice;
   }
 
   cache.addEntity({ entity: "etf", id: etf.details.etfId.toString(), value: etf });

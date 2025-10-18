@@ -19,7 +19,7 @@ export type T_ToastContainer = {
 
 export const ToastContainer = ({ id, title, description, url, urlType, icon, buttonVisible = false, buttonIcon, buttonText, color }: T_ToastContainer) => {
   return (
-    <div className={cn("relative w-full md:min-w-[364px] flex flex-col rounded-lg bg-bg-900 border p-4", buttonVisible ? "gap-3" : "")}>
+    <div className={cn("relative w-full md:min-w-[364px] flex flex-col rounded-lg bg-bg border p-4", buttonVisible ? "gap-3" : "")}>
       <div className="w-full flex flex-1 items-center">
         <div className="w-full flex flex-col gap-1">
           <div className="w-full flex items-center justify-between">

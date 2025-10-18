@@ -66,16 +66,16 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
   const { poolEtfMap, etfAssetPoolMap } = _buildForSwaps({ logs: swapLogs, cache });
 
   for (const log of logs) {
+    if (isSwapV2Log({ log }) || isSwapV3Log({ log })) {
+      _syncSwap({ log, cache, poolEtfMap, etfAssetPoolMap });
+    }
+
     if (isEtfTokenTransferLog({ log })) {
       _syncEtfTokenTransfer({ log, cache });
     }
 
     if (isVaultBalanceLog({ log })) {
-      _syncVaultBalance({ log, cache });
-    }
-
-    if (isSwapV2Log({ log }) || isSwapV3Log({ log })) {
-      _syncSwap({ log, cache, poolEtfMap, etfAssetPoolMap });
+      _syncVaultBalance({ log, cache, etfAssetPoolMap });
     }
   }
 
