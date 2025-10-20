@@ -3,8 +3,10 @@ import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { NumberDiv } from "@/main/components/ui/number-div";
 import { Timestamp } from "@/main/components/ui/timestamp";
 import { calculateTvl } from "@/main/utils/calc-etf";
+import { usePrices } from "@/main/wrappers/components/prices-provider";
 
 export const EtfMetadata = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+  const { ethUsdPrice } = usePrices();
   const statsOptions = ["Created", "Volume", "TVL", "Liquidity", "Mkt Cap"];
 
   const getStatsValue = (option: string) => {
@@ -12,13 +14,13 @@ export const EtfMetadata = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
       case "Created":
         return etf.etf.details.createdAt;
       case "Volume":
-        return etf.etf.stats.price.usd;
+        return etf.etf.stats.volume.usd;
       case "TVL":
-        return calculateTvl({ etf }).usd;
+        return calculateTvl({ etf, ethUsdPrice }).usd;
       case "Liquidity":
-        return etf.etf.stats.price.usd;
+        return etf.etf.stats.assetsLiquidityUsd;
       case "Mkt Cap":
-        return etf.etf.stats.price.usd;
+        return etf.etf.stats.assetsMcapUsd;
       default:
         return 0;
     }

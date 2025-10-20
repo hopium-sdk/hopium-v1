@@ -1,6 +1,6 @@
 import { MutationCtx } from "../../../_generated/server";
 import { OHLC_TIMEFRAMES, T_Ohlc } from "../../../schema/ohlc";
-import { getBucketTimestamp, getBucketSizeMs, normalizeTs, parseTimeframe, addMonthsUTC } from "../../../../src/utils/ohlc";
+import { getBucketTimestamp, normalizeTs } from "../../../../src/utils/ohlc";
 
 export type T_OhlcUpdates = {
   etfId: number;
@@ -12,7 +12,7 @@ export type T_OhlcUpdates = {
 
 export const _updateOhlcs = async (ctx: MutationCtx, ohlcUpdates: T_OhlcUpdates[]) => {
   // ---------- READS ----------
-  // For each (update × timeframe) read current & previous bucket.
+  // For each (update × timeframe) read current bucket & the previous existing ohlc (strictly earlier).
   const readPromises = ohlcUpdates.flatMap((u) => {
     const normalizedTs = normalizeTs(u.timestamp);
     const { etfId, price, syncBlockNumber_ } = u;
@@ -21,18 +21,17 @@ export const _updateOhlcs = async (ctx: MutationCtx, ohlcUpdates: T_OhlcUpdates[
     return OHLC_TIMEFRAMES.map(async (timeframe) => {
       const bucketTimestamp = getBucketTimestamp(normalizedTs, timeframe);
 
-      // prev bucket timestamp (month uses calendar months, others use fixed ms)
-      const { n, unit } = parseTimeframe(timeframe);
-      const prevBucketTimestamp = unit === "M" ? addMonthsUTC(bucketTimestamp, -n) : bucketTimestamp - getBucketSizeMs(timeframe, bucketTimestamp); // pass bucket start as reference
-
       const [existing, prev] = await Promise.all([
+        // Exact current bucket
         ctx.db
           .query("ohlc")
           .withIndex("by_etfId_timeframe_bucketTimestamp", (q) => q.eq("etfId", etfId).eq("timeframe", timeframe).eq("bucketTimestamp", bucketTimestamp))
           .first(),
+        // Previous ohlc (any earlier bucket) — pick the closest earlier by sorting desc
         ctx.db
           .query("ohlc")
-          .withIndex("by_etfId_timeframe_bucketTimestamp", (q) => q.eq("etfId", etfId).eq("timeframe", timeframe).eq("bucketTimestamp", prevBucketTimestamp))
+          .withIndex("by_etfId_timeframe_bucketTimestamp", (q) => q.eq("etfId", etfId).eq("timeframe", timeframe).lt("bucketTimestamp", bucketTimestamp))
+          .order("desc")
           .first(),
       ]);
 

@@ -11,7 +11,8 @@ export const _saveNewPools = async ({ logs, cache }: { logs: T_QnLog[]; cache: C
 
   const newPools = _processNewPools({ logs: decodedLogs, cache });
 
-  for (const pool of newPools) {
+  const allPools = cache.getAllEntities({ entity: "pool" }) as T_Pool[];
+  for (const pool of allPools) {
     cache.addEntity({ entity: "pool", id: normalizeAddress(pool.address), value: pool });
 
     const wethAddress = COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected];

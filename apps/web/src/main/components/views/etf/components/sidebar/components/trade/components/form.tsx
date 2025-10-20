@@ -29,7 +29,7 @@ type T_TradeForm = {
 };
 
 export const TradeForm = ({ form, formData, amount, handleClick, loading, balanceEth, balanceToken, actionSelected, getBalanceAmount }: T_TradeForm) => {
-  const { ethPrice } = usePrices();
+  const { ethUsdPrice } = usePrices();
   const { address } = useAccount();
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export const TradeForm = ({ form, formData, amount, handleClick, loading, balanc
             )}
           />
 
-          {actionSelected == "Sell" ? null : <p className="text-xs font-medium text-subtext text-end">≈ ${numberToUsd(Number(amount) * ethPrice)}</p>}
+          {actionSelected == "Sell" ? null : <p className="text-xs font-medium text-subtext text-end">≈ ${numberToUsd(Number(amount) * ethUsdPrice)}</p>}
 
           <AmountSuggestionButtons form={form} amount={amount} balanceEth={balanceEth} balanceToken={balanceToken} actionSelected={actionSelected} />
 

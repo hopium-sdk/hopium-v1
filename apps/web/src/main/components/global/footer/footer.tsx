@@ -6,7 +6,7 @@ import { usePrices } from "@/main/wrappers/components/prices-provider";
 import { numberToUsd } from "@repo/common/utils/currency";
 
 export const Footer = () => {
-  const { ethPrice } = usePrices();
+  const { ethUsdPrice } = usePrices();
   return (
     <div className="h-10 border-t flex items-center px-6">
       <div className="">
@@ -19,7 +19,7 @@ export const Footer = () => {
       <div className="flex items-center gap-2.5">
         <div className="flex items-center gap-1 text-subtext">
           <Icons.Ether />
-          <p className="text-xs font-medium">{numberToUsd(ethPrice)}</p>
+          <p className="text-xs font-medium">{numberToUsd(ethUsdPrice)}</p>
         </div>
         <p className="text-subtext pl-1">|</p>
         <Button variant="ghost" size="icon" className="text-subtext p-0">

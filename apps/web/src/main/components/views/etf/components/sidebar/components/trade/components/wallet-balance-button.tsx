@@ -29,7 +29,7 @@ export const WalletBalanceButton = ({ form, amount, balanceEth, balanceToken, ac
 
   const calculateTotalBalance = (): number => {
     if (actionSelected == "Sell") {
-      return NUMBERS_WEB.truncateDecimals(balanceToken, 4);
+      return balanceToken;
     }
 
     return NUMBERS_WEB.truncateDecimals(balanceEth - CONSTANTS.minTxFee, 4);

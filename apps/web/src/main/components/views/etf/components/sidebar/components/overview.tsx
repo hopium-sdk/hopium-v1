@@ -29,6 +29,7 @@ export const EtfOverview = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
           symbolType={"usd"}
           blink
         />
+
         <NumberTab
           title={"Price ETH"}
           value={getValue(1)}

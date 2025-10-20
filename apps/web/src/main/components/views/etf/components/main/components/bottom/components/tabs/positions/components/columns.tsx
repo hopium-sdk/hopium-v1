@@ -35,7 +35,7 @@ export const getPositionsColumns = () => {
     {
       header: "Value",
       cell: ({ row }) => {
-        const value = row.original.balance * row.original.currentPrice.usd;
+        const value = row.original.value;
         return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
       },
     },

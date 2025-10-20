@@ -6,8 +6,10 @@ import { CoinImage } from "@/main/components/ui/coin-image";
 import { T_EtfVaultToken } from "../vault";
 import { Progress } from "@/main/shadcn/components/ui/progress";
 import { calcCurrentWeight } from "@/main/utils/calc-etf";
+import { normalizeAddress } from "@repo/common/utils/address";
+import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 
-export const getVaultColumns = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: T_EtfWithAssetsAndPools; ethUsdPrice: number }) => {
   const allColumns: ColumnDef<T_EtfVaultToken>[] = [
     {
       accessorKey: "tokenAddress",
@@ -34,21 +36,43 @@ export const getVaultColumns = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
         return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" blink />;
       },
     },
+    // {
+    //   accessorKey: "price",
+    //   header: "Price",
+    //   cell: ({ row }) => {
+    //     const wethAddress = normalizeAddress(COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected]);
+    //     let poolPrice = 0;
+    //     if (row.original.tokenAddress === wethAddress) {
+    //       poolPrice = ethUsdPrice;
+    //     } else {
+    //       const pool = etf.pools.find((pool) => pool.details.token0 === row.original.tokenAddress || pool.details.token1 === row.original.tokenAddress);
+    //       if (!pool) return 0;
+    //       poolPrice = pool.stats.price.usd;
+    //     }
+    //     return <NumberDiv number={poolPrice} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
+    //   },
+    // },
     {
       header: "Value",
       cell: ({ row }) => {
         let value = 0;
-        const pool = etf.pools.find((pool) => pool.details.token0 === row.original.tokenAddress || pool.details.token1 === row.original.tokenAddress);
-        if (pool) {
-          value = row.original.balance * pool.stats.price.usd;
+        const wethAddress = normalizeAddress(COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected]);
+        let poolPrice = 0;
+        if (row.original.tokenAddress === wethAddress) {
+          poolPrice = ethUsdPrice;
+        } else {
+          const pool = etf.pools.find((pool) => pool.details.token0 === row.original.tokenAddress || pool.details.token1 === row.original.tokenAddress);
+          if (!pool) return 0;
+          poolPrice = pool.stats.price.usd;
         }
+        value = row.original.balance * poolPrice;
         return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
       },
     },
     {
       header: "Current Weight",
       cell: ({ row }) => {
-        let value = calcCurrentWeight({ etf, assetAddress: row.original.tokenAddress });
+        let value = calcCurrentWeight({ etf, assetAddress: row.original.tokenAddress, ethUsdPrice });
         if (isNaN(value) || value == Infinity) {
           value = 0;
         }

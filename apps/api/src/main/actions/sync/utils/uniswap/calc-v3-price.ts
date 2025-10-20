@@ -1,69 +1,53 @@
-import { T_Pool } from "@repo/convex/schema";
-import { decodeSwapV3Log } from "../logs/filter-logs/swap-v3";
 import { normalizeAddress } from "@repo/common/utils/address";
+import { T_Pool } from "@repo/convex/schema";
 
+// Returns base-per-1-other (scaled 1e18), using the same math as _getTokenPriceV3.
 export const _calcPoolPriceV3 = ({
-  decoded,
+  decoded, // must include sqrtPriceX96 from Swap event
   pool,
   baseAddress,
 }: {
-  decoded: ReturnType<typeof decodeSwapV3Log>;
+  decoded: { args?: { sqrtPriceX96?: bigint } }; // ensure your decoder surfaces this
   pool: T_Pool;
   baseAddress: string;
 }): number | null => {
-  const args: ReturnType<typeof decodeSwapV3Log>["args"] = decoded.args ?? {};
+  const sqrt = decoded.args?.sqrtPriceX96;
+  if (sqrt === undefined) return null;
 
-  // Ensure this looks like a V3 Swap event
-  if (args.amount0 === undefined || args.amount1 === undefined) {
-    return null;
-  }
+  const Q96 = 1n << 96n;
+  const priceQ96 = (sqrt * sqrt) / Q96; // = (token1/token0) * 2^96
 
-  const d0 = pool.details.decimals0 ?? 0;
-  const d1 = pool.details.decimals1 ?? 0;
-  const toDec = (x: bigint, d: number) => Number(x) / 10 ** d;
-
-  // V3 logs use signed ints (pool perspective)
-  const amount0Delta = toDec(BigInt(args.amount0), d0); // + => pool received token0
-  const amount1Delta = toDec(BigInt(args.amount1), d1); // + => pool received token1
-
-  // Determine trade direction from pool perspective
-  let direction: "0->1" | "1->0";
-  if (amount0Delta > 0 && amount1Delta < 0)
-    direction = "0->1"; // trader swapped token0 -> token1
-  else if (amount1Delta > 0 && amount0Delta < 0)
-    direction = "1->0"; // trader swapped token1 -> token0
-  else return null;
-
-  const EPS = 1e-18;
-  let price0Per1: number;
-  let price1Per0: number;
-
-  // Compute effective price from this swap
-  // 0->1: pool got token0 (+), sent token1 (-)
-  if (direction === "0->1") {
-    const p1Per0 = Math.abs(amount0Delta) < EPS ? Number.NaN : -amount1Delta / amount0Delta;
-    price1Per0 = p1Per0; // token1 per 1 token0
-    price0Per1 = 1 / p1Per0; // token0 per 1 token1
-  } else {
-    const p0Per1 = Math.abs(amount1Delta) < EPS ? Number.NaN : -amount0Delta / amount1Delta;
-    price0Per1 = p0Per1; // token0 per 1 token1
-    price1Per0 = 1 / p0Per1; // token1 per 1 token0
-  }
-
-  // Normalize base
-  const base = normalizeAddress(baseAddress);
   const token0 = normalizeAddress(pool.details.token0);
   const token1 = normalizeAddress(pool.details.token1);
+  const base = normalizeAddress(baseAddress);
 
-  // Return the price of 1 base in terms of the other token
+  const d0 = BigInt(pool.details.decimals0 ?? 0);
+  const d1 = BigInt(pool.details.decimals1 ?? 0);
+  const pow10 = (n: bigint) => 10n ** n;
+
   if (base === token1) {
-    // base = token0 → return token1 per 1 token0
-    return price1Per0;
+    // base=t1, other=t0 → want (t1 per 1 t0)
+    if (d0 >= d1) {
+      // price = priceQ96 * 10^(d0-d1) / 2^96
+      const num = priceQ96 * pow10(d0 - d1);
+      return Number(num) / Number(Q96);
+    } else {
+      // price = priceQ96 / (2^96 * 10^(d1-d0))
+      const den = Q96 * pow10(d1 - d0);
+      return Number(priceQ96) / Number(den);
+    }
   } else if (base === token0) {
-    // base = token1 → return token0 per 1 token1
-    return price0Per1;
+    // base=t0, other=t1 → want inverse of (t1 per 1 t0)
+    if (d1 >= d0) {
+      // price = (2^96 * 10^(d1-d0)) / priceQ96
+      const num = Q96 * pow10(d1 - d0);
+      return Number(num) / Number(priceQ96);
+    } else {
+      // price = (2^96) / (priceQ96 * 10^(d0-d1))
+      const den = priceQ96 * pow10(d0 - d1);
+      return Number(Q96) / Number(den);
+    }
   } else {
-    // base not in this pool
     return null;
   }
 };

@@ -14,12 +14,14 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as fns_defaultTokens_getByAddress from "../fns/defaultTokens/getByAddress.js";
+import type * as fns_etf_getAllEtfs from "../fns/etf/getAllEtfs.js";
 import type * as fns_etf_getEtfWithAssetsAndPools from "../fns/etf/getEtfWithAssetsAndPools.js";
 import type * as fns_etfToken_getAllPositionsByAddress from "../fns/etfToken/getAllPositionsByAddress.js";
 import type * as fns_etfToken_getTokenBalanceByAddress from "../fns/etfToken/getTokenBalanceByAddress.js";
 import type * as fns_etfToken_getTokenHolders from "../fns/etfToken/getTokenHolders.js";
 import type * as fns_ohlc_getHistorical from "../fns/ohlc/getHistorical.js";
 import type * as fns_ohlc_getLatest from "../fns/ohlc/getLatest.js";
+import type * as fns_pools_getWethUsdPrice from "../fns/pools/getWethUsdPrice.js";
 import type * as fns_sync_fns_getAssetsByAddresses from "../fns/sync/fns/getAssetsByAddresses.js";
 import type * as fns_sync_fns_getEtfsAndSupplyByPoolAddreses from "../fns/sync/fns/getEtfsAndSupplyByPoolAddreses.js";
 import type * as fns_sync_fns_getEtfsByIds from "../fns/sync/fns/getEtfsByIds.js";
@@ -30,6 +32,7 @@ import type * as fns_syncStatus_get from "../fns/syncStatus/get.js";
 import type * as fns_watchlist_getWatchlist from "../fns/watchlist/getWatchlist.js";
 import type * as mutations__handleReorg_handle from "../mutations/_handleReorg/handle.js";
 import type * as mutations_defaultTokens_upsert from "../mutations/defaultTokens/upsert.js";
+import type * as mutations_etf_updateEtfs from "../mutations/etf/updateEtfs.js";
 import type * as mutations_sync_fns_updateOhlcs from "../mutations/sync/fns/updateOhlcs.js";
 import type * as mutations_sync_fns_updateSyncStatus from "../mutations/sync/fns/updateSyncStatus.js";
 import type * as mutations_sync_fns_upsertAssets from "../mutations/sync/fns/upsertAssets.js";
@@ -59,12 +62,14 @@ import type * as schema_watchlist from "../schema/watchlist.js";
  */
 declare const fullApi: ApiFromModules<{
   "fns/defaultTokens/getByAddress": typeof fns_defaultTokens_getByAddress;
+  "fns/etf/getAllEtfs": typeof fns_etf_getAllEtfs;
   "fns/etf/getEtfWithAssetsAndPools": typeof fns_etf_getEtfWithAssetsAndPools;
   "fns/etfToken/getAllPositionsByAddress": typeof fns_etfToken_getAllPositionsByAddress;
   "fns/etfToken/getTokenBalanceByAddress": typeof fns_etfToken_getTokenBalanceByAddress;
   "fns/etfToken/getTokenHolders": typeof fns_etfToken_getTokenHolders;
   "fns/ohlc/getHistorical": typeof fns_ohlc_getHistorical;
   "fns/ohlc/getLatest": typeof fns_ohlc_getLatest;
+  "fns/pools/getWethUsdPrice": typeof fns_pools_getWethUsdPrice;
   "fns/sync/fns/getAssetsByAddresses": typeof fns_sync_fns_getAssetsByAddresses;
   "fns/sync/fns/getEtfsAndSupplyByPoolAddreses": typeof fns_sync_fns_getEtfsAndSupplyByPoolAddreses;
   "fns/sync/fns/getEtfsByIds": typeof fns_sync_fns_getEtfsByIds;
@@ -75,6 +80,7 @@ declare const fullApi: ApiFromModules<{
   "fns/watchlist/getWatchlist": typeof fns_watchlist_getWatchlist;
   "mutations/_handleReorg/handle": typeof mutations__handleReorg_handle;
   "mutations/defaultTokens/upsert": typeof mutations_defaultTokens_upsert;
+  "mutations/etf/updateEtfs": typeof mutations_etf_updateEtfs;
   "mutations/sync/fns/updateOhlcs": typeof mutations_sync_fns_updateOhlcs;
   "mutations/sync/fns/updateSyncStatus": typeof mutations_sync_fns_updateSyncStatus;
   "mutations/sync/fns/upsertAssets": typeof mutations_sync_fns_upsertAssets;

@@ -101,6 +101,12 @@ const _processNewEtfs = ({ logs }: { logs: { log: T_QnLog; decoded: ReturnType<t
           eth: 0,
           usd: 0,
         },
+        volume: {
+          eth: 0,
+          usd: 0,
+        },
+        assetsLiquidityUsd: 0,
+        assetsMcapUsd: 0,
       },
       tags: [],
       syncBlockNumber_: Number(log.blockNumber),

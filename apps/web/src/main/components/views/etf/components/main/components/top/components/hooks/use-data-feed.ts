@@ -7,7 +7,7 @@ import { CONVEX } from "@/main/lib/convex";
 import { useEffect, useRef } from "react";
 import { useQuery } from "convex/react";
 
-export const useDataFeed = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const useDataFeed = ({ etf, setIsReady }: { etf: T_EtfWithAssetsAndPools; setIsReady: (isReady: boolean) => void }) => {
   const timeframeRef = useRef<T_OhlcTimeframe | null>(null);
   const liveCbRef = useRef<SubscribeBarsCallback | null>(null);
 
@@ -36,7 +36,10 @@ export const useDataFeed = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
 
   const dataFeed: IBasicDataFeed = {
     onReady: (callback: OnReadyCallback) => {
-      setTimeout(() => callback(getConfig()));
+      setTimeout(() => {
+        callback(getConfig());
+        setIsReady(true);
+      });
     },
     searchSymbols: (userInput, exchange, symbolType, onResultReadyCallback) => {
       onResultReadyCallback([]);
@@ -45,7 +48,7 @@ export const useDataFeed = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
       const symbolInfo = getSymbolInfo({ etf });
       setTimeout(() => {
         onSymbolResolvedCallback(symbolInfo);
-      }, 0);
+      });
     },
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, _) => {
       setTimeout(async () => {
@@ -72,7 +75,7 @@ export const useDataFeed = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
             volume: ohlc.volume,
           }))
         );
-      }, 0);
+      });
     },
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
       const timeframe = convertResolution(resolution);

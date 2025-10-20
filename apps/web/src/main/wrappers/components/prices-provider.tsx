@@ -1,39 +1,18 @@
 "use client";
-import { HOPIUM } from "@/main/lib/hopium";
-import { createContext, useContext, useEffect, useState } from "react";
+import { CONVEX } from "@/main/lib/convex";
+import { useQuery } from "convex/react";
+import { createContext, useContext } from "react";
 
 const PricesContext = createContext<{
-  ethPrice: number;
+  ethUsdPrice: number;
 }>({
-  ethPrice: 0,
+  ethUsdPrice: 0,
 });
 
-const UPDATE_INTERVAL = 30_000;
-
 export const PricesProvider = ({ children }: { children: React.ReactNode }) => {
-  const [ethPrice, setEthPrice] = useState<number>(0);
+  const ethUsdPrice = useQuery(CONVEX.api.fns.pools.getWethUsdPrice.default);
 
-  const updateEthPrice = async () => {
-    const price = await HOPIUM.fns.uniswapOracle.fetchWethUsdPrice();
-    if (ethPrice !== price) {
-      setEthPrice(price);
-    }
-  };
-
-  useEffect(() => {
-    // Fetch immediately on mount
-    updateEthPrice();
-
-    // Then update every 60 seconds (1 minute)
-    const interval = setInterval(() => {
-      updateEthPrice();
-    }, UPDATE_INTERVAL); // 60,000 ms = 1 minute
-
-    // Cleanup interval on unmount
-    return () => clearInterval(interval);
-  }, []);
-
-  return <PricesContext.Provider value={{ ethPrice }}>{children}</PricesContext.Provider>;
+  return <PricesContext.Provider value={{ ethUsdPrice: ethUsdPrice ?? 0 }}>{children}</PricesContext.Provider>;
 };
 
 export const usePrices = () => {

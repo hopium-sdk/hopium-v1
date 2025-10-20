@@ -1,7 +1,7 @@
 import { T_QnLog } from "../../schema";
 import { CacheManager } from "../../helpers/cache-manager";
-import { decodeSwapV3Log, isSwapV3Log } from "../../utils/logs/filter-logs/swap-v3";
-import { decodeSwapV2Log } from "../../utils/logs/filter-logs/swap-v2";
+import { decodeV3SwapLog, isV3SwapLog } from "../../utils/logs/filter-logs/uni-v3-swap";
+import { decodeV2SyncLog } from "../../utils/logs/filter-logs/uni-v2-sync";
 import { normalizeAddress } from "@repo/common/utils/address";
 import assert from "assert";
 import { _calcPoolPriceV3 } from "../../utils/uniswap/calc-v3-price";
@@ -20,8 +20,8 @@ type T_SyncSwapParams = {
 export const _syncSwap = ({ log, cache, poolEtfMap, etfAssetPoolMap }: T_SyncSwapParams) => {
   const ethUsdPrice = cache.getEthPrice();
 
-  const isV3Swap = isSwapV3Log({ log });
-  const decodedLog = isV3Swap ? decodeSwapV3Log({ log }) : decodeSwapV2Log({ log });
+  const isV3Swap = isV3SwapLog({ log });
+  const decodedLog = isV3Swap ? decodeV3SwapLog({ log }) : decodeV2SyncLog({ log });
   assert(decodedLog, "Decoded log not found");
 
   const poolAddress = normalizeAddress(log.address);
@@ -38,8 +38,8 @@ export const _syncSwap = ({ log, cache, poolEtfMap, etfAssetPoolMap }: T_SyncSwa
 
   const baseAddress = isWethUsdcPool ? usdcAddress : wethAddress;
   const price = isV3Swap
-    ? _calcPoolPriceV3({ decoded: decodedLog as ReturnType<typeof decodeSwapV3Log>, pool, baseAddress })
-    : _calcPoolPriceV2({ decoded: decodedLog as ReturnType<typeof decodeSwapV2Log>, pool, baseAddress });
+    ? _calcPoolPriceV3({ decoded: decodedLog as ReturnType<typeof decodeV3SwapLog>, pool, baseAddress })
+    : _calcPoolPriceV2({ decoded: decodedLog as ReturnType<typeof decodeV2SyncLog>, pool, baseAddress });
   if (!price) {
     return;
   }
@@ -49,7 +49,7 @@ export const _syncSwap = ({ log, cache, poolEtfMap, etfAssetPoolMap }: T_SyncSwa
 
   cache.addEntity({ entity: "pool", id: normalizeAddress(pool.address), value: pool });
 
-  if (!isWethUsdcPool) {
+  if (!isWethUsdcPool && price > 0) {
     _updateEtfPrice({ log, pool, cache, poolEtfMap, etfAssetPoolMap, ethUsdPrice });
   }
 };

@@ -15,7 +15,7 @@ export const decodePoolChangedLog = ({ log }: { log: T_QnLog }) => {
 export const isPoolChangedLog = ({ log }: { log: T_QnLog }): boolean => {
   try {
     const decoded = decodePoolChangedLog({ log });
-
+ 
     if (decoded.eventName === "PoolChanged") {
       return true;
     }

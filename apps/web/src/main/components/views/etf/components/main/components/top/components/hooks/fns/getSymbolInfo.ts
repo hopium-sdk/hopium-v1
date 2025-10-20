@@ -7,7 +7,7 @@ export const getSymbolInfo = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   const etfName = etf.etf.details.name;
 
   const symbolInfo: LibrarySymbolInfo = {
-    ticker: `${etfSymbol}USD`,
+    ticker: `${etfSymbol}`,
     name: `HOPIUM:${etfSymbol}USD`,
     description: `${etfName} / USD`,
     type: "Crypto ETF",

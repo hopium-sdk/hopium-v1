@@ -13,6 +13,7 @@ export type T_EtfTokenPosition = {
   avgEntryPrice: { eth: number; usd: number };
   currentPrice: { eth: number; usd: number };
   etfId: number;
+  value: number;
 };
 
 type Running = { balance: number; avg: { eth: number; usd: number } };
@@ -88,10 +89,12 @@ export default query({
         avgEntryPrice: p.avgEntryPrice,
         etfId: etf?.details.etfId ?? 0,
         currentPrice: { eth: etf?.stats.price.eth ?? 0, usd: etf?.stats.price.usd ?? 0 },
+        value: p.balance * (etf?.stats.price.usd ?? 0),
       });
     }
 
-    enriched.sort((a, b) => b.balance - a.balance);
-    return enriched;
+    const filtered = enriched.filter((p) => p.value > 0.01);
+
+    return filtered;
   },
 });

@@ -1,12 +1,15 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChartingLibraryWidgetOptions, ResolutionString, widget } from "@/public/tv/charting_library";
 import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useDataFeed } from "./hooks/use-data-feed";
 import { SUPPORTED_RESOLUTIONS } from "./hooks/lib/getConfig";
+import { cn } from "@/main/shadcn/lib/utils";
+import { LoadingDiv } from "@/main/components/ui/loading-div";
 
 export const EtfChart = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
-  const { dataFeed } = useDataFeed({ etf });
+  const [isReady, setIsReady] = useState(false);
+  const { dataFeed } = useDataFeed({ etf, setIsReady });
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,7 +40,8 @@ export const EtfChart = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
 
   return (
     <div className={"flex flex-1 overflow-hidden"}>
-      <div ref={chartContainerRef} className={"flex flex-1"} />
+      <div ref={chartContainerRef} className={cn("flex flex-1", isReady ? "" : "hidden")} />
+      {!isReady && <LoadingDiv />}
     </div>
   );
 };

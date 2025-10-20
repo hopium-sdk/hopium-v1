@@ -27,6 +27,9 @@ export const EtfSchema = {
   }),
   stats: v.object({
     price: ethUsd,
+    volume: ethUsd,
+    assetsLiquidityUsd: v.number(),
+    assetsMcapUsd: v.number(),
   }),
   tags: v.array(v.string()),
   syncBlockNumber_: v.number(),

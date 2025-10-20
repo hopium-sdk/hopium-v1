@@ -145,7 +145,8 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
                     pClassName={cn("text-2xs")}
                   />
                 </div>
-                <div className="flex items-center gap-2">
+
+                {/* <div className="flex items-center gap-2">
                   <p
                     className={cn(
                       "text-2xs",
@@ -154,7 +155,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
                   >
                     {getChangePercent()}%
                   </p>
-                </div>
+                </div> */}
               </div>
             )}
             {editMode && (

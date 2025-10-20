@@ -6,8 +6,8 @@ import { _saveNewEtfsAndAssets } from "./fns/etf-deployed/save-new-etfs-and-asse
 import { isPoolChangedLog } from "./utils/logs/filter-logs/pool-changed";
 import { _saveNewPools } from "./fns/pool-changed/save-new-pools";
 import { sortLogsByChainOrder } from "./utils/logs/sortLogs";
-import { isSwapV2Log } from "./utils/logs/filter-logs/swap-v2";
-import { isSwapV3Log } from "./utils/logs/filter-logs/swap-v3";
+import { isV2SyncLog } from "./utils/logs/filter-logs/uni-v2-sync";
+import { isV3SwapLog } from "./utils/logs/filter-logs/uni-v3-swap";
 import { _syncSwap } from "./fns/swap/sync-swap";
 import { isVaultBalanceLog } from "./utils/logs/filter-logs/vault-balance";
 import { _syncVaultBalance } from "./fns/vault-balance/sync-vault-balance";
@@ -54,7 +54,7 @@ const handleUpdateMutations = async ({ cache, logs }: { cache: CacheManager; log
 const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManager }) => {
   const etfDeployedLogs = logs.filter((log) => isEtfDeployedLog({ log }));
   const poolChangedLogs = logs.filter((log) => isPoolChangedLog({ log }));
-  const swapLogs = logs.filter((log) => isSwapV2Log({ log }) || isSwapV3Log({ log }));
+  const swapLogs = logs.filter((log) => isV2SyncLog({ log }) || isV3SwapLog({ log }));
   const vaultBalanceLogs = logs.filter((log) => isVaultBalanceLog({ log }));
 
   await _preloadCache({ etfDeployedLogs, poolChangedLogs, swapLogs, vaultBalanceLogs, cache });
@@ -66,7 +66,7 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
   const { poolEtfMap, etfAssetPoolMap } = _buildForSwaps({ logs: swapLogs, cache });
 
   for (const log of logs) {
-    if (isSwapV2Log({ log }) || isSwapV3Log({ log })) {
+    if (isV2SyncLog({ log }) || isV3SwapLog({ log })) {
       _syncSwap({ log, cache, poolEtfMap, etfAssetPoolMap });
     }
 
