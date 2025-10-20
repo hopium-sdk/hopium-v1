@@ -1,13 +1,13 @@
 import { RealtimeTable } from "@/main/components/ui/table";
 import { useQuery } from "convex/react";
 import { getHoldersColumns } from "./components/columns";
-import { T_EtfWithAssetsAndPools, T_EtfTokenHolder } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools, T_EtfTokenHolder } from "@repo/convex/schema";
 import { CONVEX } from "@/main/lib/convex";
 import { useEffect, useState } from "react";
 import { HOPIUM } from "@/main/lib/hopium";
 import { formatUnits } from "viem";
 
-export const EtfHolders = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfHolders = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const [etfSupply, setEtfSupply] = useState<number>(0);
   const result: T_EtfTokenHolder[] | undefined = useQuery(CONVEX.api.fns.etfToken.getTokenHolders.default, {
     tokenAddress: etf.etf.contracts.etfTokenAddress as `0x${string}`,
@@ -24,5 +24,5 @@ export const EtfHolders = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
     fetchEtfSupply();
   }, [etf, result]);
 
-  return <RealtimeTable queryMode="query" columns={columns} queryData={result} emptyType="container" emptyContainerLabelVariant={"holders"} />;
+  return <RealtimeTable queryMode="query" columns={columns} queryData={result} empty={{ containerLabelVariant: "holders" }} />;
 };

@@ -15,7 +15,10 @@ import type {
 } from "convex/server";
 import type * as fns_defaultTokens_getByAddress from "../fns/defaultTokens/getByAddress.js";
 import type * as fns_etf_getAllEtfs from "../fns/etf/getAllEtfs.js";
+import type * as fns_etf_getEtfList from "../fns/etf/getEtfList.js";
 import type * as fns_etf_getEtfWithAssetsAndPools from "../fns/etf/getEtfWithAssetsAndPools.js";
+import type * as fns_etf_search from "../fns/etf/search.js";
+import type * as fns_etf_utils_encrichWithAssetsAndPools from "../fns/etf/utils/encrichWithAssetsAndPools.js";
 import type * as fns_etfToken_getAllPositionsByAddress from "../fns/etfToken/getAllPositionsByAddress.js";
 import type * as fns_etfToken_getTokenBalanceByAddress from "../fns/etfToken/getTokenBalanceByAddress.js";
 import type * as fns_etfToken_getTokenHolders from "../fns/etfToken/getTokenHolders.js";
@@ -63,7 +66,10 @@ import type * as schema_watchlist from "../schema/watchlist.js";
 declare const fullApi: ApiFromModules<{
   "fns/defaultTokens/getByAddress": typeof fns_defaultTokens_getByAddress;
   "fns/etf/getAllEtfs": typeof fns_etf_getAllEtfs;
+  "fns/etf/getEtfList": typeof fns_etf_getEtfList;
   "fns/etf/getEtfWithAssetsAndPools": typeof fns_etf_getEtfWithAssetsAndPools;
+  "fns/etf/search": typeof fns_etf_search;
+  "fns/etf/utils/encrichWithAssetsAndPools": typeof fns_etf_utils_encrichWithAssetsAndPools;
   "fns/etfToken/getAllPositionsByAddress": typeof fns_etfToken_getAllPositionsByAddress;
   "fns/etfToken/getTokenBalanceByAddress": typeof fns_etfToken_getTokenBalanceByAddress;
   "fns/etfToken/getTokenHolders": typeof fns_etfToken_getTokenHolders;

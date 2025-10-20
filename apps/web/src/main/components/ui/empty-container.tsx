@@ -17,6 +17,11 @@ export const EmptyContainerVariants = {
     description: "There's a buy button right there",
     icon: Icons.Positions,
   },
+  search: {
+    label: "No results found",
+    description: "Try a different search",
+    icon: Icons.Search,
+  },
 };
 
 type T_EmptyContainer = {

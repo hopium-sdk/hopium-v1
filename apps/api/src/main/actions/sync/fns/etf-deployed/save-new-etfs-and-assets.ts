@@ -90,6 +90,7 @@ const _processNewEtfs = ({ logs }: { logs: { log: T_QnLog; decoded: ReturnType<t
           targetWeightBips: asset.weightBips,
           balance: 0,
         })),
+        assetsCount: decoded.args.etf.assets.length,
         createdAt: log.timestamp,
       },
       contracts: {

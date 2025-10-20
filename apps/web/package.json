@@ -35,6 +35,7 @@
     "@repo/common": "*",
     "@repo/convex": "*",
     "@tabler/icons-react": "^3.35.0",
+    "@tanstack/pacer": "^0.15.4",
     "@tanstack/react-table": "^8.21.3",
     "@vercel/blob": "^2.0.0",
     "assert": "^2.1.0",

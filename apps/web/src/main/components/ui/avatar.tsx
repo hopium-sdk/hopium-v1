@@ -41,7 +41,7 @@ export const getAddressColor = getStaticColor;
 
 export type T_AvatarImage = {
   address: string;
-  iconVariant?: "user" | "coin" | "contract";
+  iconVariant?: "user" | "coin" | "contract" | "etf";
   iconClassName?: string;
   iconColor?: string;
   withBox?: boolean;
@@ -55,7 +55,8 @@ export const AvatarImage = ({ address, boxClassName, iconClassName, iconColor, w
     user: Icons.User,
     coin: Icons.Coin,
     contract: Icons.Contract,
-  };
+    etf: Icons.Etf,
+  } as const;
 
   const render = () => {
     const IconComponent = icons[iconVariant];
@@ -81,7 +82,7 @@ type T_Avatar = {
   imageIconClassName?: string;
   pClassName?: string;
   linkIconClassName?: string;
-  iconVariant?: "user" | "coin" | "contract";
+  iconVariant?: "user" | "coin" | "contract" | "etf";
 };
 
 export const Avatar = ({

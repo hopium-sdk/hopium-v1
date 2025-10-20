@@ -30,8 +30,7 @@ export const EtfPositions = () => {
       queryMode="query"
       columns={columns}
       queryData={!address ? [] : result}
-      emptyType="container"
-      emptyContainerLabelVariant={"positions"}
+      empty={{ containerLabelVariant: "positions" }}
       handleClick={handleClick}
     />
   );

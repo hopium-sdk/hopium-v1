@@ -1,8 +1,8 @@
 import { LibrarySymbolInfo } from "@/public/tv/charting_library/charting_library";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { getConfig } from "../lib/getConfig";
 
-export const getSymbolInfo = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const getSymbolInfo = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const etfSymbol = etf.etf.details.ticker;
   const etfName = etf.etf.details.name;
 

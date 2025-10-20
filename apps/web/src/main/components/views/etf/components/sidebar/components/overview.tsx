@@ -1,4 +1,4 @@
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useWatchlist } from "@/main/hooks/use-watchlist";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
@@ -7,7 +7,7 @@ import { NumberTab } from "@/main/components/ui/number-tab";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
 
-export const EtfOverview = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const getValue = (option: number): number => {
     switch (option) {
       case 0:
@@ -42,7 +42,7 @@ export const EtfOverview = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
   );
 };
 
-const WatchlistButton = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+const WatchlistButton = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const [watchlistLoading, setWatchlistLoading] = useState(false);
   const { addToWatchlist, isInWatchlist, removeFromWatchlist } = useWatchlist();
 

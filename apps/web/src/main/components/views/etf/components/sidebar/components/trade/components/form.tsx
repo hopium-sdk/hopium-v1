@@ -15,8 +15,10 @@ import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { numberToUsd } from "@repo/common/utils/currency";
 import { useAccount } from "wagmi";
 import { ConnectWalletButton } from "@/main/components/ui/connect-wallet-button";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 
 type T_TradeForm = {
+  etf: C_EtfWithAssetsAndPools;
   form: UseFormReturn<z.input<typeof TradeFormSchema>>;
   formData: DeepPartialSkipArrayKey<z.input<typeof TradeFormSchema>>;
   amount: number;
@@ -28,7 +30,7 @@ type T_TradeForm = {
   getBalanceAmount: () => number;
 };
 
-export const TradeForm = ({ form, formData, amount, handleClick, loading, balanceEth, balanceToken, actionSelected, getBalanceAmount }: T_TradeForm) => {
+export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, balanceEth, balanceToken, actionSelected, getBalanceAmount }: T_TradeForm) => {
   const { ethUsdPrice } = usePrices();
   const { address } = useAccount();
 
@@ -74,7 +76,9 @@ export const TradeForm = ({ form, formData, amount, handleClick, loading, balanc
             )}
           />
 
-          {actionSelected == "Sell" ? null : <p className="text-xs font-medium text-subtext text-end">≈ ${numberToUsd(Number(amount) * ethUsdPrice)}</p>}
+          <p className="text-xs font-medium text-subtext text-end">
+            ≈ ${numberToUsd(Number(amount) * (actionSelected == "Sell" ? etf.etf.stats.price.usd : ethUsdPrice))}
+          </p>
 
           <AmountSuggestionButtons form={form} amount={amount} balanceEth={balanceEth} balanceToken={balanceToken} actionSelected={actionSelected} />
 

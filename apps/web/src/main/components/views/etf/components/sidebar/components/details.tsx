@@ -1,11 +1,11 @@
 import { Icons } from "@/main/utils/icons";
 import { Timestamp } from "@/main/components/ui/timestamp";
 import { CopyIcon } from "@/main/components/ui/copy-icon";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { Avatar } from "@/main/components/ui/avatar";
 import { SidebarBox } from "../ui/box";
 
-export const EtfDetails = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfDetails = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const options = ["Token", "Vault"];
 
   const css = {

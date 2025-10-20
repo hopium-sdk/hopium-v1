@@ -1,11 +1,11 @@
 import { EtfImage } from "@/main/components/ui/etf-image";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { NumberDiv } from "@/main/components/ui/number-div";
 import { Timestamp } from "@/main/components/ui/timestamp";
 import { calculateTvl } from "@/main/utils/calc-etf";
 import { usePrices } from "@/main/wrappers/components/prices-provider";
 
-export const EtfMetadata = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfMetadata = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const { ethUsdPrice } = usePrices();
   const statsOptions = ["Created", "Volume", "TVL", "Liquidity", "Mkt Cap"];
 

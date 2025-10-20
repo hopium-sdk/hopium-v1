@@ -1,7 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { NumberDiv } from "@/main/components/ui/number-div";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { CoinImage } from "@/main/components/ui/coin-image";
 import { T_EtfVaultToken } from "../vault";
 import { Progress } from "@/main/shadcn/components/ui/progress";
@@ -9,7 +9,7 @@ import { calcCurrentWeight } from "@/main/utils/calc-etf";
 import { normalizeAddress } from "@repo/common/utils/address";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 
-export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: T_EtfWithAssetsAndPools; ethUsdPrice: number }) => {
+export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndPools; ethUsdPrice: number }) => {
   const allColumns: ColumnDef<T_EtfVaultToken>[] = [
     {
       accessorKey: "tokenAddress",

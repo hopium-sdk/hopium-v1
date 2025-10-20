@@ -1,7 +1,7 @@
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 
-export const calcCurrentWeight = ({ etf, assetAddress, ethUsdPrice }: { etf: T_EtfWithAssetsAndPools; assetAddress: string; ethUsdPrice: number }) => {
+export const calcCurrentWeight = ({ etf, assetAddress, ethUsdPrice }: { etf: C_EtfWithAssetsAndPools; assetAddress: string; ethUsdPrice: number }) => {
   const wethAddress = COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected];
   const tvl = calculateTvl({ etf, ethUsdPrice });
 
@@ -21,7 +21,7 @@ export const calcCurrentWeight = ({ etf, assetAddress, ethUsdPrice }: { etf: T_E
   return ((balance * poolPrice) / tvl.eth) * 100;
 };
 
-export const calculateTvl = ({ etf, ethUsdPrice }: { etf: T_EtfWithAssetsAndPools; ethUsdPrice: number }) => {
+export const calculateTvl = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndPools; ethUsdPrice: number }) => {
   const wethAddress = COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected];
   const tvl = etf.etf.details.assets.reduce((acc, asset) => {
     let poolPrice = 0;

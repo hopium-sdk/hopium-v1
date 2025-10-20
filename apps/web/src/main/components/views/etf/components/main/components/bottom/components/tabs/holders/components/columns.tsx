@@ -3,9 +3,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { NumberDiv } from "@/main/components/ui/number-div";
 import { Avatar } from "@/main/components/ui/avatar";
 import { Progress } from "@/main/shadcn/components/ui/progress";
-import { T_EtfWithAssetsAndPools, T_EtfTokenHolder } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools, T_EtfTokenHolder } from "@repo/convex/schema";
 
-export const getHoldersColumns = ({ etf, etfSupply }: { etf: T_EtfWithAssetsAndPools; etfSupply: number }) => {
+export const getHoldersColumns = ({ etf, etfSupply }: { etf: C_EtfWithAssetsAndPools; etfSupply: number }) => {
   const allColumns: ColumnDef<T_EtfTokenHolder>[] = [
     {
       header: "Rank",

@@ -18,11 +18,13 @@ type CommonProps<TData, TValue> = {
   isPausable?: boolean; // ignored in 'query' mode
   loadingNumRows?: number;
   loadingRowHeight?: string;
-  emptyType: "table" | "container";
-  emptyTableMinRows?: number;
-  emptyContainerCssVariant?: keyof typeof EmptyContainerCssVariants;
-  emptyContainerLabelVariant?: keyof typeof EmptyContainerVariants;
-  emptyContainerShowSubtext?: boolean;
+  empty: {
+    type?: "table" | "container";
+    tableMinRows?: number;
+    containerCssVariant?: keyof typeof EmptyContainerCssVariants;
+    containerLabelVariant?: keyof typeof EmptyContainerVariants;
+    containerShowSubtext?: boolean;
+  };
   handleClick?: (row: Row<TData>) => void;
   getRowClassName?: ({ row, index }: { row: Row<TData>; index: number }) => string;
   cellClassName?: string;
@@ -45,21 +47,15 @@ type RealtimeTableProps<TData, TValue, Query extends PaginatedQueryReference> = 
 /** -------------------- Component -------------------- */
 
 export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReference>(props: RealtimeTableProps<TData, TValue, Query>) => {
-  const {
-    columns,
-    isBlinkable = false,
-    isPausable = false,
-    loadingNumRows,
-    loadingRowHeight,
-    emptyType = "table",
-    emptyTableMinRows = 10,
-    emptyContainerCssVariant = "default",
-    emptyContainerLabelVariant = "default",
-    emptyContainerShowSubtext = false,
-    handleClick,
-    getRowClassName,
-    cellClassName,
-  } = props;
+  const { columns, isBlinkable = false, isPausable = false, loadingNumRows, loadingRowHeight, empty, handleClick, getRowClassName, cellClassName } = props;
+
+  const emptyConfig = {
+    type: empty.type ?? "container",
+    tableMinRows: empty.tableMinRows ?? 10,
+    containerCssVariant: empty.containerCssVariant ?? "default",
+    containerLabelVariant: empty.containerLabelVariant ?? "default",
+    containerShowSubtext: empty.containerShowSubtext ?? false,
+  };
 
   const [data, setData] = useState<TData[]>([]);
   const [isAtScrollTop, setIsAtScrollTop] = useState(true);
@@ -148,11 +144,11 @@ export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReferen
       ) : (
         <EmptyTable
           table={table}
-          type={emptyType}
-          tableMinRows={emptyTableMinRows}
-          containerCssVariant={emptyContainerCssVariant}
-          containerLabelVariant={emptyContainerLabelVariant}
-          containerShowSubtext={emptyContainerShowSubtext}
+          type={emptyConfig.type}
+          tableMinRows={emptyConfig.tableMinRows}
+          containerCssVariant={emptyConfig.containerCssVariant}
+          containerLabelVariant={emptyConfig.containerLabelVariant}
+          containerShowSubtext={emptyConfig.containerShowSubtext}
         />
       )}
     </div>

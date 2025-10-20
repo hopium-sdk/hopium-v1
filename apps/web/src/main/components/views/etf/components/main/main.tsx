@@ -1,11 +1,11 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/main/shadcn/components/ui/resizable";
 import { useLocalStorage } from "@/main/hooks/use-local-storage";
 import z from "zod";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { EtfBottom } from "./components/bottom/bottom";
 import { EtfTop } from "./components/top/top";
 
-export const EtfMain = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfMain = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const [etfBottomCollapsed, setEtfBottomCollapsed] = useLocalStorage({ key: "etfBottomCollapsed", schema: z.boolean(), initialValue: false });
 
   return (

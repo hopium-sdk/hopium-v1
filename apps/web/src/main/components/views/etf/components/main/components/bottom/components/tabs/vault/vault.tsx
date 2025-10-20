@@ -1,5 +1,5 @@
 import { RealtimeTable } from "@/main/components/ui/table";
-import { C_Etf, T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_Etf, C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { getVaultColumns } from "./components/columns";
 import { usePrices } from "@/main/wrappers/components/prices-provider";
 
@@ -8,7 +8,7 @@ export type T_EtfVaultToken = C_Etf["details"]["assets"][number] & {
   tokenSymbol: string;
 };
 
-export const EtfVault = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfVault = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const { ethUsdPrice } = usePrices();
 
   const result: T_EtfVaultToken[] = etf.etf.details.assets.map((asset) => {
@@ -22,5 +22,5 @@ export const EtfVault = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
 
   const columns = getVaultColumns({ etf, ethUsdPrice });
 
-  return <RealtimeTable queryMode="query" columns={columns} queryData={result} emptyType="container" emptyContainerLabelVariant={"positions"} />;
+  return <RealtimeTable queryMode="query" columns={columns} queryData={result} empty={{ containerLabelVariant: "positions" }} />;
 };

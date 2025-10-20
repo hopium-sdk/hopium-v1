@@ -17,6 +17,7 @@ type T_COMMON_CONSTANTS = {
   explorer: {
     [key in T_Network]: string;
   };
+  storage_url: string;
 };
 
 export const COMMON_CONSTANTS: T_COMMON_CONSTANTS = {
@@ -40,4 +41,5 @@ export const COMMON_CONSTANTS: T_COMMON_CONSTANTS = {
     mainnet: "https://etherscan.io",
     base: "https://basescan.org",
   },
+  storage_url: "https://rhzo270gblcou0le.public.blob.vercel-storage.com",
 };

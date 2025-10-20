@@ -4,14 +4,14 @@ import { ComponentProps, useEffect, useState } from "react";
 
 export function ThemeProvider({ children, ...props }: ComponentProps<typeof NextThemesProvider>) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem {...props}>
+    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem {...props}>
       {children}
     </NextThemesProvider>
   );
 }
 
 export const useSafeTheme = () => {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -19,5 +19,5 @@ export const useSafeTheme = () => {
     setTheme("dark");
   }, []);
 
-  return { hydrated, theme: hydrated ? resolvedTheme : "dark", setTheme };
+  return { hydrated, theme: hydrated ? resolvedTheme : "dark", selectedTheme: theme, setTheme };
 };

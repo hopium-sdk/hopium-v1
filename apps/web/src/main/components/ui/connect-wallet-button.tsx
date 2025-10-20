@@ -13,6 +13,9 @@ import {
   DropdownMenuTrigger,
 } from "@/main/shadcn/components/ui/dropdown-menu";
 import { useDisconnect } from "wagmi";
+import { getExplorerAddressUrl } from "@repo/common/utils/explorer";
+import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
+import { toast } from "sonner";
 
 export const ConnectWalletButton = () => {
   return (
@@ -42,6 +45,12 @@ const ConnectedBox = ({ address }: { address: string }) => {
       </>
     );
   };
+
+  const copyAddress = () => {
+    navigator.clipboard.writeText(address);
+    toast.success("Address copied to clipboard");
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -57,15 +66,11 @@ const ConnectedBox = ({ address }: { address: string }) => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Icons.User className="size-4" />
-          View Profile
-        </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={copyAddress}>
           <Icons.Copy className="size-4" />
           Copy Address
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => window.open(getExplorerAddressUrl({ address, network: COMMON_CONSTANTS.networkSelected }), "_blank")}>
           <Icons.Explorer className="size-4" />
           View on Explorer
         </DropdownMenuItem>

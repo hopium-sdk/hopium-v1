@@ -41,12 +41,14 @@ export { PiGhostBold as User } from "react-icons/pi";
 export { RiCopperCoinLine as Coin } from "react-icons/ri";
 export { BiWallet as Wallet } from "react-icons/bi";
 export { RiSwap2Line as Trade } from "react-icons/ri";
+export { PiStarFourBold as Etf } from "react-icons/pi";
 
 //Social
-export { FaXTwitter as Twitter } from "react-icons/fa6";
+export { RiTwitterXLine as Twitter } from "react-icons/ri";
 export { PiTelegramLogoBold as Telegram } from "react-icons/pi";
 export { PiGlobeSimpleBold as Website } from "react-icons/pi";
 export { TbCurrencyEthereum as Ether } from "react-icons/tb";
+export { RiDiscordFill as Discord } from "react-icons/ri";
 
 //-------Specific-------//
 

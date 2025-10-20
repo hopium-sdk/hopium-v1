@@ -1,6 +1,8 @@
 import { v } from "convex/values";
 import { Doc } from "../_generated/dataModel";
 import { defineTable } from "convex/server";
+import { C_Asset } from "./assets";
+import { C_Pool } from "./pools";
 
 const ethUsd = v.object({
   eth: v.number(),
@@ -19,6 +21,7 @@ export const EtfSchema = {
         balance: v.number(),
       })
     ),
+    assetsCount: v.number(),
     createdAt: v.number(),
   }),
   contracts: v.object({
@@ -39,7 +42,22 @@ export const etfsTable = defineTable(EtfSchema)
   .index("by_etfId", ["details.etfId"])
   .index("by_syncBlockNumber", ["syncBlockNumber_"])
   .index("by_tags", ["tags"])
-  .index("by_token_address", ["contracts.etfTokenAddress"]);
+  .index("by_token_address", ["contracts.etfTokenAddress"])
+
+  //sorting for etf list
+  .index("by_createdAt", ["details.createdAt"])
+  .index("by_assetsMcapUsd", ["stats.assetsMcapUsd"])
+  .index("by_assetsLiquidityUsd", ["stats.assetsLiquidityUsd"])
+  .index("by_assetsCount", ["details.assetsCount"]);
 
 export type C_Etf = Doc<"etfs">;
 export type T_Etf = Omit<Doc<"etfs">, "_id" | "_creationTime">;
+
+export type C_EtfWithAssetsAndPools = {
+  etf: C_Etf;
+  assets: C_Asset[];
+  pools: C_Pool[];
+};
+
+export const EtfListOptions = ["most-cap", "most-liquidity", "recently-created", "most-tokens", "least-tokens"] as const;
+export type T_EtfListOption = (typeof EtfListOptions)[number];

@@ -1,46 +1,70 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { ChartingLibraryWidgetOptions, ResolutionString, widget } from "@/public/tv/charting_library";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { ChartingLibraryWidgetOptions, IChartingLibraryWidget, ResolutionString, widget } from "@/public/tv/charting_library";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useDataFeed } from "./hooks/use-data-feed";
 import { SUPPORTED_RESOLUTIONS } from "./hooks/lib/getConfig";
 import { cn } from "@/main/shadcn/lib/utils";
 import { LoadingDiv } from "@/main/components/ui/loading-div";
+import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
 
-export const EtfChart = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
+  const { theme } = useSafeTheme();
   const [isReady, setIsReady] = useState(false);
   const { dataFeed } = useDataFeed({ etf, setIsReady });
-  const chartContainerRef = useRef<HTMLDivElement>(null);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tvWidgetRef = useRef<IChartingLibraryWidget | null>(null);
+  const chartReadyRef = useRef(false);
+
+  // Create the widget ONCE
   useEffect(() => {
-    if (!chartContainerRef.current) return;
+    if (!containerRef.current || tvWidgetRef.current) return;
 
-    const widgetOptions: ChartingLibraryWidgetOptions = {
+    const opts: ChartingLibraryWidgetOptions = {
       load_last_chart: true,
-      datafeed: dataFeed,
+      datafeed: dataFeed, // stable by etf.id
       interval: "1" as ResolutionString,
-      container: chartContainerRef.current,
+      container: containerRef.current,
       library_path: "/tv/charting_library/",
       locale: "en",
       fullscreen: false,
       autosize: true,
-      theme: "dark",
-      favorites: {
-        intervals: SUPPORTED_RESOLUTIONS,
-      },
+      theme: theme === "light" ? "light" : "dark",
+      favorites: { intervals: SUPPORTED_RESOLUTIONS },
       disabled_features: ["header_quick_search"],
     };
 
-    const tvWidget = new widget(widgetOptions);
+    const w = new widget(opts);
+    tvWidgetRef.current = w;
+
+    w.onChartReady(() => {
+      chartReadyRef.current = true;
+    });
 
     return () => {
-      tvWidget.remove();
+      chartReadyRef.current = false;
+      tvWidgetRef.current?.remove();
+      tvWidgetRef.current = null;
     };
-  }, [chartContainerRef]);
+  }, []);
+
+  // Theme switching (no widget recreation)
+  useEffect(() => {
+    const w = tvWidgetRef.current;
+    if (!w || !chartReadyRef.current) return;
+    const next = theme === "light" ? "light" : "dark";
+    // TS: changeTheme may return void/promise; both are fine
+    try {
+      w.changeTheme?.(next);
+    } catch {
+      // Older builds might not support changeTheme; ignore gracefully
+    }
+  }, [theme]);
 
   return (
-    <div className={"flex flex-1 overflow-hidden"}>
-      <div ref={chartContainerRef} className={cn("flex flex-1", isReady ? "" : "hidden")} />
+    <div className="flex flex-1 overflow-hidden">
+      <div ref={containerRef} className={cn("flex flex-1", isReady ? "" : "hidden")} />
       {!isReady && <LoadingDiv />}
     </div>
   );

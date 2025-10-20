@@ -5,6 +5,7 @@ import { Icons } from "@/main/utils/icons";
 import { cn } from "@/main/shadcn/lib/utils";
 import { useBalanceEth } from "@/main/wrappers/components/balance-provider";
 import { useAccount } from "wagmi";
+import { Suspense } from "react";
 
 export const Header = () => {
   const { address } = useAccount();
@@ -12,7 +13,9 @@ export const Header = () => {
   return (
     <div className="h-14 border-b flex items-center justify-between px-6">
       <div className="w-full flex items-center">
-        <Search />
+        <Suspense>
+          <Search />
+        </Suspense>
       </div>
       <div className="flex items-center justify-end gap-4">
         {address && (

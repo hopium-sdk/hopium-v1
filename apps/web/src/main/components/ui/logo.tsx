@@ -3,7 +3,7 @@ import { cn } from "@/main/shadcn/lib/utils";
 const Logo = ({ className, color }: React.ComponentProps<"div"> & { color?: string }) => {
   return (
     <div className={cn(className)}>
-      <LogoSvg color={color || "var(--foreground)"} />
+      <LogoSvg color={color || "var(--fg)"} />
     </div>
   );
 };

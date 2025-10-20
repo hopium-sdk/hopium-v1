@@ -2,7 +2,7 @@
 import { useState } from "react";
 import z from "zod";
 import { Icons } from "@/main/utils/icons";
-import { T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ActionButtons } from "./components/action-buttons";
@@ -22,7 +22,7 @@ export const TradeFormSchema = z.object({
 export const actionOptions = ["Buy", "Sell"];
 export type T_ActionSelected = (typeof actionOptions)[number];
 
-export const EtfTrade = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfTrade = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const [loading, setLoading] = useState<string | null>(null);
   const { buyEtf, sellEtf } = useHopiumContracts({ setLoading });
 
@@ -83,6 +83,7 @@ export const EtfTrade = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
         </div>
 
         <TradeForm
+          etf={etf}
           form={form}
           formData={formData}
           amount={formData.amount as number}

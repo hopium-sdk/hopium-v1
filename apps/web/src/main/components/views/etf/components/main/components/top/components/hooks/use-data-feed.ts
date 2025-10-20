@@ -1,5 +1,5 @@
 import { OnReadyCallback, IBasicDataFeed, SubscribeBarsCallback } from "@/public/tv/charting_library/charting_library";
-import { T_EtfWithAssetsAndPools, T_OhlcTimeframe } from "@repo/convex/schema";
+import { C_EtfWithAssetsAndPools, T_OhlcTimeframe } from "@repo/convex/schema";
 import { getSymbolInfo } from "./fns/getSymbolInfo";
 import { getConfig } from "./lib/getConfig";
 import { convertResolution } from "./utils/convert-resolution";
@@ -7,7 +7,7 @@ import { CONVEX } from "@/main/lib/convex";
 import { useEffect, useRef } from "react";
 import { useQuery } from "convex/react";
 
-export const useDataFeed = ({ etf, setIsReady }: { etf: T_EtfWithAssetsAndPools; setIsReady: (isReady: boolean) => void }) => {
+export const useDataFeed = ({ etf, setIsReady }: { etf: C_EtfWithAssetsAndPools; setIsReady: (isReady: boolean) => void }) => {
   const timeframeRef = useRef<T_OhlcTimeframe | null>(null);
   const liveCbRef = useRef<SubscribeBarsCallback | null>(null);
 

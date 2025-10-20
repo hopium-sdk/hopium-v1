@@ -4,7 +4,7 @@ import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { Table, TableCell, TableRow, TableHead, TableHeader, TableBody } from "@/main/shadcn/components/ui/table";
 import { Icons } from "@/main/utils/icons";
 import { getExplorerTokenUrl } from "@repo/common/utils/explorer";
-import { C_Asset, T_EtfWithAssetsAndPools } from "@repo/convex/schema";
+import { C_Asset, C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { SidebarBox } from "../ui/box";
 import { Progress } from "@/main/shadcn/components/ui/progress";
 
@@ -12,7 +12,7 @@ export type T_AssetWithWeight = C_Asset & {
   weightBips: number;
 };
 
-export const EtfAssets = ({ etf }: { etf: T_EtfWithAssetsAndPools }) => {
+export const EtfAssets = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const assetsWithWeight: T_AssetWithWeight[] =
     etf.assets.map((asset) => ({
       ...asset,
