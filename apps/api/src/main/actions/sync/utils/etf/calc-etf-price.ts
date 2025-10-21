@@ -8,10 +8,9 @@ type T_CalcEtfPriceParams = {
   etf: T_Etf;
   cache: CacheManager;
   etfAssetPoolMap: Map<string, string>;
-  etfSupply: number;
 };
 
-export const _calcEtfPrice = ({ etf, cache, etfAssetPoolMap, etfSupply }: T_CalcEtfPriceParams): number => {
+export const _calcEtfPrice = ({ etf, cache, etfAssetPoolMap }: T_CalcEtfPriceParams): number => {
   const weth = normalizeAddress(COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected]);
 
   let tvlEth = 0; // Σ(balanceWhole * priceEth)
@@ -33,16 +32,16 @@ export const _calcEtfPrice = ({ etf, cache, etfAssetPoolMap, etfSupply }: T_Calc
     }
 
     // TVL (balances are whole-token units)
-    const balWhole = asset.balance ?? 0;
-    if (balWhole > 0) {
-      tvlEth += balWhole * priceEth;
+    const balDec = asset.balance ?? 0;
+    if (balDec > 0) {
+      tvlEth += balDec * priceEth;
     }
   }
 
   // Decide initial vs NAV
-  const supplyWhole = etfSupply;
-  if (supplyWhole > 0) {
-    return tvlEth / supplyWhole; // true NAV per ETF token
+  const supplyDec = etf.stats.totalSupply;
+  if (supplyDec > 0) {
+    return tvlEth / supplyDec; // true NAV per ETF token
   }
   return 0; // index-style initial price
 };

@@ -1,40 +1,44 @@
-import assert from "assert";
 import { MutationCtx } from "../../../_generated/server";
-import { C_Asset, T_Asset } from "../../../schema/assets";
+import { T_Asset } from "../../../schema/assets";
 import { normalizeAddress } from "../../../../src/utils/normalizeAddress";
+import { snapshot } from "../helpers/snapshot";
 
-export const _upsertAssets = async (ctx: MutationCtx, assets: T_Asset[]) => {
+/**
+ * Upsert Assets for a single block (reorg-safe via snapshots).
+ * Requires assets table to have .index("by_docId", ["docId"])
+ */
+export const _upsertAssets = async (ctx: MutationCtx, assets: T_Asset[], blockNumber: number) => {
+  // Normalize inputs
   const normalizedAssets = assets.map((asset) => ({
     ...asset,
     address: normalizeAddress(asset.address),
+    ...(asset.poolAddress ? { poolAddress: normalizeAddress(asset.poolAddress) } : {}),
   }));
 
-  const found = (
-    await Promise.all(
-      normalizedAssets.map(async (asset) => {
-        return await ctx.db
-          .query("assets")
-          .withIndex("by_address", (q) => q.eq("address", asset.address))
-          .first();
-      })
-    )
-  ).filter((asset) => asset !== null) as C_Asset[];
+  for (const asset of normalizedAssets) {
+    const docId = asset.docId; // using your unified table id
 
-  const not_found = normalizedAssets.filter((asset) => !found.find((c: C_Asset) => c.address === asset.address));
+    // Look up by primary key
+    const existing = await ctx.db
+      .query("assets")
+      .withIndex("by_docId", (q) => q.eq("docId", docId))
+      .first();
 
-  if (not_found.length > 0) {
-    for (const asset of not_found) {
+    // Take a snapshot BEFORE mutating (idempotent per (block, table, docId))
+    await snapshot(ctx, {
+      blockNumber,
+      table: "assets",
+      docId,
+      existed: !!existing,
+      before: existing ?? null,
+    });
+
+    if (existing) {
+      // Patch to new state (keep same _id, same docId)
+      await ctx.db.patch(existing._id, { ...existing, ...asset });
+    } else {
+      // Insert new document
       await ctx.db.insert("assets", asset);
-    }
-  }
-
-  if (found.length > 0) {
-    for (const asset of found) {
-      const new_asset = normalizedAssets.find((c) => c.address === asset.address);
-
-      assert(new_asset, `Asset ${asset.address} not found`);
-
-      await ctx.db.patch(asset._id, { ...new_asset });
     }
   }
 };

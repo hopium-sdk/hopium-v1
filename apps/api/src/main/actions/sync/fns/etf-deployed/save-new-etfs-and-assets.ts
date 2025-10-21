@@ -12,12 +12,12 @@ export const _saveNewEtfsAndAssets = async ({ logs, cache }: { logs: T_QnLog[]; 
   const newEtfs = _processNewEtfs({ logs: decodedLogs });
   const newAssets = await _processNewAssets({ logs: decodedLogs, cache });
 
-  for (const etf of newEtfs) {
-    cache.addEntity({ entity: "etf", id: etf.details.etfId.toString(), value: etf });
+  for (const { etf, blockNumber } of newEtfs) {
+    cache.addEntity({ entity: "etf", id: etf.docId, value: etf, blockNumber });
   }
 
-  for (const asset of newAssets) {
-    cache.addEntity({ entity: "asset", id: normalizeAddress(asset.address), value: asset });
+  for (const { asset, blockNumber } of newAssets) {
+    cache.addEntity({ entity: "asset", id: normalizeAddress(asset.address), value: asset, blockNumber });
   }
 };
 
@@ -59,58 +59,68 @@ export const _processNewAssets = async ({
   // Get all new asset addresses that are not in the cache
   const newAssetAddresses = assetAddresses.filter((address) => !cachedAssetsMap.has(normalizeAddress(address)));
 
+  type T_NewAsset = {
+    asset: T_Asset;
+    blockNumber: number;
+  };
   // Create tasks to fetch new asset details
-  const tasks: Array<() => Promise<T_Asset>> = newAssetAddresses.map((address) => {
+  const tasks: Array<() => Promise<T_NewAsset>> = newAssetAddresses.map((address) => {
     return async () => {
       const syncBlockNumber = addrToSyncBlock.get(normalizeAddress(address))!; // guaranteed to exist
-      const asset: T_Asset = await fetchAssetDetails({
-        tokenAddress: normalizeAddress(address),
-        syncBlockNumber, // <-- passed correctly
-      });
+      const asset: T_NewAsset = {
+        asset: await fetchAssetDetails({
+          tokenAddress: normalizeAddress(address),
+        }),
+        blockNumber: syncBlockNumber,
+      };
 
       return asset;
     };
   });
 
   // Fetch new asset details in batches
-  const newAssets = await batchRetry<T_Asset>({ tasks });
+  const newAssets = await batchRetry<T_NewAsset>({ tasks });
 
   return newAssets;
 };
 
 const _processNewEtfs = ({ logs }: { logs: { log: T_QnLog; decoded: ReturnType<typeof decodeEtfDeployedLog> }[] }) => {
-  const newEtfs: T_Etf[] = logs.map(({ log, decoded }) => {
+  const newEtfs: { etf: T_Etf; blockNumber: number }[] = logs.map(({ log, decoded }) => {
     return {
-      details: {
-        etfId: Number(decoded.args.etfId),
-        name: decoded.args.etf.name,
-        ticker: decoded.args.etf.ticker,
-        assets: decoded.args.etf.assets.map((asset) => ({
-          tokenAddress: asset.tokenAddress,
-          targetWeightBips: asset.weightBips,
-          balance: 0,
-        })),
-        assetsCount: decoded.args.etf.assets.length,
-        createdAt: log.timestamp,
-      },
-      contracts: {
-        etfTokenAddress: decoded.args.etfTokenAddress,
-        etfVaultAddress: decoded.args.etfVaultAddress,
-      },
-      stats: {
-        price: {
-          eth: 0,
-          usd: 0,
+      etf: {
+        docId: decoded.args.etfId.toString(),
+        details: {
+          etfId: Number(decoded.args.etfId),
+          name: decoded.args.etf.name,
+          ticker: decoded.args.etf.ticker,
+          assets: decoded.args.etf.assets.map((asset) => ({
+            tokenAddress: asset.tokenAddress,
+            targetWeightBips: asset.weightBips,
+            balance: 0,
+          })),
+          assetsCount: decoded.args.etf.assets.length,
+          createdAt: log.timestamp,
         },
-        volume: {
-          eth: 0,
-          usd: 0,
+        contracts: {
+          etfTokenAddress: decoded.args.etfTokenAddress,
+          etfVaultAddress: decoded.args.etfVaultAddress,
         },
-        assetsLiquidityUsd: 0,
-        assetsMcapUsd: 0,
+        stats: {
+          totalSupply: 0,
+          price: {
+            eth: 0,
+            usd: 0,
+          },
+          volume: {
+            eth: 0,
+            usd: 0,
+          },
+          assetsLiquidityUsd: 0,
+          assetsMcapUsd: 0,
+        },
+        tags: [],
       },
-      tags: [],
-      syncBlockNumber_: Number(log.blockNumber),
+      blockNumber: Number(log.blockNumber),
     };
   });
 

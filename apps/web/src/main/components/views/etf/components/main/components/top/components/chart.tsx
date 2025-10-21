@@ -9,7 +9,7 @@ import { LoadingDiv } from "@/main/components/ui/loading-div";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
 
 export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
-  const { theme } = useSafeTheme();
+  const { hydrated, theme } = useSafeTheme();
   const [isReady, setIsReady] = useState(false);
   const { dataFeed } = useDataFeed({ etf, setIsReady });
 
@@ -19,7 +19,7 @@ export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 
   // Create the widget ONCE
   useEffect(() => {
-    if (!containerRef.current || tvWidgetRef.current) return;
+    if (!containerRef.current || tvWidgetRef.current || !hydrated) return;
 
     const opts: ChartingLibraryWidgetOptions = {
       load_last_chart: true,
@@ -40,6 +40,7 @@ export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 
     w.onChartReady(() => {
       chartReadyRef.current = true;
+      w.changeTheme?.(theme === "light" ? "light" : "dark");
     });
 
     return () => {
@@ -47,19 +48,14 @@ export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
       tvWidgetRef.current?.remove();
       tvWidgetRef.current = null;
     };
-  }, []);
+  }, [hydrated]);
 
   // Theme switching (no widget recreation)
   useEffect(() => {
     const w = tvWidgetRef.current;
     if (!w || !chartReadyRef.current) return;
     const next = theme === "light" ? "light" : "dark";
-    // TS: changeTheme may return void/promise; both are fine
-    try {
-      w.changeTheme?.(next);
-    } catch {
-      // Older builds might not support changeTheme; ignore gracefully
-    }
+    w.changeTheme?.(next);
   }, [theme]);
 
   return (

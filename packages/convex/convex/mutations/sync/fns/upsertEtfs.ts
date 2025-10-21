@@ -1,50 +1,54 @@
 import { MutationCtx } from "../../../_generated/server";
-import { C_Etf, T_Etf } from "../../../schema/etf";
-import assert from "assert";
+import { T_Etf } from "../../../schema/etf";
+import { snapshot } from "../helpers/snapshot";
 import { normalizeAddress } from "../../../../src/utils/normalizeAddress";
 
-export const _upsertEtfs = async (ctx: MutationCtx, etfs: T_Etf[]) => {
-  const normalizedEtfs = etfs.map((etf) => ({
-    ...etf,
-    details: {
-      ...etf.details,
-      assets: etf.details.assets.map((asset) => ({
-        ...asset,
-        tokenAddress: normalizeAddress(asset.tokenAddress),
-      })),
-    },
-    contracts: {
-      etfTokenAddress: normalizeAddress(etf.contracts.etfTokenAddress),
-      etfVaultAddress: normalizeAddress(etf.contracts.etfVaultAddress),
-    },
-  }));
+/**
+ * Upsert ETFs for a single block (reorg-safe via snapshots).
+ * Requires an index on etfs: .index("by_docId", ["docId"])
+ */
+export const _upsertEtfs = async (ctx: MutationCtx, etfs: T_Etf[], blockNumber: number) => {
+  const normalized = etfs.map((etf) => {
+    const docId = etf.docId;
 
-  const found = (
-    await Promise.all(
-      normalizedEtfs.map(async (etf) => {
-        return await ctx.db
-          .query("etfs")
-          .withIndex("by_etfId", (q) => q.eq("details.etfId", etf.details.etfId))
-          .first();
-      })
-    )
-  ).filter((etf) => etf !== null) as C_Etf[];
+    return {
+      ...etf,
+      docId,
+      details: {
+        ...etf.details,
+        assets: etf.details.assets.map((a) => ({
+          ...a,
+          tokenAddress: normalizeAddress(a.tokenAddress),
+        })),
+      },
+      contracts: {
+        etfTokenAddress: normalizeAddress(etf.contracts.etfTokenAddress),
+        etfVaultAddress: normalizeAddress(etf.contracts.etfVaultAddress),
+      },
+    } as T_Etf & { docId: string };
+  });
 
-  const not_found = normalizedEtfs.filter((etf) => !found.find((c: C_Etf) => c.details.etfId === etf.details.etfId));
+  // 2) upsert each ETF with a snapshot taken once per (block, docId)
+  for (const etf of normalized) {
+    const existing = await ctx.db
+      .query("etfs")
+      .withIndex("by_docId", (q) => q.eq("docId", etf.docId))
+      .first();
 
-  if (not_found.length > 0) {
-    for (const etf of not_found) {
+    // record snapshot BEFORE the first mutation in this block
+    await snapshot(ctx, {
+      blockNumber,
+      table: "etfs",
+      docId: etf.docId,
+      existed: !!existing,
+      before: existing ?? null,
+    });
+
+    if (existing) {
+      // patch to the new state (no merging needed beyond your normalization)
+      await ctx.db.patch(existing._id, { ...existing, ...etf });
+    } else {
       await ctx.db.insert("etfs", etf);
-    }
-  }
-
-  if (found.length > 0) {
-    for (const etf of found) {
-      const new_etf = normalizedEtfs.find((c) => c.details.etfId === etf.details.etfId);
-
-      assert(new_etf, `Etf ${etf.details.etfId} not found`);
-
-      await ctx.db.patch(etf._id, { ...new_etf });
     }
   }
 };

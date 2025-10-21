@@ -21,34 +21,35 @@ export const sync = async ({ body }: { body: any }) => {
   const logs = sortLogsByChainOrder({ logs: payload.logs });
   const cache = new CacheManager();
 
+  const firstBlockNumber = logs.length > 0 ? Number(logs[0]?.blockNumber) : 0;
+  const lastBlockNumber = logs.length > 0 ? Number(logs[logs.length - 1]?.blockNumber) : 0;
+  console.log("Syncing logs from block", firstBlockNumber, "to block", lastBlockNumber);
+
   await handleReorg({ logs });
 
   await handleSync({ logs, cache });
 
-  await handleUpdateMutations({ cache, logs });
+  await handleUpdateMutations({ cache });
 };
 
-const handleUpdateMutations = async ({ cache, logs }: { cache: CacheManager; logs: T_QnLog[] }) => {
-  const allEtfs = cache.getAllEntities({ entity: "etf" });
-  const allAssets = cache.getAllEntities({ entity: "asset" });
-  const allEtfTokenTransfers = cache.getAllEntities({ entity: "etf_token_transfer" });
-  const allPools = cache.getAllEntities({ entity: "pool" });
-  const allOhlcUpdates = cache.getAllEntities({ entity: "ohlc_updates" });
+const handleUpdateMutations = async ({ cache }: { cache: CacheManager }) => {
+  // Build per-block payloads from the cache
+  const blocks = cache.buildBlockPayloads();
 
-  if (allEtfs.length > 0 || allAssets.length > 0 || allEtfTokenTransfers.length > 0 || allPools.length > 0 || allOhlcUpdates.length > 0) {
-    const maxBlockNumber = Math.max(...logs.map((log) => Number(log.blockNumber)));
-
-    await CONVEX.httpClient.mutation(CONVEX.api.mutations.sync.sync.default, {
-      etfs: allEtfs,
-      etfTokenTransfers: allEtfTokenTransfers,
-      assets: allAssets,
-      pools: allPools,
-      ohlcUpdates: allOhlcUpdates,
-      lastBlockNumber: maxBlockNumber,
-    });
-
-    console.log("Sync successfully completed");
+  if (blocks.length === 0) {
+    console.log("No staged changes to sync");
+    return;
   }
+
+  // Call the updated multi-block mutation (the one we wrote earlier)
+  await CONVEX.httpClient.mutation(CONVEX.api.mutations.sync.sync.default, {
+    blocks, // <-- BlockPayload[] (sorted ascending)
+  });
+
+  // If the mutation succeeds, you can clear local staging
+  cache.clearStagedBlocks();
+
+  console.log("Sync successfully completed");
 };
 
 const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManager }) => {
@@ -56,8 +57,9 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
   const poolChangedLogs = logs.filter((log) => isPoolChangedLog({ log }));
   const swapLogs = logs.filter((log) => isV2SyncLog({ log }) || isV3SwapLog({ log }));
   const vaultBalanceLogs = logs.filter((log) => isVaultBalanceLog({ log }));
+  const etfTokenTransferLogs = logs.filter((log) => isEtfTokenTransferLog({ log }));
 
-  await _preloadCache({ etfDeployedLogs, poolChangedLogs, swapLogs, vaultBalanceLogs, cache });
+  await _preloadCache({ etfDeployedLogs, poolChangedLogs, swapLogs, vaultBalanceLogs, etfTokenTransferLogs, cache });
 
   if (etfDeployedLogs.length > 0) {
     await _saveNewEtfsAndAssets({ logs: etfDeployedLogs, cache });
@@ -75,7 +77,7 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
     }
 
     if (isVaultBalanceLog({ log })) {
-      _syncVaultBalance({ log, cache, etfAssetPoolMap });
+      await _syncVaultBalance({ log, cache, etfAssetPoolMap });
     }
   }
 

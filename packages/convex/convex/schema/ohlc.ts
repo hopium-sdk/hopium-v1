@@ -8,6 +8,7 @@ export type T_OhlcTimeframe = (typeof OHLC_TIMEFRAMES)[number];
 const ohlcTimeframeSchema = v.union(...OHLC_TIMEFRAMES.map(v.literal));
 
 export const OhlcSchema = {
+  docId: v.string(),
   etfId: v.number(),
   timeframe: ohlcTimeframeSchema,
   bucketTimestamp: v.number(),
@@ -16,12 +17,11 @@ export const OhlcSchema = {
   low: v.number(),
   close: v.number(),
   volume: v.number(),
-  syncBlockNumber_: v.number(),
 };
 
 export const ohlcTable = defineTable(OhlcSchema)
-  .index("by_etfId_timeframe_bucketTimestamp", ["etfId", "timeframe", "bucketTimestamp"])
-  .index("by_syncBlockNumber", ["syncBlockNumber_"]);
+  .index("by_docId", ["docId"])
+  .index("by_etfId_timeframe_bucketTimestamp", ["etfId", "timeframe", "bucketTimestamp"]);
 
 export type C_Ohlc = Doc<"ohlc">;
 export type T_Ohlc = Omit<Doc<"ohlc">, "_id" | "_creationTime">;

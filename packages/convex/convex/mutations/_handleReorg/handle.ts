@@ -1,84 +1,94 @@
 import { mutation, MutationCtx } from "../../_generated/server";
 import { v } from "convex/values";
-import { C_Etf } from "../../schema/etf";
+import { _updateSyncStatus } from "../sync/fns/updateSyncStatus";
+
+// Remove Convex meta so we can patch/insert safely
+function stripMeta<T extends Record<string, any> | null | undefined>(doc: T): Omit<NonNullable<T>, "_id" | "_creationTime"> | null {
+  if (!doc) return null;
+  const { _id, _creationTime, ...rest } = doc as any;
+  return rest;
+}
 
 export default mutation({
-  args: {
-    safeBlockNumber: v.number(),
-  },
-  handler: async (ctx, args) => {
-    const { safeBlockNumber } = args;
-
-    const unsafeEtfTokenTransfers = await ctx.db
-      .query("etf_token_transfers")
-      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
+  args: { safeBlockNumber: v.number() },
+  handler: async (ctx, { safeBlockNumber }) => {
+    // 1) Fetch all snapshots for unsafe blocks
+    const snapshots = await ctx.db
+      .query("snapshots")
+      .withIndex("by_block", (q) => q.gt("blockNumber", safeBlockNumber))
       .collect();
 
-    const unsafeEtfs = await ctx.db
-      .query("etfs")
-      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
-      .collect();
+    // Process newest → oldest so multi-block rollbacks land on the correct final state
+    snapshots.sort((a, b) => b.blockNumber - a.blockNumber);
 
-    const unsafeAssets = await ctx.db
-      .query("assets")
-      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
-      .collect();
+    console.log(`🌀 Reorg: rolling back ${snapshots.length} snapshots above block ${safeBlockNumber}`);
 
-    const unsafePools = await ctx.db
-      .query("pools")
-      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
-      .collect();
+    for (const snap of snapshots) {
+      const { table, docId, existed, before } = snap;
 
-    const unsafeOhlcs = await ctx.db
-      .query("ohlc")
-      .withIndex("by_syncBlockNumber", (q) => q.gt("syncBlockNumber_", safeBlockNumber))
-      .collect();
+      // find current doc by our stable primary key
+      const current = await ctx.db
+        .query(table)
+        .withIndex("by_docId", (q) => q.eq("docId", docId))
+        .first();
 
-    //delete all unsafe etf token transfers
-    for (const etfTokenTransfer of unsafeEtfTokenTransfers) {
-      await ctx.db.delete(etfTokenTransfer._id);
+      if (existed) {
+        // Doc existed before this block — restore its previous image
+        const clean = stripMeta(before);
+        if (current) {
+          await ctx.db.patch(current._id, clean!);
+        } else {
+          // @ts-ignore
+          await ctx.db.insert(table, clean!);
+        }
+      } else {
+        // Doc did not exist before — delete if present
+        if (current) {
+          await ctx.db.delete(current._id);
+        }
+      }
+
+      // delete the snapshot (or mark revertedAt if you prefer to keep audit)
+      await ctx.db.delete(snap._id);
     }
 
-    //delete all unsafe etfs
-    for (const etf of unsafeEtfs) {
-      await ctx.db.delete(etf._id);
-    }
+    await _updateWatchlists(ctx);
+    await _updateSyncStatus(ctx, safeBlockNumber);
 
-    //delete all unsafe assets
-    for (const asset of unsafeAssets) {
-      await ctx.db.delete(asset._id);
-    }
-
-    //delete all unsafe pools
-    for (const pool of unsafePools) {
-      await ctx.db.delete(pool._id);
-    }
-
-    //delete all unsafe ohlcs
-    for (const ohlc of unsafeOhlcs) {
-      await ctx.db.delete(ohlc._id);
-    }
-
-    await _updateWatchlists(ctx, unsafeEtfs);
+    console.log(`✅ Reorg rollback complete to block ${safeBlockNumber}`);
   },
 });
 
-const _updateWatchlists = async (ctx: MutationCtx, unsafeEtfs: C_Etf[]) => {
-  const unsafeEtfIds = new Set<number>(unsafeEtfs.map((e: C_Etf) => e.details.etfId).filter((x: unknown): x is number => typeof x === "number"));
+// Rebuild watchlists against current DB
+const _updateWatchlists = async (ctx: MutationCtx) => {
+  const watchlists = await ctx.db.query("watchlist").collect();
+  if (watchlists.length === 0) return;
 
-  if (unsafeEtfIds.size > 0) {
-    // Pull all watchlists (use an index if you have one to scope further)
-    const watchlists = await ctx.db.query("watchlist").collect();
+  const referenced = new Set<number>();
+  for (const wl of watchlists) {
+    for (const it of wl.items ?? []) {
+      if (it && typeof it.etfId === "number") referenced.add(it.etfId);
+    }
+  }
+  if (referenced.size === 0) return;
 
-    for (const wl of watchlists) {
-      // Remove any items that reference an unsafe ETF id
-      const filtered = wl.items.filter((it: { etfId: number }) => !unsafeEtfIds.has(it.etfId));
+  const checks = await Promise.all(
+    Array.from(referenced).map(async (etfId) => {
+      const row = await ctx.db
+        .query("etfs")
+        .withIndex("by_etfId", (q) => q.eq("details.etfId", etfId))
+        .first();
+      return [etfId, !!row] as const;
+    })
+  );
+  const present = new Set(checks.filter(([, ok]) => ok).map(([id]) => id));
 
-      if (filtered.length !== wl.items.length) {
-        // Reindex to keep `index` contiguous and ordered
-        const reindexed = filtered.map((it, i) => ({ ...it, index: i }));
-        await ctx.db.patch(wl._id, { items: reindexed });
-      }
+  for (const wl of watchlists) {
+    const items = wl.items ?? [];
+    const filtered = items.filter((it: { etfId: number }) => present.has(it.etfId));
+    if (filtered.length !== items.length) {
+      const reindexed = filtered.map((it, i) => ({ ...it, index: i }));
+      await ctx.db.patch(wl._id, { items: reindexed });
     }
   }
 };

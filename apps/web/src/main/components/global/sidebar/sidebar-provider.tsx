@@ -11,9 +11,9 @@ export const SidebarProvider = ({ children }: { children: React.ReactNode }) => 
         } as React.CSSProperties
       }
     >
-      <Sidebar className="border-r" />
+      <Sidebar className="py-1 pl-1" />
       {/* <SidebarInset> */}
-      <div className="flex flex-1 flex-col bg-bg">{children}</div>
+      <div className="flex flex-1 flex-col">{children}</div>
       {/* </SidebarInset> */}
     </ScnSidebarProvider>
   );

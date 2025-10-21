@@ -14,10 +14,10 @@ export const etfTokenEventsAbi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "address",
-        name: "etfTokenAddress",
-        type: "address",
+        indexed: false,
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
       },
       {
         indexed: true,
@@ -47,6 +47,12 @@ export const etfTokenEventsAbi = [
         indexed: false,
         internalType: "uint256",
         name: "etfUsdPrice",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "totalSupply",
         type: "uint256",
       },
     ],
@@ -99,6 +105,11 @@ export const etfTokenEventsAbi = [
       {
         internalType: "uint256",
         name: "transferAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalSupply",
         type: "uint256",
       },
     ],

@@ -1,112 +1,157 @@
 import { MutationCtx } from "../../../_generated/server";
 import { OHLC_TIMEFRAMES, T_Ohlc } from "../../../schema/ohlc";
 import { getBucketTimestamp, normalizeTs } from "../../../../src/utils/ohlc";
+import { snapshot } from "../helpers/snapshot";
 
 export type T_OhlcUpdates = {
   etfId: number;
-  timestamp: number; // ms or seconds (we'll normalize)
+  timestamp: number; // ms or seconds
   price: number;
   volume?: number;
-  syncBlockNumber_: number;
 };
 
-export const _updateOhlcs = async (ctx: MutationCtx, ohlcUpdates: T_OhlcUpdates[]) => {
-  // ---------- READS ----------
-  // For each (update × timeframe) read current bucket & the previous existing ohlc (strictly earlier).
-  const readPromises = ohlcUpdates.flatMap((u) => {
-    const normalizedTs = normalizeTs(u.timestamp);
-    const { etfId, price, syncBlockNumber_ } = u;
+/**
+ * Requirements:
+ * - ohlc has .index("by_docId", ["docId"])
+ * - (kept) .index("by_etfId_timeframe_bucketTimestamp", ["etfId","timeframe","bucketTimestamp"])
+ */
+export const _updateOhlcs = async (ctx: MutationCtx, ohlcUpdates: T_OhlcUpdates[], blockNumber: number) => {
+  // ----- aggregate ticks into buckets -----
+  type Key = string; // `${etfId}:${timeframe}:${bucketTimestamp}`
+  type Agg = {
+    etfId: number;
+    timeframe: (typeof OHLC_TIMEFRAMES)[number];
+    bucketTimestamp: number;
+    firstTs: number;
+    firstPrice: number;
+    high: number;
+    low: number;
+    closeTs: number;
+    closePrice: number;
+    volumeSum: number;
+  };
+
+  const buckets = new Map<Key, Agg>();
+
+  for (const u of ohlcUpdates) {
+    const ts = normalizeTs(u.timestamp);
     const volume = u.volume ?? 0;
 
-    return OHLC_TIMEFRAMES.map(async (timeframe) => {
-      const bucketTimestamp = getBucketTimestamp(normalizedTs, timeframe);
-
-      const [existing, prev] = await Promise.all([
-        // Exact current bucket
-        ctx.db
-          .query("ohlc")
-          .withIndex("by_etfId_timeframe_bucketTimestamp", (q) => q.eq("etfId", etfId).eq("timeframe", timeframe).eq("bucketTimestamp", bucketTimestamp))
-          .first(),
-        // Previous ohlc (any earlier bucket) — pick the closest earlier by sorting desc
-        ctx.db
-          .query("ohlc")
-          .withIndex("by_etfId_timeframe_bucketTimestamp", (q) => q.eq("etfId", etfId).eq("timeframe", timeframe).lt("bucketTimestamp", bucketTimestamp))
-          .order("desc")
-          .first(),
-      ]);
-
-      return {
-        etfId,
-        timeframe,
-        bucketTimestamp,
-        tickTime: normalizedTs, // normalized, used for correct 'close' ordering
-        price,
-        volume,
-        existing,
-        prevClose: prev?.close ?? null,
-        syncBlockNumber_: syncBlockNumber_,
-      };
-    });
-  });
-
-  const readResults = await Promise.all(readPromises);
-
-  // ---------- GROUP per bucket to avoid duplicate inserts/patches ----------
-  type Row = (typeof readResults)[number];
-  const byBucket = new Map<string, Row[]>();
-  for (const row of readResults) {
-    const key = `${row.etfId}|${row.timeframe}|${row.bucketTimestamp}`;
-    const arr = byBucket.get(key);
-    if (arr) arr.push(row);
-    else byBucket.set(key, [row]);
-  }
-
-  // ---------- WRITES (one per bucket) ----------
-  const writePromises: Promise<any>[] = [];
-
-  for (const rows of byBucket.values()) {
-    // All rows share same bucket identity
-    const { etfId, timeframe, bucketTimestamp, syncBlockNumber_ } = rows[0];
-
-    // Aggregate the ticks in this bucket
-    const sorted = rows.slice().sort((a, b) => a.tickTime - b.tickTime);
-    const high = Math.max(...sorted.map((r) => r.price));
-    const low = Math.min(...sorted.map((r) => r.price));
-    const close = sorted[sorted.length - 1]!.price;
-    const volumeSum = sorted.reduce((s, r) => s + (r.volume ?? 0), 0);
-
-    // choose an existing (if any) and prevClose (they should be same across rows)
-    const existing = rows.find((r) => !!r.existing)?.existing ?? null;
-    const prevClose = rows.find((r) => r.prevClose != null)?.prevClose ?? null;
-
-    if (!existing) {
-      // open is prev close if available, otherwise first observed price in this bucket
-      const firstPrice = sorted[0]!.price;
-      const open = prevClose ?? firstPrice;
-
-      const ohlc: T_Ohlc = {
-        etfId,
-        timeframe,
-        bucketTimestamp,
-        open,
-        high,
-        low,
-        close,
-        volume: volumeSum,
-        syncBlockNumber_,
-      };
-      writePromises.push(ctx.db.insert("ohlc", ohlc));
-    } else {
-      writePromises.push(
-        ctx.db.patch(existing._id, {
-          high: Math.max(existing.high, high),
-          low: Math.min(existing.low, low),
-          close, // last observed
-          volume: (existing.volume ?? 0) + volumeSum,
-        })
-      );
+    for (const timeframe of OHLC_TIMEFRAMES) {
+      const bucketTimestamp = getBucketTimestamp(ts, timeframe);
+      const key = `${u.etfId}:${timeframe}:${bucketTimestamp}`;
+      const prev = buckets.get(key);
+      if (!prev) {
+        buckets.set(key, {
+          etfId: u.etfId,
+          timeframe,
+          bucketTimestamp,
+          firstTs: ts,
+          firstPrice: u.price,
+          high: u.price,
+          low: u.price,
+          closeTs: ts,
+          closePrice: u.price,
+          volumeSum: volume,
+        });
+      } else {
+        if (ts < prev.firstTs) {
+          prev.firstTs = ts;
+          prev.firstPrice = u.price;
+        }
+        if (u.price > prev.high) prev.high = u.price;
+        if (u.price < prev.low) prev.low = u.price;
+        if (ts >= prev.closeTs) {
+          prev.closeTs = ts;
+          prev.closePrice = u.price;
+        }
+        prev.volumeSum += volume;
+      }
     }
   }
 
-  await Promise.all(writePromises);
+  // ----- group by (etfId,timeframe) and process buckets in ascending time -----
+  type GroupKey = string; // `${etfId}:${timeframe}`
+  const groups = new Map<GroupKey, Agg[]>();
+  for (const agg of buckets.values()) {
+    const gk = `${agg.etfId}:${agg.timeframe}`;
+    const arr = groups.get(gk);
+    if (arr) arr.push(agg);
+    else groups.set(gk, [agg]);
+  }
+
+  for (const group of groups.values()) {
+    group.sort((a, b) => a.bucketTimestamp - b.bucketTimestamp);
+  }
+
+  // For each group, seed prevClose from DB (closest earlier bucket), then write each bucket
+  for (const aggs of groups.values()) {
+    const { etfId, timeframe } = aggs[0]!;
+
+    // seed prevClose from DB
+    const firstBucketTs = aggs[0]!.bucketTimestamp;
+    const prevRow = await ctx.db
+      .query("ohlc")
+      .withIndex("by_etfId_timeframe_bucketTimestamp", (q) => q.eq("etfId", etfId).eq("timeframe", timeframe).lt("bucketTimestamp", firstBucketTs))
+      .order("desc")
+      .first();
+    let prevClose: number | null = prevRow?.close ?? null;
+
+    // now apply each bucket in order
+    for (const agg of aggs) {
+      const { bucketTimestamp, firstPrice, high, low, closePrice, volumeSum } = agg;
+      const docId = `${etfId}:${timeframe}:${bucketTimestamp}`;
+
+      const existing = await ctx.db
+        .query("ohlc")
+        .withIndex("by_docId", (q) => q.eq("docId", docId))
+        .first();
+
+      // snapshot before mutation (idempotent per (block, table, docId))
+      await snapshot(ctx, {
+        blockNumber,
+        table: "ohlc",
+        docId,
+        existed: !!existing,
+        before: existing ?? null,
+      });
+
+      if (!existing) {
+        // open = previous bucket's close if available, else first tick's price
+        const open = prevClose ?? firstPrice;
+
+        const row: T_Ohlc = {
+          docId,
+          etfId,
+          timeframe,
+          bucketTimestamp,
+          open,
+          high,
+          low,
+          close: closePrice,
+          volume: volumeSum,
+        };
+        await ctx.db.insert("ohlc", row);
+
+        // advance prevClose to this bucket's close
+        prevClose = closePrice;
+      } else {
+        // keep existing.open; update high/low/close/volume
+        const nextHigh = Math.max(existing.high, high);
+        const nextLow = Math.min(existing.low, low);
+        const nextClose = closePrice;
+        const nextVolume = (existing.volume ?? 0) + volumeSum;
+
+        await ctx.db.patch(existing._id, {
+          high: nextHigh,
+          low: nextLow,
+          close: nextClose,
+          volume: nextVolume,
+        });
+
+        // advance prevClose to the (patched) close
+        prevClose = nextClose;
+      }
+    }
+  }
 };

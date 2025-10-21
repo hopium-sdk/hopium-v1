@@ -6,7 +6,7 @@ const DEFAULT_OPTIONS = {
   mediumNumberDecimals: 2, // > 1
   smallNumberSubscriptZeroes: 3, // threshold for “0.0<sub>n</sub>…” style
   smallNumberSubscriptDecimals: 4, // how many digits after significant zeros
-  smallNumberNormalDecimals: 5, // how many digits after significant zeros
+  smallNumberNormalDecimals: 9, // how many digits after significant zeros
   type: "jsx",
 };
 

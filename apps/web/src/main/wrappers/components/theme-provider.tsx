@@ -16,7 +16,7 @@ export const useSafeTheme = () => {
 
   useEffect(() => {
     setHydrated(true);
-    setTheme("dark");
+    // setTheme("dark");
   }, []);
 
   return { hydrated, theme: hydrated ? resolvedTheme : "dark", selectedTheme: theme, setTheme };

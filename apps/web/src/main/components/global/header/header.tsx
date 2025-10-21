@@ -11,7 +11,7 @@ export const Header = () => {
   const { address } = useAccount();
 
   return (
-    <div className="h-14 border-b flex items-center justify-between px-6">
+    <div className="h-13 border-b-0 flex items-center justify-between px-6 bg-bg">
       <div className="w-full flex items-center">
         <Suspense>
           <Search />

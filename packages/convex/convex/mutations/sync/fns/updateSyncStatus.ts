@@ -4,7 +4,7 @@ export const _updateSyncStatus = async (ctx: MutationCtx, lastBlockNumber: numbe
   const syncStatus = await ctx.db.query("sync_status").first();
 
   if (!syncStatus) {
-    await ctx.db.insert("sync_status", { statusId: 0, lastBlockNumber });
+    await ctx.db.insert("sync_status", { docId: "0", lastBlockNumber });
   } else {
     await ctx.db.patch(syncStatus._id, { lastBlockNumber });
   }

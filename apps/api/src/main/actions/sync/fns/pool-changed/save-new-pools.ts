@@ -11,9 +11,8 @@ export const _saveNewPools = async ({ logs, cache }: { logs: T_QnLog[]; cache: C
 
   const newPools = _processNewPools({ logs: decodedLogs, cache });
 
-  const allPools = cache.getAllEntities({ entity: "pool" }) as T_Pool[];
-  for (const pool of allPools) {
-    cache.addEntity({ entity: "pool", id: normalizeAddress(pool.address), value: pool });
+  for (const { pool, blockNumber } of newPools) {
+    cache.addEntity({ entity: "pool", id: normalizeAddress(pool.address), value: pool, blockNumber: blockNumber });
 
     const wethAddress = COMMON_CONSTANTS.addresses.weth[COMMON_CONSTANTS.networkSelected];
     const assetAddress = pool.details.token0 === wethAddress ? pool.details.token1 : pool.details.token0;
@@ -23,10 +22,10 @@ export const _saveNewPools = async ({ logs, cache }: { logs: T_QnLog[]; cache: C
     }
 
     asset.poolAddress = normalizeAddress(pool.address);
-    cache.addEntity({ entity: "asset", id: normalizeAddress(assetAddress), value: asset });
+    cache.addEntity({ entity: "asset", id: normalizeAddress(assetAddress), value: asset, blockNumber: blockNumber });
   }
 
-  await upsertPoolsToQn({ addresses: newPools.map((pool) => pool.address) });
+  await upsertPoolsToQn({ addresses: newPools.map(({ pool }) => pool.address) });
 };
 
 export const _getPreloadEntitiesForNewPools = async ({ logs }: { logs: T_QnLog[] }) => {
@@ -70,7 +69,11 @@ export const _processNewPools = ({ logs, cache }: { logs: { log: T_QnLog; decode
 
   const newPoolAddresses = poolAddresses.filter((address) => !cachedPoolsMap.has(normalizeAddress(address)));
 
-  const newPools: T_Pool[] = newPoolAddresses
+  type T_NewPool = {
+    pool: T_Pool;
+    blockNumber: number;
+  };
+  const newPools: T_NewPool[] = newPoolAddresses
     .map((address) => {
       const norm = normalizeAddress(address);
       const syncBlockNumber = addrToSyncBlock.get(norm)!; // exists by construction
@@ -82,6 +85,7 @@ export const _processNewPools = ({ logs, cache }: { logs: { log: T_QnLog; decode
       }
 
       const pool: T_Pool = {
+        docId: norm,
         address: norm,
         isV3Pool: decoded.args.isV3Pool,
         details: {
@@ -99,10 +103,9 @@ export const _processNewPools = ({ logs, cache }: { logs: { log: T_QnLog; decode
           liquidityUsd: 0,
           mcapUsd: 0,
         },
-        syncBlockNumber_: syncBlockNumber,
       };
 
-      return pool;
+      return { pool, blockNumber: syncBlockNumber };
     })
     .filter((pool) => pool !== null);
 

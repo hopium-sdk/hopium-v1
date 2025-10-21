@@ -26,7 +26,7 @@ export const EtfTrade = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const [loading, setLoading] = useState<string | null>(null);
   const { buyEtf, sellEtf } = useHopiumContracts({ setLoading });
 
-  const { balanceEtf } = useBalanceEtf({ etfTokenAddress: etf.etf.contracts.etfTokenAddress as `0x${string}` });
+  const { balanceEtf } = useBalanceEtf({ etfId: etf.etf.details.etfId });
   const { balanceEth, updateBalanceEth } = useBalanceEth();
 
   const [actionSelected, setActionSelected] = useState<(typeof actionOptions)[number]>("Buy");

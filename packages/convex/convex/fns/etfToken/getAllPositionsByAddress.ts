@@ -23,7 +23,7 @@ export default query({
   handler: async (ctx, args) => {
     const user = normalizeAddress(args.userAddress);
 
-    // 1) Fetch transfers for this user
+    // 1) Fetch transfers for this user (by from/to)
     const outgoing: C_EtfTokenTransfer[] = await ctx.db
       .query("etf_token_transfers")
       .withIndex("by_from", (q) => q.eq("fromAddress", user))
@@ -34,65 +34,67 @@ export default query({
       .withIndex("by_to", (q) => q.eq("toAddress", user))
       .collect();
 
-    // 2) Sort in chain order
+    // 2) Sort in chain order (blockNumber, txIndex, logIndex)
     const all = sortTransferByChainOrder({ transfers: [...incoming, ...outgoing] });
 
-    // 3) Running balances + moving-average entry prices
-    const state = new Map<string, Running>();
+    // 3) Running balances + moving-average entry prices, keyed by etfId
+    const state = new Map<number, Running>();
     const wavg = (prev: number, prevBal: number, px: number | undefined, qty: number, newBal: number) =>
       px == null || Number.isNaN(px) ? prev : (prev * prevBal + px * qty) / newBal;
 
     for (const t of all) {
-      const token = normalizeAddress(t.etfTokenAddress);
+      const etfId = t.etfId;
       const inbound = t.toAddress === user;
       const amt = t.transferAmount ?? 0;
-      const curr = state.get(token) ?? { balance: 0, avg: { eth: 0, usd: 0 } };
+      const curr = state.get(etfId) ?? { balance: 0, avg: { eth: 0, usd: 0 } };
 
       if (inbound) {
         const newBal = curr.balance + amt;
         if (newBal <= 0) {
-          state.set(token, { balance: 0, avg: { eth: 0, usd: 0 } });
+          state.set(etfId, { balance: 0, avg: { eth: 0, usd: 0 } });
           continue;
         }
         const newAvgEth = wavg(curr.avg.eth, curr.balance, t.etfPrice?.eth, amt, newBal);
         const newAvgUsd = wavg(curr.avg.usd, curr.balance, t.etfPrice?.usd, amt, newBal);
-        state.set(token, { balance: newBal, avg: { eth: newAvgEth, usd: newAvgUsd } });
+        state.set(etfId, { balance: newBal, avg: { eth: newAvgEth, usd: newAvgUsd } });
       } else {
         const newBal = Math.max(0, curr.balance - amt);
-        state.set(token, { balance: newBal, avg: newBal === 0 ? { eth: 0, usd: 0 } : curr.avg });
+        state.set(etfId, { balance: newBal, avg: newBal === 0 ? { eth: 0, usd: 0 } : curr.avg });
       }
     }
 
-    // 4) Build positions (nonzero only)
+    // 4) Build positions for nonzero balances
     const base = Array.from(state.entries())
       .filter(([_, v]) => v.balance > 0)
-      .map(([tokenAddress, { balance, avg }]) => ({
-        tokenAddress,
+      .map(([etfId, { balance, avg }]) => ({
+        etfId,
         balance,
         avgEntryPrice: { eth: avg.eth, usd: avg.usd },
       }));
 
-    // 5) Enrich from ETFs: name (details.name) & symbol (details.ticker)
+    // 5) Enrich from ETFs via etfId (by_etfId index)
     const enriched: T_EtfTokenPosition[] = [];
     for (const p of base) {
-      // If you add the index below, use this:
       const etf: C_Etf | null = await ctx.db
         .query("etfs")
-        .withIndex("by_token_address", (q) => q.eq("contracts.etfTokenAddress", p.tokenAddress))
+        .withIndex("by_etfId", (q) => q.eq("details.etfId", p.etfId))
         .first();
 
+      const tokenAddress = etf?.contracts?.etfTokenAddress ? normalizeAddress(etf.contracts.etfTokenAddress) : "";
+
       enriched.push({
-        tokenAddress: p.tokenAddress,
+        tokenAddress,
         tokenSymbol: etf?.details.ticker ?? "",
         tokenName: etf?.details.name ?? "",
         balance: p.balance,
         avgEntryPrice: p.avgEntryPrice,
-        etfId: etf?.details.etfId ?? 0,
+        etfId: p.etfId,
         currentPrice: { eth: etf?.stats.price.eth ?? 0, usd: etf?.stats.price.usd ?? 0 },
         value: p.balance * (etf?.stats.price.usd ?? 0),
       });
     }
 
+    // 6) Filter tiny dust positions (optional)
     const filtered = enriched.filter((p) => p.value > 0.01);
 
     return filtered;

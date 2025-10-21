@@ -9,20 +9,20 @@ export type T_EtfTokenHolder = {
 
 export default query({
   args: {
-    tokenAddress: v.string(),
+    etfId: v.number(),
   },
   handler: async (ctx, args) => {
-    const token = normalizeAddress(args.tokenAddress);
+    const { etfId } = args;
 
     // Fetch all transfers where token is involved — both incoming and outgoing
     const outgoingTransfers = await ctx.db
       .query("etf_token_transfers")
-      .withIndex("by_token_from", (q) => q.eq("etfTokenAddress", token))
+      .withIndex("by_etf_from", (q) => q.eq("etfId", etfId))
       .collect();
 
     const incomingTransfers = await ctx.db
       .query("etf_token_transfers")
-      .withIndex("by_token_to", (q) => q.eq("etfTokenAddress", token))
+      .withIndex("by_etf_to", (q) => q.eq("etfId", etfId))
       .collect();
 
     // Accumulate balances per user

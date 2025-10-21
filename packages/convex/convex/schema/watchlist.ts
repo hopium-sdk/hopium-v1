@@ -9,11 +9,12 @@ const watchlistItemSchema = v.object({
 });
 
 const WatchlistSchema = {
+  docId: v.string(),
   userAddress: v.string(),
   items: v.array(watchlistItemSchema),
 };
 
-export const watchlistTable = defineTable(WatchlistSchema).index("by_userAddress", ["userAddress"]);
+export const watchlistTable = defineTable(WatchlistSchema).index("by_docId", ["docId"]).index("by_userAddress", ["userAddress"]);
 
 export type C_Watchlist = Doc<"watchlist">;
 export type T_Watchlist = Omit<Doc<"watchlist">, "_id" | "_creationTime">;

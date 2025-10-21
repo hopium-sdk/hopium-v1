@@ -11,7 +11,7 @@ import { PiMonitor, PiMonitorFill, PiMoon, PiMoonFill, PiSun, PiSunFill } from "
 export const Footer = () => {
   const { ethUsdPrice } = usePrices();
   return (
-    <div className="h-10 border-t flex items-center px-6">
+    <div className="h-10 border-t-0 flex items-center px-6 bg-bg">
       <div className="flex items-center gap-2.5">
         <div className="flex items-center gap-2.5 bg-buy-900/70 rounded-full px-4 py-1">
           <PingCircle />

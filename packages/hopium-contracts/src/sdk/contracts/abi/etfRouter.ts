@@ -12,6 +12,11 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
+    name: "CapacityExceeded",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "DeltaError",
     type: "error",
   },

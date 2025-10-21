@@ -8,6 +8,7 @@ const ethUsd = v.object({
 });
 
 export const PoolSchema = {
+  docId: v.string(),
   address: v.string(),
   isV3Pool: v.boolean(),
   details: v.object({
@@ -22,12 +23,11 @@ export const PoolSchema = {
     liquidityUsd: v.number(),
     mcapUsd: v.number(),
   }),
-  syncBlockNumber_: v.number(),
 };
 
 export const poolsTable = defineTable(PoolSchema)
+  .index("by_docId", ["docId"])
   .index("by_address", ["address"])
-  .index("by_syncBlockNumber", ["syncBlockNumber_"])
   .index("by_tokens", ["details.token0", "details.token1"]);
 
 export type C_Pool = Doc<"pools">;

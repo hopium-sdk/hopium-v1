@@ -2,12 +2,27 @@ import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { useWatchlist } from "@/main/hooks/use-watchlist";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NumberTab } from "@/main/components/ui/number-tab";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
+import { HOPIUM } from "@/main/lib/hopium";
 
 export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
+  // const [livePrice, setLivePrice] = useState({ etfPriceWeth: 0, etfPriceUsd: 0 });
+
+  // const fetchLiveUsdPrice = async () => {
+  //   const data = await HOPIUM.fns.etfOracle.fetchEtfPrice({ etfId: BigInt(etf.etf.details.etfId) });
+  //   setLivePrice(data);
+  // };
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     fetchLiveUsdPrice();
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [etf.etf.details.etfId]);
+
   const getValue = (option: number): number => {
     switch (option) {
       case 0:
@@ -37,6 +52,22 @@ export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
           symbolType={"eth"}
           blink
         />
+
+        {/* <NumberTab
+          title={"Live Price USD"}
+          value={livePrice.etfPriceUsd}
+          color={livePrice.etfPriceUsd == 0 ? "text-subtext" : livePrice.etfPriceUsd > 0 ? "text-green-500" : "text-red-500"}
+          symbolType={"usd"}
+          blink
+        />
+
+        <NumberTab
+          title={"Live Price ETH"}
+          value={livePrice.etfPriceWeth}
+          color={livePrice.etfPriceWeth == 0 ? "text-subtext" : livePrice.etfPriceWeth > 0 ? "text-green-500" : "text-red-500"}
+          symbolType={"eth"}
+          blink
+        /> */}
       </div>
     </SidebarBox>
   );

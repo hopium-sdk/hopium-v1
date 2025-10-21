@@ -10,6 +10,7 @@ const ethUsd = v.object({
 });
 
 export const EtfSchema = {
+  docId: v.string(),
   details: v.object({
     etfId: v.number(),
     name: v.string(),
@@ -29,18 +30,18 @@ export const EtfSchema = {
     etfVaultAddress: v.string(),
   }),
   stats: v.object({
+    totalSupply: v.number(),
     price: ethUsd,
     volume: ethUsd,
     assetsLiquidityUsd: v.number(),
     assetsMcapUsd: v.number(),
   }),
   tags: v.array(v.string()),
-  syncBlockNumber_: v.number(),
 };
 
 export const etfsTable = defineTable(EtfSchema)
+  .index("by_docId", ["docId"])
   .index("by_etfId", ["details.etfId"])
-  .index("by_syncBlockNumber", ["syncBlockNumber_"])
   .index("by_tags", ["tags"])
   .index("by_token_address", ["contracts.etfTokenAddress"])
 

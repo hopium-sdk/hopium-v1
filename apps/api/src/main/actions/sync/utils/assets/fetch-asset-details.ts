@@ -6,7 +6,7 @@ import { normalizeAddress } from "@repo/common/utils/address";
 
 const chain = COMMON_CONSTANTS.networkSelected == "mainnet" ? "eth" : "base";
 
-export const fetchAssetDetails = async ({ tokenAddress, syncBlockNumber }: { tokenAddress: string; syncBlockNumber: number }) => {
+export const fetchAssetDetails = async ({ tokenAddress }: { tokenAddress: string }) => {
   try {
     const find = await fetchAssetDetailsFromGeckoTerminal({ tokenAddress });
 
@@ -15,12 +15,12 @@ export const fetchAssetDetails = async ({ tokenAddress, syncBlockNumber }: { tok
     }
 
     const token: T_Asset = {
+      docId: normalizeAddress(find.address),
       address: normalizeAddress(find.address),
       name: find.name,
       symbol: find.symbol,
       decimals: find.decimals,
       tv_ticker: "",
-      syncBlockNumber_: syncBlockNumber,
     };
 
     return token;
@@ -28,12 +28,12 @@ export const fetchAssetDetails = async ({ tokenAddress, syncBlockNumber }: { tok
     const tokenDetails = await HOPIUM.fns.erc20.fetchTokenDetails({ tokenAddress: tokenAddress as `0x${string}` });
 
     const token: T_Asset = {
-      address: tokenAddress,
+      docId: normalizeAddress(tokenAddress),
+      address: normalizeAddress(tokenAddress),
       name: tokenDetails.name,
       symbol: tokenDetails.symbol,
       decimals: tokenDetails.decimals,
       tv_ticker: "",
-      syncBlockNumber_: syncBlockNumber,
     };
 
     return token;

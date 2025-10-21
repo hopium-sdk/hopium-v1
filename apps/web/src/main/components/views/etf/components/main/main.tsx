@@ -13,23 +13,23 @@ export const EtfMain = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
       {!etfBottomCollapsed ? (
         <ResizablePanelGroup direction="vertical" className="w-full h-full flex flex-col overflow-hidden" autoSaveId="coin-chart">
           <ResizablePanel defaultSize={70} className="min-h-[300px]">
-            <div className="w-full h-full flex flex-col overflow-hidden">
+            <div className="w-full h-full flex flex-col overflow-hidden border rounded-md bg-bg">
               <EtfTop etf={etf} />
             </div>
           </ResizablePanel>
-          <ResizableHandle className="bg-transparent hover:bg-transparent" />
+          <ResizableHandle className="bg-transparent hover:bg-transparent py-0.5" />
           <ResizablePanel defaultSize={30} className="min-h-[150px]">
-            <div className="w-full h-full flex flex-col overflow-hidden border-t">
+            <div className="w-full h-full flex flex-col overflow-hidden border rounded-md bg-bg">
               <EtfBottom etf={etf} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />
             </div>
           </ResizablePanel>
         </ResizablePanelGroup>
       ) : (
-        <div className="flex flex-1 flex-col gap-0 overflow-hidden">
-          <div className="w-full flex flex-1 flex-col overflow-hidden">
+        <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+          <div className="w-full flex flex-1 flex-col overflow-hidden border rounded-md bg-bg">
             <EtfTop etf={etf} />
           </div>
-          <div className="w-full flex flex-col overflow-hidden border-t">
+          <div className="w-full flex flex-col overflow-hidden border rounded-md bg-bg">
             <EtfBottom etf={etf} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />
           </div>
         </div>

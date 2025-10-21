@@ -1,15 +1,13 @@
+import { CONSTANTS } from "@/main/lib/constants";
 import { QN } from "@/main/lib/qn";
-
-// export const upsertAssetsToQn = async ({ addresses }: { addresses: string[] }) => {
-//   await QN.upsertKvList({
-//     key: "hopium-assets",
-//     values: addresses,
-//   });
-// };
 
 export const upsertPoolsToQn = async ({ addresses }: { addresses: string[] }) => {
   await QN.upsertKvList({
-    key: "hopium-pools",
+    key: CONSTANTS.qn.poolKey,
     values: addresses,
   });
+};
+
+export const getPoolsListFromQn = async () => {
+  return await QN.getKvList({ key: CONSTANTS.qn.poolKey });
 };

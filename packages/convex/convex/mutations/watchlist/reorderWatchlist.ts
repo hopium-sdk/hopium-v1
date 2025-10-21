@@ -17,6 +17,7 @@ export const reorderWatchlist = mutation({
     // 1) No watchlist yet → create one with this coin at index 0
     if (!watchlist) {
       await ctx.db.insert("watchlist", {
+        docId: userAddress,
         userAddress,
         items: [{ etfId, index: 0 }],
       });

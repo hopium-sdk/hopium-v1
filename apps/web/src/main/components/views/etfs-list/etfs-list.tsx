@@ -19,7 +19,7 @@ export const EtfsList = ({ sortBy }: { sortBy: T_EtfListOption }) => {
   };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col overflow-hidden border rounded-md bg-bg">
       <RealtimeTable<C_EtfWithAssetsAndPools, string, typeof CONVEX.api.fns.etf.getEtfList.default>
         queryMode="paginated"
         queryResult={result}

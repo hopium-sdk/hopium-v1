@@ -21,6 +21,7 @@
 
   --color-text: var(--text);
   --color-subtext: var(--subtext);
+  --color-bg-1000: var(--bg-1000);
   --color-bg: var(--bg);
   --color-bg-900: var(--bg-900);
   --color-bg-800: var(--bg-800);
@@ -75,6 +76,7 @@
   --radius: 0.625rem;
   --text: var(--fg);
   --subtext: var(--mid);
+  --bg-1000: oklch(0.985 0 0);
   --bg: oklch(1 0 0);
   --bg-900: oklch(0.95 0 0);
   --bg-800: oklch(0.967 0.001 286.375);
@@ -100,7 +102,7 @@
   --mid: oklch(0.552 0.016 285.938);
   --mid2: oklch(0.705 0.015 286.067);
   --error: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
+  --border: oklch(0.89 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
 
   --background: var(--bg);
@@ -137,6 +139,7 @@
 .dark {
   --text: var(--fg);
   --subtext: var(--mid);
+  --bg-1000: #0d0d0d;
   --bg: #0f0f0f;
   /* --bg: #0e0e12; */
   --bg-900: #2e2e2e;

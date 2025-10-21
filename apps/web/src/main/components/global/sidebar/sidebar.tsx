@@ -19,21 +19,23 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof ScnSidebar>) {
   return (
     <ScnSidebar collapsible="none" {...props}>
       {!watchlistCollapsed.isCollapsed ? (
-        <ResizablePanelGroup direction="vertical" className="flex flex-1 flex-col overflow-hidden gap-0.75" autoSaveId={"sidebar"}>
-          <ResizablePanel defaultSize={70} className="min-h-[300px] flex flex-col">
+        <ResizablePanelGroup direction="vertical" className="flex flex-1 flex-col overflow-hidden" autoSaveId={"sidebar"}>
+          <ResizablePanel defaultSize={70} className="min-h-[300px] flex flex-col border rounded-md bg-bg">
             <SidebarInside />
           </ResizablePanel>
-          <ResizableHandle className="bg-transparent hover:bg-transparent" />
-          <ResizablePanel defaultSize={30} className="min-h-[110px] flex flex-1">
+          <ResizableHandle className="bg-transparent hover:bg-transparent py-0.5" />
+          <ResizablePanel defaultSize={30} className="min-h-[110px] flex flex-1 border rounded-md bg-bg">
             <WatchlistInside watchlistCollapsed={watchlistCollapsed} setWatchlistCollapsed={setWatchlistCollapsed} />
           </ResizablePanel>
         </ResizablePanelGroup>
       ) : (
-        <div className="w-full flex flex-1 flex-col gap-1.5">
-          <div className="w-full flex flex-1 flex-col">
+        <div className="w-full flex flex-1 flex-col gap-1">
+          <div className="w-full flex flex-1 flex-col border rounded-md bg-bg">
             <SidebarInside />
           </div>
-          <WatchlistInside watchlistCollapsed={watchlistCollapsed} setWatchlistCollapsed={setWatchlistCollapsed} />
+          <div className="border rounded-md bg-bg">
+            <WatchlistInside watchlistCollapsed={watchlistCollapsed} setWatchlistCollapsed={setWatchlistCollapsed} />
+          </div>
         </div>
       )}
     </ScnSidebar>
@@ -50,7 +52,7 @@ type T_WatchlistInside = {
 
 const WatchlistInside = ({ watchlistCollapsed, setWatchlistCollapsed }: T_WatchlistInside) => {
   return (
-    <div className="w-full flex flex-col overflow-hidden border-t">
+    <div className="w-full flex flex-col overflow-hidden">
       <Suspense>
         <Watchlist collapsed={watchlistCollapsed} setCollapsed={setWatchlistCollapsed} />
       </Suspense>

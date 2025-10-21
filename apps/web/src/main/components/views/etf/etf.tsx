@@ -20,11 +20,11 @@ export const Etf = ({ etfId }: { etfId: number }) => {
   }
 
   return (
-    <div className="flex flex-1 overflow-hidden">
+    <div className="flex flex-1 overflow-hidden gap-1">
       <div className="flex flex-1 flex-col overflow-hidden">
         <EtfMain etf={etfWithAssetsAndPools} />
       </div>
-      <div className="flex w-[350px] flex-col overflow-hidden border-l">
+      <div className="flex w-[350px] flex-col overflow-hidden border rounded-md">
         <EtfSidebar etf={etfWithAssetsAndPools} />
       </div>
     </div>

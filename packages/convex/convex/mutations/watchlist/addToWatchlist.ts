@@ -13,6 +13,7 @@ export const addToWatchlist = mutation({
 
     if (!watchlist) {
       await ctx.db.insert("watchlist", {
+        docId: userAddress,
         userAddress,
         items: [{ etfId, index: 0 }],
       });

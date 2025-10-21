@@ -10,7 +10,7 @@ import { formatUnits } from "viem";
 export const EtfHolders = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const [etfSupply, setEtfSupply] = useState<number>(0);
   const result: T_EtfTokenHolder[] | undefined = useQuery(CONVEX.api.fns.etfToken.getTokenHolders.default, {
-    tokenAddress: etf.etf.contracts.etfTokenAddress as `0x${string}`,
+    etfId: etf.etf.details.etfId,
   });
 
   const columns = getHoldersColumns({ etf, etfSupply });
