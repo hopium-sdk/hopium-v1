@@ -1,9 +1,10 @@
 import { Suspense } from "react";
 import { EtfsList } from "@/main/components/views/etfs-list/etfs-list";
+import { LoadingDiv } from "@/main/components/ui/loading-div";
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingDiv />}>
       <ServerPage searchParams={searchParams} />
     </Suspense>
   );
