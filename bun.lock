@@ -177,6 +177,7 @@
       "name": "@repo/convex",
       "version": "0.0.0",
       "dependencies": {
+        "@repo/common": "workspace:*",
         "assert": "^2.1.0",
         "convex": "^1.27.5",
         "ethers": "5.7",
