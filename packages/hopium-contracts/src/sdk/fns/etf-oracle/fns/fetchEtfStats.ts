@@ -7,10 +7,6 @@ export const _fetchEtfStats = async ({ etfId, network, rpcUrl }: { etfId: bigint
   const stats = await etfOracleContract.read.getEtfStats([etfId]);
 
   return {
-    volume: {
-      eth: Number(stats.volume.eth18) / 1e18,
-      usd: Number(stats.volume.usd18) / 1e18,
-    },
     assetsLiquidityUsd: Number(stats.assetsLiquidityUsd) / 1e18,
     assetsMcapUsd: Number(stats.assetsMcapUsd) / 1e18,
   };

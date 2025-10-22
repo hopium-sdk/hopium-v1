@@ -7,9 +7,14 @@ export const _updateEtfStats = async () => {
   const etfs = await CONVEX.httpClient.query(CONVEX.api.fns.etf.getAllEtfs.default);
 
   const tasks: Array<() => Promise<T_Etf>> = etfs.map((etf) => async () => {
-    const stats = await HOPIUM.fns.etfOracle.fetchEtfStats({
-      etfId: BigInt(etf.details.etfId),
-    });
+    const [stats, volume] = await Promise.all([
+      HOPIUM.fns.etfOracle.fetchEtfStats({
+        etfId: BigInt(etf.details.etfId),
+      }),
+      CONVEX.httpClient.query(CONVEX.api.fns.etfToken.getEtfVolume.default, {
+        etfId: etf.details.etfId,
+      }),
+    ]);
 
     const { _id, _creationTime, ...rest } = etf;
 
@@ -17,7 +22,12 @@ export const _updateEtfStats = async () => {
       ...rest,
       stats: {
         ...rest.stats,
-        ...stats,
+        assetsLiquidityUsd: stats.assetsLiquidityUsd,
+        assetsMcapUsd: stats.assetsMcapUsd,
+        volume: {
+          eth: volume.eth,
+          usd: volume.usd,
+        },
       },
     };
   });

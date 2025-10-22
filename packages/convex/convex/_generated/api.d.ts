@@ -15,10 +15,12 @@ import type {
 } from "convex/server";
 import type * as fns_etf_getAllEtfs from "../fns/etf/getAllEtfs.js";
 import type * as fns_etf_getEtfList from "../fns/etf/getEtfList.js";
+import type * as fns_etf_getEtfListByTag from "../fns/etf/getEtfListByTag.js";
 import type * as fns_etf_getEtfWithAssetsAndPools from "../fns/etf/getEtfWithAssetsAndPools.js";
 import type * as fns_etf_search from "../fns/etf/search.js";
 import type * as fns_etf_utils_encrichWithAssetsAndPools from "../fns/etf/utils/encrichWithAssetsAndPools.js";
 import type * as fns_etfToken_getAllPositionsByAddress from "../fns/etfToken/getAllPositionsByAddress.js";
+import type * as fns_etfToken_getEtfVolume from "../fns/etfToken/getEtfVolume.js";
 import type * as fns_etfToken_getTokenBalanceByAddress from "../fns/etfToken/getTokenBalanceByAddress.js";
 import type * as fns_etfToken_getTokenHolders from "../fns/etfToken/getTokenHolders.js";
 import type * as fns_ohlc_getHistorical from "../fns/ohlc/getHistorical.js";
@@ -65,10 +67,12 @@ import type * as schema_watchlist from "../schema/watchlist.js";
 declare const fullApi: ApiFromModules<{
   "fns/etf/getAllEtfs": typeof fns_etf_getAllEtfs;
   "fns/etf/getEtfList": typeof fns_etf_getEtfList;
+  "fns/etf/getEtfListByTag": typeof fns_etf_getEtfListByTag;
   "fns/etf/getEtfWithAssetsAndPools": typeof fns_etf_getEtfWithAssetsAndPools;
   "fns/etf/search": typeof fns_etf_search;
   "fns/etf/utils/encrichWithAssetsAndPools": typeof fns_etf_utils_encrichWithAssetsAndPools;
   "fns/etfToken/getAllPositionsByAddress": typeof fns_etfToken_getAllPositionsByAddress;
+  "fns/etfToken/getEtfVolume": typeof fns_etfToken_getEtfVolume;
   "fns/etfToken/getTokenBalanceByAddress": typeof fns_etfToken_getTokenBalanceByAddress;
   "fns/etfToken/getTokenHolders": typeof fns_etfToken_getTokenHolders;
   "fns/ohlc/getHistorical": typeof fns_ohlc_getHistorical;

@@ -42,14 +42,16 @@ export const EtfSchema = {
 export const etfsTable = defineTable(EtfSchema)
   .index("by_docId", ["docId"])
   .index("by_etfId", ["details.etfId"])
-  .index("by_tags", ["tags"])
   .index("by_token_address", ["contracts.etfTokenAddress"])
 
   //sorting for etf list
   .index("by_createdAt", ["details.createdAt"])
   .index("by_assetsMcapUsd", ["stats.assetsMcapUsd"])
   .index("by_assetsLiquidityUsd", ["stats.assetsLiquidityUsd"])
-  .index("by_assetsCount", ["details.assetsCount"]);
+  .index("by_assetsCount", ["details.assetsCount"])
+
+  //sorting for etf list by tag
+  .index("by_tags", ["tags", "stats.assetsMcapUsd"]);
 
 export type C_Etf = Doc<"etfs">;
 export type T_Etf = Omit<Doc<"etfs">, "_id" | "_creationTime">;

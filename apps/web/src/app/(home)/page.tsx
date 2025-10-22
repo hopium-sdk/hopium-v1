@@ -1,5 +1,5 @@
 import { EtfsList } from "@/main/components/views/etfs-list/etfs-list";
 
 export default async function Page() {
-  return <EtfsList sortBy="most-cap" />;
+  return <EtfsList type="list" query="most-cap" />;
 }

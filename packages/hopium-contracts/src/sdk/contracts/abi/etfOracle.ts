@@ -92,23 +92,6 @@ export const etfOracleAbi = [
       {
         components: [
           {
-            components: [
-              {
-                internalType: "uint256",
-                name: "eth18",
-                type: "uint256",
-              },
-              {
-                internalType: "uint256",
-                name: "usd18",
-                type: "uint256",
-              },
-            ],
-            internalType: "struct EtfStats.EthUsd",
-            name: "volume",
-            type: "tuple",
-          },
-          {
             internalType: "uint256",
             name: "assetsLiquidityUsd",
             type: "uint256",

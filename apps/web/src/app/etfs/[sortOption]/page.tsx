@@ -18,5 +18,5 @@ const ServerPage = async ({ params }: { params: Promise<{ sortOption: string }> 
     return notFound();
   }
 
-  return <EtfsList sortBy={sortOption as (typeof EtfListOptions)[number]} />;
+  return <EtfsList type="list" query={sortOption as (typeof EtfListOptions)[number]} />;
 };

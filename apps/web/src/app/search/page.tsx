@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { SearchList } from "@/main/components/views/search-list/search-list";
+import { EtfsList } from "@/main/components/views/etfs-list/etfs-list";
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ query?: string }> }) {
   return (
@@ -11,5 +11,5 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ q
 
 const ServerPage = async ({ searchParams }: { searchParams: Promise<{ query?: string }> }) => {
   const { query } = await searchParams;
-  return <SearchList query={query ?? ""} />;
+  return <EtfsList type="search" query={query ?? ""} />;
 };

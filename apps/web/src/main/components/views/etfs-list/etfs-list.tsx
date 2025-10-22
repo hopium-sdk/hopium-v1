@@ -1,16 +1,40 @@
 "use client";
 import { CONVEX } from "@/main/lib/convex";
-import { usePaginatedQuery } from "convex/react";
+import { PaginatedQueryReference, usePaginatedQuery } from "convex/react";
 import { T_EtfListOption, C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { RealtimeTable } from "../../ui/table";
 import { getEtfListColumns } from "./components/columns";
 import { Row } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
+
 const PAGE_SIZE = 20;
 
-export const EtfsList = ({ sortBy }: { sortBy: T_EtfListOption }) => {
+type T_EtfsList = {
+  type: "list" | "tag" | "search";
+  query: string;
+};
+
+export const EtfsList = ({ type, query }: T_EtfsList) => {
   const router = useRouter();
-  const result = usePaginatedQuery(CONVEX.api.fns.etf.getEtfList.default, { sortBy }, { initialNumItems: PAGE_SIZE });
+
+  const params = {
+    list: {
+      fn: CONVEX.api.fns.etf.getEtfList.default,
+      args: { sortBy: query as T_EtfListOption },
+    },
+    tag: {
+      fn: CONVEX.api.fns.etf.getEtfListByTag.default,
+      args: { tag: query },
+    },
+    search: {
+      fn: CONVEX.api.fns.etf.search.default,
+      args: { searchTerm: query },
+    },
+  };
+
+  const result = usePaginatedQuery(params[type].fn as PaginatedQueryReference, params[type].args, {
+    initialNumItems: PAGE_SIZE,
+  });
 
   const columns = getEtfListColumns();
 
@@ -25,7 +49,7 @@ export const EtfsList = ({ sortBy }: { sortBy: T_EtfListOption }) => {
         queryResult={result}
         pageSize={PAGE_SIZE}
         columns={columns}
-        empty={{ containerLabelVariant: "default", containerShowSubtext: true }}
+        empty={{ containerLabelVariant: type === "search" ? "search" : "default", containerShowSubtext: true }}
         loadingNumRows={14}
         loadingRowHeight="h-12"
         getRowClassName={() => "cursor-pointer"}

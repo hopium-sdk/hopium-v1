@@ -1,6 +1,7 @@
 // convex/etfs/search.ts
 import { query } from "../../_generated/server";
 import { v } from "convex/values";
+import { paginationOptsValidator } from "convex/server";
 import { isEthAddress, normalizeAddress } from "../../../src/utils/normalizeAddress";
 import { C_Etf, C_EtfWithAssetsAndPools } from "../../schema/etf";
 import { enrichEtfWithAssetsAndPools } from "./utils/encrichWithAssetsAndPools";
@@ -8,8 +9,11 @@ import { enrichEtfWithAssetsAndPools } from "./utils/encrichWithAssetsAndPools";
 export default query({
   args: {
     searchTerm: v.string(),
+    paginationOpts: paginationOptsValidator,
   },
-  handler: async (ctx, { searchTerm }) => {
+  handler: async (ctx, args) => {
+    const { searchTerm } = args;
+
     let results: C_Etf[] = [];
     const term = searchTerm.trim();
 
@@ -41,6 +45,10 @@ export default query({
       })
     );
 
-    return resultsWithAssetsAndPools;
+    return {
+      page: resultsWithAssetsAndPools,
+      isDone: true,
+      continueCursor: null,
+    };
   },
 });

@@ -22,6 +22,11 @@ export const etfFactoryAbi = [
   },
   {
     inputs: [],
+    name: "ETHSendFailed",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "EmptyTicker",
     type: "error",
   },
@@ -32,12 +37,22 @@ export const etfFactoryAbi = [
   },
   {
     inputs: [],
+    name: "InsufficientETH",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "InvalidAddress",
     type: "error",
   },
   {
     inputs: [],
     name: "InvalidId",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "InvalidSeedAmount",
     type: "error",
   },
   {
@@ -67,12 +82,12 @@ export const etfFactoryAbi = [
   },
   {
     inputs: [],
-    name: "ZeroToken",
+    name: "ZeroAmount",
     type: "error",
   },
   {
     inputs: [],
-    name: "ZeroTradeValue",
+    name: "ZeroToken",
     type: "error",
   },
   {
@@ -229,7 +244,7 @@ export const etfFactoryAbi = [
         type: "uint256",
       },
     ],
-    stateMutability: "nonpayable",
+    stateMutability: "payable",
     type: "function",
   },
   {
@@ -437,36 +452,25 @@ export const etfFactoryAbi = [
         type: "uint256",
       },
     ],
-    name: "getEtfTotalVolume",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "volWeth",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "volUsd",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "etfId",
-        type: "uint256",
-      },
-    ],
     name: "getEtfVaultAddress",
     outputs: [
       {
         internalType: "address",
         name: "vaultAddress",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getSeedPrice",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -488,19 +492,23 @@ export const etfFactoryAbi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "etfId",
-        type: "uint256",
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
       },
       {
-        internalType: "uint256",
-        name: "ethAmount",
-        type: "uint256",
+        internalType: "address",
+        name: "toAddress",
+        type: "address",
       },
     ],
-    name: "updateEtfVolume",
+    name: "recoverAsset",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ] as const;
