@@ -24,7 +24,7 @@ export function ThemeToggle({ withBox = true }: { withBox?: boolean }) {
       <DropdownMenuTrigger asChild>
         <div
           className={cn(
-            "cursor-pointer flex items-center justify-center rounded-md outline-none border-none text-subtext hover:text-foreground w-8.5 h-8.5",
+            "cursor-pointer flex items-center justify-center rounded-lg outline-none border-none text-subtext hover:text-foreground w-8.5 h-8.5",
             withBox && "bg-primary-foreground"
           )}
         >

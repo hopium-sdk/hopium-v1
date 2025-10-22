@@ -16,7 +16,7 @@ export const AmountSuggestionButtons = ({ form, amount, balanceEth, balanceToken
   const suggestions = [25, 50, 75, 100];
 
   const css = {
-    suggestion_option_div: "border flex items-center justify-center py-2 rounded-md cursor-pointer",
+    suggestion_option_div: "border flex items-center justify-center py-2 rounded-lg cursor-pointer",
     suggestion_option_p: "text-sm font-semibold uppercase text-subtext px-4",
     buy_hover: "hover:border-buy",
     sell_hover: "hover:border-sell",

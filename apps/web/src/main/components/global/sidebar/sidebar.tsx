@@ -37,20 +37,20 @@ const SidebarDesktop = () => {
     <div className="hidden md:flex flex-1 flex-col overflow-hidden">
       {!watchlistCollapsed.isCollapsed ? (
         <ResizablePanelGroup direction="vertical" className="flex flex-1 flex-col overflow-hidden" autoSaveId={"sidebar"}>
-          <ResizablePanel defaultSize={70} className="min-h-[300px] flex flex-col border rounded-md bg-bg">
+          <ResizablePanel defaultSize={70} className="min-h-[300px] flex flex-col border rounded-lg bg-bg">
             <SidebarInside />
           </ResizablePanel>
           <ResizableHandle className="bg-transparent hover:bg-transparent py-0.5" />
-          <ResizablePanel defaultSize={30} className="min-h-[110px] flex flex-1 border rounded-md bg-bg">
+          <ResizablePanel defaultSize={30} className="min-h-[110px] flex flex-1 border rounded-lg bg-bg">
             <WatchlistInside watchlistCollapsed={watchlistCollapsed} setWatchlistCollapsed={setWatchlistCollapsed} />
           </ResizablePanel>
         </ResizablePanelGroup>
       ) : (
         <div className="w-full flex flex-1 flex-col gap-1">
-          <div className="w-full flex flex-1 flex-col border rounded-md bg-bg">
+          <div className="w-full flex flex-1 flex-col border rounded-lg bg-bg">
             <SidebarInside />
           </div>
-          <div className="border rounded-md bg-bg">
+          <div className="border rounded-lg bg-bg">
             <WatchlistInside watchlistCollapsed={watchlistCollapsed} setWatchlistCollapsed={setWatchlistCollapsed} />
           </div>
         </div>

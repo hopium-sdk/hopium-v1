@@ -3,7 +3,7 @@ import { cn } from "@/main/shadcn/lib/utils";
 
 export const LoadingDiv = ({ logoSize = "size-8", className }: { logoSize?: string; className?: string }) => {
   return (
-    <div className={cn("flex flex-1 items-center justify-center border lg:rounded-md bg-bg", className)}>
+    <div className={cn("flex flex-1 items-center justify-center border lg:rounded-lg bg-bg", className)}>
       <Logo className={cn("rotate", logoSize)} color="var(--fg)" />
     </div>
   );

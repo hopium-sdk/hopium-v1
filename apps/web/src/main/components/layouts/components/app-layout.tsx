@@ -22,13 +22,13 @@ const LayoutInside = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-1 flex-col overflow-hidden lg:gap-1 lg:p-1">
       <Suspense>
-        <div className={cn("border-b lg:border lg:rounded-md overflow-hidden")}>
+        <div className={cn("border-b lg:border lg:rounded-lg overflow-hidden")}>
           <Header />
           <HeaderMobile />
         </div>
       </Suspense>
       <div className="flex flex-1 overflow-hidden">{children}</div>
-      <div className="border rounded-md overflow-hidden hidden lg:block">
+      <div className="border rounded-lg overflow-hidden hidden lg:block">
         <Footer />
       </div>
     </div>

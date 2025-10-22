@@ -29,7 +29,7 @@ export const EtfTabsBar = ({ tabSelected, setTabSelected, etfBottomCollapsed, se
               key={index}
               value={option.label}
               className={cn(
-                "px-5 rounded-md py-1.25",
+                "px-5 rounded-lg py-1.25",
                 etfBottomCollapsed ? "dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-subtext" : ""
               )}
               onClick={() => setEtfBottomCollapsed(false)}

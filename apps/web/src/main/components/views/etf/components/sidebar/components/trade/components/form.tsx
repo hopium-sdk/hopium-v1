@@ -52,7 +52,7 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="w-full flex items-center border rounded-md overflow-hidden">
+                  <div className="w-full flex items-center border rounded-lg overflow-hidden">
                     <div className="w-3/12 flex items-center justify-center py-3 border-r">
                       <p className="text-sm font-medium text-subtext">Amount</p>
                     </div>

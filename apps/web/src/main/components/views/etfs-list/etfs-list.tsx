@@ -43,15 +43,14 @@ export const EtfsList = ({ type, query }: T_EtfsList) => {
   };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden lg:border lg:rounded-md bg-bg">
+    <div className="flex flex-1 flex-col overflow-hidden lg:border lg:rounded-lg bg-bg">
       <RealtimeTable<C_EtfWithAssetsAndPools, string, typeof CONVEX.api.fns.etf.getEtfList.default>
         queryMode="paginated"
         queryResult={result}
         pageSize={PAGE_SIZE}
         columns={columns}
         empty={{ containerLabelVariant: type === "search" ? "search" : "default", containerShowSubtext: true }}
-        loadingNumRows={14}
-        loadingRowHeight="h-12"
+        loading={{ type: "spinner" }}
         getRowClassName={() => "cursor-pointer"}
         handleClick={handleClick}
       />

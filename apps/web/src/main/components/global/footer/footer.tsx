@@ -6,7 +6,6 @@ import { usePrices } from "@/main/wrappers/components/prices-provider";
 import { numberToUsd } from "@repo/common/utils/currency";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
 import { Tabs, TabsList, TabsTrigger } from "@/main/shadcn/components/ui/tabs";
-import { PiMonitor, PiMoon, PiSun } from "react-icons/pi";
 
 export const Footer = () => {
   const { ethUsdPrice } = usePrices();
@@ -17,7 +16,7 @@ export const Footer = () => {
           <PingCircle />
           <p className="text-sm font-medium text-green-500">Live</p>
         </div>
-        <p className="text-subtext pl-1">|</p>
+        <p className="text-border pl-1">|</p>
         <div className="flex items-center gap-1 text-subtext">
           <Icons.Ether />
           <p className="text-sm font-medium">{numberToUsd(ethUsdPrice)}</p>
@@ -28,7 +27,7 @@ export const Footer = () => {
         <Button variant="ghost" size="icon" className="text-subtext p-0">
           <Icons.Twitter className="size-4.25" />
         </Button>
-        <p className="text-subtext pl-1">|</p>
+        <p className="text-border pl-1">|</p>
         {/* <Button variant="ghost" size="icon" className="text-subtext p-0">
           <Icons.Discord className="size-4.75" />
         </Button>
@@ -53,13 +52,13 @@ const ThemeSwitcher = () => {
     <Tabs value={selectedTheme}>
       <TabsList className="gap-0.5">
         <TabsTrigger value="light" onClick={() => setTheme("light")}>
-          <PiSun className={css.icon} />
+          <Icons.Sun className={css.icon} />
         </TabsTrigger>
         <TabsTrigger value="dark" onClick={() => setTheme("dark")}>
-          <PiMoon className={css.icon} />
+          <Icons.Moon className={css.icon} />
         </TabsTrigger>
         <TabsTrigger value="system" onClick={() => setTheme("system")}>
-          <PiMonitor className={css.icon} />
+          <Icons.Monitor className={css.icon} />
         </TabsTrigger>
       </TabsList>
     </Tabs>

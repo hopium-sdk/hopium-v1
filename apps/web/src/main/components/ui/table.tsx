@@ -9,6 +9,7 @@ import { PaginatedQueryReference, UsePaginatedQueryReturnType } from "convex/rea
 import { useReactTable, getCoreRowModel } from "@tanstack/react-table";
 import { EmptyContainer, EmptyContainerCssVariants, EmptyContainerVariants } from "./empty-container";
 import { LoadingRows } from "./loading-rows";
+import { LoadingDiv } from "./loading-div";
 
 /** -------------------- Types -------------------- */
 
@@ -16,8 +17,12 @@ type CommonProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   isBlinkable?: boolean;
   isPausable?: boolean; // ignored in 'query' mode
-  loadingNumRows?: number;
-  loadingRowHeight?: string;
+  loading: {
+    type?: "spinner" | "rows";
+    numRows?: number;
+    rowHeight?: string;
+    logoSize?: string;
+  };
   empty: {
     type?: "table" | "container";
     tableMinRows?: number;
@@ -47,14 +52,21 @@ type RealtimeTableProps<TData, TValue, Query extends PaginatedQueryReference> = 
 /** -------------------- Component -------------------- */
 
 export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReference>(props: RealtimeTableProps<TData, TValue, Query>) => {
-  const { columns, isBlinkable = false, isPausable = false, loadingNumRows, loadingRowHeight, empty, handleClick, getRowClassName, cellClassName } = props;
+  const { columns, isBlinkable = false, isPausable = false, loading, empty, handleClick, getRowClassName, cellClassName } = props;
 
   const emptyConfig = {
-    type: empty.type ?? "container",
-    tableMinRows: empty.tableMinRows ?? 10,
-    containerCssVariant: empty.containerCssVariant ?? "default",
-    containerLabelVariant: empty.containerLabelVariant ?? "default",
-    containerShowSubtext: empty.containerShowSubtext ?? false,
+    type: empty?.type ?? "container",
+    tableMinRows: empty?.tableMinRows ?? 10,
+    containerCssVariant: empty?.containerCssVariant ?? "default",
+    containerLabelVariant: empty?.containerLabelVariant ?? "default",
+    containerShowSubtext: empty?.containerShowSubtext ?? false,
+  };
+
+  const loadingConfig = {
+    type: loading?.type ?? "rows",
+    numRows: loading?.numRows ?? 10,
+    rowHeight: loading?.rowHeight ?? "h-10",
+    logoSize: loading?.logoSize,
   };
 
   const [data, setData] = useState<TData[]>([]);
@@ -125,7 +137,11 @@ export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReferen
   return (
     <div className="flex flex-1 flex-col overflow-hidden">
       {showLoadingFirst ? (
-        <LoadingRows num_rows={loadingNumRows} row_height={loadingRowHeight} />
+        loadingConfig.type === "rows" ? (
+          <LoadingRows num_rows={loadingConfig.numRows} row_height={loadingConfig.rowHeight} />
+        ) : (
+          <LoadingDiv logoSize={loadingConfig.logoSize} />
+        )
       ) : data.length > 0 ? (
         <Suspense>
           <DataTable

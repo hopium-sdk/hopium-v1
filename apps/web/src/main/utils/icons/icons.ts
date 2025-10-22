@@ -14,6 +14,11 @@ export { PiArrowUpRightBold as ArrowUpRight } from "react-icons/pi";
 //Shapes
 export { PiCircleFill as Circle } from "react-icons/pi";
 
+//Theme
+export { PiSunBold as Sun } from "react-icons/pi";
+export { PiMoonBold as Moon } from "react-icons/pi";
+export { PiMonitorBold as Monitor } from "react-icons/pi";
+
 //Navigation
 export { PiMagnifyingGlassBold as Search } from "react-icons/pi";
 export { PiMagnifyingGlassBold as Explorer } from "react-icons/pi";

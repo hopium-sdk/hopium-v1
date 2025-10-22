@@ -109,7 +109,7 @@ const ConnectedBoxDesktop = ({ address, copyAddress, disconnect }: { address: st
           <div className="md:hidden">
             <AvatarImage address={address || ""} boxClassName="size-8" iconClassName="size-5" withBox />
           </div>
-          <div className={cn("hidden md:flex items-center gap-2 cursor-pointer hover:bg-bg-900 rounded-md px-4 h-10 border")}>
+          <div className={cn("hidden md:flex items-center gap-2 cursor-pointer hover:bg-bg-900 rounded-lg px-4 h-10 border")}>
             <AvatarAddressBar address={address || ""} />
             <Icons.ChevronDown className="size-4" />
           </div>

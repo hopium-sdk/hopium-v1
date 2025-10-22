@@ -66,7 +66,7 @@ const Links = () => {
 //   return (
 //     <>
 //       {address && (
-//         <div className={cn("w-fit items-center rounded-md h-8 border divide-x hidden lg:flex")}>
+//         <div className={cn("w-fit items-center rounded-lg h-8 border divide-x hidden lg:flex")}>
 //           <div className="flex items-center justify-center pl-3 pr-2">
 //             <Icons.Wallet className="size-4" />
 //           </div>
@@ -87,7 +87,7 @@ const Rewards = () => {
   const rewards = useQuery(CONVEX.api.fns.user.getUserRewards.default, address ? { userAddress: address as `0x${string}` } : "skip");
 
   return (
-    <div className={cn("w-fit flex items-center gap-1.5 cursor-pointer bg-rewards-900 hover:opacity-80 rounded-md px-4 h-8 text-rewards")}>
+    <div className={cn("w-fit flex items-center gap-1.5 cursor-pointer bg-rewards-900 hover:opacity-80 rounded-lg px-4 h-8 text-rewards")}>
       <div className="flex items-center justify-center">
         <Icons.Rewards className="size-4" />
       </div>
