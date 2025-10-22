@@ -1,6 +1,6 @@
 import { createConfig, http, waitForTransactionReceipt } from "@wagmi/core";
-import { mainnet, base } from "@wagmi/core/chains";
 import { COMMON_CONSTANTS, T_Network } from "@repo/common/utils/constants";
+import { mainnet, base } from "wagmi/chains";
 
 const networks = {
   mainnet: mainnet,
