@@ -24,7 +24,8 @@
   "dependencies": {
     "assert": "^2.1.0",
     "convex": "^1.27.5",
-    "ethers": "5.7"
+    "ethers": "5.7",
+    "@repo/common": "workspace:*"
   },
   "peerDependencies": {
     "react": "19.1.0",
