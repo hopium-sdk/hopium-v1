@@ -1,8 +1,8 @@
-import { normalizeAddress } from "@repo/common/utils/address";
 import { C_Asset } from "../../../schema/assets";
 import { C_Etf, C_EtfWithAssetsAndPools } from "../../../schema/etf";
 import { C_Pool } from "../../../schema/pools";
 import { QueryCtx } from "../../../_generated/server";
+import { normalizeAddress } from "../../../../src/utils/normalizeAddress";
 
 export async function enrichEtfWithAssetsAndPools(ctx: QueryCtx, etf: C_Etf): Promise<C_EtfWithAssetsAndPools> {
   const assetsInEtf = etf?.details?.assets ?? [];
