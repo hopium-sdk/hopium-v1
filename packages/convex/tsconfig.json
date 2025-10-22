@@ -2,10 +2,7 @@
   "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
     "skipLibCheck": true,
-    "outDir": "dist",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "outDir": "dist"
   },
   "include": ["convex/src", "convex", "exports/index.ts", "src/utils", "src/fns"],
   "exclude": ["node_modules", "dist"]
