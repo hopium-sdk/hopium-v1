@@ -33,6 +33,7 @@ import type * as fns_sync_fns_getPoolsByAddresses from "../fns/sync/fns/getPools
 import type * as fns_sync_fns_getWethUsdPool from "../fns/sync/fns/getWethUsdPool.js";
 import type * as fns_sync_getPreloadCache from "../fns/sync/getPreloadCache.js";
 import type * as fns_syncStatus_get from "../fns/syncStatus/get.js";
+import type * as fns_user_getUserRewards from "../fns/user/getUserRewards.js";
 import type * as fns_watchlist_getWatchlist from "../fns/watchlist/getWatchlist.js";
 import type * as mutations__handleReorg_handle from "../mutations/_handleReorg/handle.js";
 import type * as mutations_etf_updateEtfs from "../mutations/etf/updateEtfs.js";
@@ -85,6 +86,7 @@ declare const fullApi: ApiFromModules<{
   "fns/sync/fns/getWethUsdPool": typeof fns_sync_fns_getWethUsdPool;
   "fns/sync/getPreloadCache": typeof fns_sync_getPreloadCache;
   "fns/syncStatus/get": typeof fns_syncStatus_get;
+  "fns/user/getUserRewards": typeof fns_user_getUserRewards;
   "fns/watchlist/getWatchlist": typeof fns_watchlist_getWatchlist;
   "mutations/_handleReorg/handle": typeof mutations__handleReorg_handle;
   "mutations/etf/updateEtfs": typeof mutations_etf_updateEtfs;

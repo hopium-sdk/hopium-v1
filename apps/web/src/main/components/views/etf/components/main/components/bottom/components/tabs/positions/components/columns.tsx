@@ -13,12 +13,12 @@ export const getPositionsColumns = () => {
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-3">
-            <EtfImage address={row.original.tokenAddress} withBox boxClassName="size-8" iconClassName="size-6" />
+            <EtfImage address={row.original.tokenAddress} withBox boxClassName="size-9" iconClassName="size-6" />
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <p className="text-xs font-medium">{row.original.tokenSymbol}</p>
+                <p className="text-sm font-medium">{row.original.tokenSymbol}</p>
               </div>
-              <p className="text-xs font-medium text-subtext">{row.original.tokenName}</p>
+              <p className="text-sm font-medium text-subtext">{row.original.tokenName}</p>
             </div>
           </div>
         );
@@ -29,21 +29,21 @@ export const getPositionsColumns = () => {
       header: "Position",
       cell: ({ row }) => {
         const value = row.original.balance;
-        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     {
       header: "Value",
       cell: ({ row }) => {
         const value = row.original.value;
-        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     {
       header: "Avg Entry Price",
       cell: ({ row }) => {
         const value = row.original.avgEntryPrice.usd;
-        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     {
@@ -55,23 +55,23 @@ export const getPositionsColumns = () => {
         return (
           <div className="flex flex-col items-start gap-1">
             <div className="flex items-center gap-1">
-              <p className={cn("text-xs font-medium", pnlColor)}>{pnlUsd > 0 ? "+" : "-"}</p>
-              <NumberDiv number={Math.abs(pnlUsd)} symbolType={"usd"} displayZero={true} color={pnlColor} pClassName="text-xs" blink />
+              <p className={cn("text-sm font-medium", pnlColor)}>{pnlUsd > 0 ? "+" : "-"}</p>
+              <NumberDiv number={Math.abs(pnlUsd)} symbolType={"usd"} displayZero={true} color={pnlColor} pClassName="text-sm" blink />
             </div>
             <div className="flex items-center gap-1">
-              <span className={cn("text-xs font-medium", pnlColor)}>(</span>
-              <span className={cn("text-xs font-medium", pnlColor)}>{pnlPercent > 0 ? "+" : "-"}</span>
+              <span className={cn("text-sm font-medium", pnlColor)}>(</span>
+              <span className={cn("text-sm font-medium", pnlColor)}>{pnlPercent > 0 ? "+" : "-"}</span>
               <NumberDiv
                 number={Math.abs(pnlPercent)}
                 symbolType={"percent"}
                 displayZero={true}
                 color={pnlColor}
-                pClassName="text-xs"
+                pClassName="text-sm"
                 unformatted
                 unformattedDecimals={2}
                 blink
               />
-              <span className={cn("text-xs font-medium", pnlColor)}>)</span>
+              <span className={cn("text-sm font-medium", pnlColor)}>)</span>
             </div>
           </div>
         );

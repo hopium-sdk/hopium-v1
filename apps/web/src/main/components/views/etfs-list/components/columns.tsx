@@ -5,29 +5,22 @@ import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { EtfImage } from "@/main/components/ui/etf-image";
 import { cn } from "@/main/shadcn/lib/utils";
 import { Timestamp } from "@/main/components/ui/timestamp";
-import { calculateTvl } from "@/main/utils/calc-etf";
 import { CoinImage } from "@/main/components/ui/coin-image";
 import Link from "next/link";
 
 export const getEtfListColumns = () => {
   const allColumns: ColumnDef<C_EtfWithAssetsAndPools>[] = [
     {
-      header: "Rank",
-      cell: ({ row }) => {
-        return <p className="text-subtext">{row.index + 1}</p>;
-      },
-    },
-    {
       header: "Token",
       cell: ({ row }) => {
         return (
           <Link href={`/etf/${row.original.etf.details.etfId}`} className="flex items-center gap-3">
-            <EtfImage address={row.original.etf.contracts.etfTokenAddress} withBox boxClassName="size-8" iconClassName="size-6" />
+            <EtfImage address={row.original.etf.contracts.etfTokenAddress} withBox boxClassName="size-9" iconClassName="size-6" />
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <p className="text-xs font-medium">{row.original.etf.details.ticker}</p>
+                <p className="text-sm font-medium">{row.original.etf.details.ticker}</p>
               </div>
-              <p className="text-xs font-medium text-subtext">{row.original.etf.details.name}</p>
+              <p className="text-sm font-medium text-subtext">{row.original.etf.details.name}</p>
             </div>
           </Link>
         );
@@ -38,44 +31,38 @@ export const getEtfListColumns = () => {
       header: "Price",
       cell: ({ row }) => {
         const value = row.original.etf.stats.price.usd;
-        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-xs text-main" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-sm text-main" blink />;
       },
     },
     {
       header: "TVL",
-      cell: ({ row }) => {
+      cell: () => {
         const value = 0;
-        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-sm" blink />;
       },
     },
     {
       header: "Volume",
       cell: ({ row }) => {
         const value = row.original.etf.stats.volume.usd;
-        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-sm" blink />;
       },
     },
     {
       header: "Liquidity",
       cell: ({ row }) => {
         const value = row.original.etf.stats.assetsLiquidityUsd;
-        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-sm" blink />;
       },
     },
     {
       header: "Mkt Cap",
       cell: ({ row }) => {
         const value = row.original.etf.stats.assetsMcapUsd;
-        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} pClassName="text-sm" blink />;
       },
     },
-    {
-      header: "Age",
-      cell: ({ row }) => {
-        const value = row.original.etf.details.createdAt;
-        return <Timestamp timestamp={value} withLink={false} />;
-      },
-    },
+
     {
       header: "Assets",
       cell: ({ row }) => {
@@ -94,6 +81,13 @@ export const getEtfListColumns = () => {
             })}
           </div>
         );
+      },
+    },
+    {
+      header: "Age",
+      cell: ({ row }) => {
+        const value = row.original.etf.details.createdAt;
+        return <Timestamp timestamp={value} withLink={false} pClassName="text-sm font-medium" />;
       },
     },
   ];

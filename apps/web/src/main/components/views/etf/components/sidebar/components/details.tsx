@@ -9,12 +9,12 @@ export const EtfDetails = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const options = ["Token", "Vault"];
 
   const css = {
-    title: "text-xs font-medium text-subtext",
-    value: "text-xs font-medium",
+    title: "text-sm font-medium text-subtext",
+    value: "text-sm font-medium",
   };
 
   return (
-    <SidebarBox title="Contracts" icon={<Icons.Details />}>
+    <SidebarBox title="Contracts" icon={<Icons.Details className="size-4.5" />}>
       <div className="w-full border-b">
         {options.map((option) => (
           <div key={option} className="w-full flex items-center justify-between border-t py-2">

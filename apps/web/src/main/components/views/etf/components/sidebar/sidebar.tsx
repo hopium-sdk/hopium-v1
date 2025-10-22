@@ -7,26 +7,22 @@ import { EtfAssets } from "./components/assets";
 export const EtfSidebar = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   return (
     <div className="w-full flex flex-1 flex-col overflow-hidden bg-bg">
-      <div className="py-3 px-6 border-b">
-        <EtfOverview etf={etf} />
-      </div>
+      <div className="flex flex-1 flex-col overflow-y-auto">
+        <div className="py-4 px-6">
+          <EtfOverview etf={etf} />
+        </div>
 
-      <div className="w-full flex flex-col overflow-y-auto">
-        <div className="py-5 px-6 border-b">
+        <div className="py-4 px-6">
           <EtfTrade etf={etf} />
         </div>
 
-        {/* <div className="py-5 px-6 border-b">
-          <EtfStats etf={etf} />
-        </div> */}
-
         {etf.assets && (
-          <div className="py-5 px-6 border-b">
+          <div className="py-4 px-6">
             <EtfAssets etf={etf} />
           </div>
         )}
 
-        <div className="py-5 px-6">
+        <div className="py-4 px-6">
           <EtfDetails etf={etf} />
         </div>
       </div>

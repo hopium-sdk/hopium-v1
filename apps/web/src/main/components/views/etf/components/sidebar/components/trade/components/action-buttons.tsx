@@ -9,7 +9,7 @@ type T_ActionButtons = {
 export const ActionButtons = ({ actionSelected, setActionSelected }: T_ActionButtons) => {
   const css = {
     action_button_div: "py-1.25",
-    action_button_p: "text-xs font-medium",
+    action_button_p: "text-sm font-medium",
     buy_base: "data-[state=active]:bg-buy-900 dark:data-[state=active]:bg-buy-900 hover:dark:data-[state=inactive]:bg-bg-800",
     sell_base: "data-[state=active]:bg-sell-900 dark:data-[state=active]:bg-sell-900 hover:dark:data-[state=inactive]:bg-bg-800",
   };

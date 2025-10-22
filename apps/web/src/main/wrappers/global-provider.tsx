@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/main/wrappers/components/theme-provider";
 import NavigationBarProvider from "@/main/wrappers/components/navigation-bar-provider";
-import { WalletProvider } from "./components/wallet/wallet-provider";
+import { WalletProvider } from "./components/wallet-provider";
 import { ConvexClientProvider } from "./components/convex-provider";
 import { PricesProvider } from "./components/prices-provider";
 import { BalanceProvider } from "./components/balance-provider";

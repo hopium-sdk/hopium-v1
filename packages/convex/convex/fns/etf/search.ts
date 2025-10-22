@@ -19,7 +19,7 @@ export default query({
 
     switch (term) {
       case "":
-        results = await ctx.db.query("etfs").withIndex("by_assetsMcapUsd").order("desc").take(20);
+        results = [];
         break;
       case isEthAddress(term):
         results = await ctx.db

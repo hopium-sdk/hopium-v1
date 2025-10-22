@@ -67,7 +67,7 @@ export const EtfTrade = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   };
 
   return (
-    <SidebarBox title="Trade" icon={<Icons.Trade />}>
+    <SidebarBox title="Trade" icon={<Icons.Trade className="size-4.5" />}>
       <div className="w-full flex flex-col gap-2">
         <ActionButtons actionSelected={actionSelected} setActionSelected={setActionSelected} />
 
@@ -95,9 +95,9 @@ export const EtfTrade = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
           getBalanceAmount={getBalanceAmount}
         />
 
-        <div className="w-full pt-2">
+        {/* <div className="w-full pt-2">
           <BalancesBox balanceEth={balanceEth} balanceToken={balanceEtf} />
-        </div>
+        </div> */}
       </div>
     </SidebarBox>
   );

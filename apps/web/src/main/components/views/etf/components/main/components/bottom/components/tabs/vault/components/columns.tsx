@@ -17,12 +17,12 @@ export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndP
       cell: ({ row }) => {
         return (
           <div className="flex items-center gap-3">
-            <CoinImage address={row.original.tokenAddress} boxClassName="size-6.5" />
+            <CoinImage address={row.original.tokenAddress} boxClassName="size-8" />
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <p className="text-xs font-medium">{row.original.tokenSymbol}</p>
+                <p className="text-sm font-medium">{row.original.tokenSymbol}</p>
               </div>
-              <p className="text-xs font-medium text-subtext">{row.original.tokenName}</p>
+              <p className="text-sm font-medium text-subtext">{row.original.tokenName}</p>
             </div>
           </div>
         );
@@ -33,7 +33,7 @@ export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndP
       header: "Balance",
       cell: ({ row }) => {
         const value = row.original.balance;
-        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     // {
@@ -66,7 +66,7 @@ export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndP
           poolPrice = pool.stats.price.usd;
         }
         value = row.original.balance * poolPrice;
-        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     {
@@ -78,7 +78,7 @@ export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndP
         }
         return (
           <div className="flex flex-col items-start gap-1">
-            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-xs" blink />
+            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-sm" blink />
             <Progress value={value} className="w-2/3 bg-bg-900 h-1.25" progressClassName="bg-main" />
           </div>
         );
@@ -93,7 +93,7 @@ export const getVaultColumns = ({ etf, ethUsdPrice }: { etf: C_EtfWithAssetsAndP
         }
         return (
           <div className="flex flex-col items-start gap-1">
-            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-xs" />
+            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-sm" />
             <Progress value={value} className="w-2/3 bg-bg-900 h-1.25" progressClassName="bg-main" />
           </div>
         );

@@ -61,7 +61,7 @@ export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   return (
     <div className="flex flex-1 overflow-hidden">
       <div ref={containerRef} className={cn("flex flex-1", isReady ? "" : "hidden")} />
-      {!isReady && <LoadingDiv />}
+      {!isReady && <LoadingDiv className="border-none" />}
     </div>
   );
 };

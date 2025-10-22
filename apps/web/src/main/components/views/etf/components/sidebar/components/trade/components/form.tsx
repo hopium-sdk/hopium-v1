@@ -54,7 +54,7 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
                 <FormControl>
                   <div className="w-full flex items-center border rounded-md overflow-hidden">
                     <div className="w-3/12 flex items-center justify-center py-3 border-r">
-                      <p className="text-xs font-medium text-subtext">Amount</p>
+                      <p className="text-sm font-medium text-subtext">Amount</p>
                     </div>
                     <div className="w-9/12 flex items-center justify-end gap-2 px-4">
                       <Input
@@ -67,7 +67,9 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
                           "w-full bg-transparent dark:bg-transparent text-sm font-medium outline-none text-end border-none outline-none focus-none focus-visible:ring-0"
                         )}
                       />
-                      {actionSelected == "Sell" ? <Icons.Coin className="size-4 text-subtext" /> : <Icons.Ether className="size-4 text-subtext" />}
+                      <div className="flex items-center justify-center">
+                        {actionSelected == "Sell" ? <Icons.Coin className="size-4.5 text-subtext" /> : <Icons.Ether className="size-4.5 text-subtext" />}
+                      </div>
                     </div>
                   </div>
                 </FormControl>
@@ -76,7 +78,7 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
             )}
           />
 
-          <p className="text-xs font-medium text-subtext text-end">
+          <p className="text-sm font-medium text-subtext text-end">
             ≈ ${numberToUsd(Number(amount) * (actionSelected == "Sell" ? etf.etf.stats.price.usd : ethUsdPrice))}
           </p>
 
@@ -94,8 +96,11 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
 export const TradeButton = ({ actionSelected, loading }: { actionSelected: string; loading: string | null }) => {
   return (
     <LoadingButton loading={loading} variant={actionSelected == "Buy" ? "buy" : "sell"} className={cn("w-full rounded-sm mt-2")} type="submit">
-      <SubscriptDiv baseItem={<Icons.Trade />} subscriptItem={<p className="text-sm font-medium">{actionSelected == "Buy" ? "+" : "-"}</p>} />
-      <p className="">{actionSelected == "Buy" ? "Buy" : "Sell"}</p>
+      <SubscriptDiv
+        baseItem={<Icons.Trade className="size-4.5" />}
+        subscriptItem={<p className="text-sm font-medium">{actionSelected == "Buy" ? "+" : "-"}</p>}
+      />
+      <p className="text-sm">{actionSelected == "Buy" ? "Buy" : "Sell"}</p>
     </LoadingButton>
   );
 };

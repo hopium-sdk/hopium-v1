@@ -32,9 +32,10 @@ export const EtfTabsBar = ({ tabSelected, setTabSelected, etfBottomCollapsed, se
                 "px-5 rounded-md py-1.25",
                 etfBottomCollapsed ? "dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-subtext" : ""
               )}
+              onClick={() => setEtfBottomCollapsed(false)}
             >
               {option.icon}
-              <span className={cn("text-xs")}>{option.label}</span>
+              <span className={cn("text-sm")}>{option.label}</span>
             </TabsTrigger>
           ))}
         </TabsList>

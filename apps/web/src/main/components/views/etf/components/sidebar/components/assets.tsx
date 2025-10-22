@@ -20,7 +20,7 @@ export const EtfAssets = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
     })) || [];
 
   return (
-    <SidebarBox title="Underlying Assets" icon={<Icons.Assets />}>
+    <SidebarBox title="Underlying Assets" icon={<Icons.Assets className="size-4.5" />}>
       <div className="w-full border rounded-md overflow-hidden">
         <TokenTable assetsWithWeight={assetsWithWeight} />
       </div>
@@ -33,8 +33,8 @@ const TokenTable = ({ assetsWithWeight }: { assetsWithWeight: T_AssetWithWeight[
     <Table>
       <TableHeader>
         <TableRow className="hover:bg-transparent">
-          <TableHead className="w-5/12 h-8 pl-3 text-subtext font-medium text-2xs">Token</TableHead>
-          <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-2xs text-right">Target Weight</TableHead>
+          <TableHead className="w-5/12 h-8 pl-3 text-subtext font-medium text-sm">Token</TableHead>
+          <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-sm text-right">Target Weight</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -56,17 +56,17 @@ const AssetItem = ({ asset, index }: { asset: T_AssetWithWeight; index: number }
   return (
     <TableRow key={index} onClick={handleClick} className="cursor-pointer px-4">
       <TableCell className="w-5/12 pl-3">
-        <div className="flex items-center gap-2">
-          <CoinImage address={asset.address} boxClassName="size-6" />
+        <div className="flex items-center gap-2.5">
+          <CoinImage address={asset.address} boxClassName="size-8" />
           <div className="flex flex-col gap-0 max-w-[6rem]">
-            <p className="text-2xs font-medium truncate">{asset.symbol}</p>
-            <p className="text-2xs font-medium text-subtext truncate">{asset.name}</p>
+            <p className="text-sm font-medium truncate">{asset.symbol}</p>
+            <p className="text-sm font-medium text-subtext truncate">{asset.name}</p>
           </div>
         </div>
       </TableCell>
       <TableCell className="w-7/12 text-right pr-3">
         <div className="flex flex-col gap-1">
-          <p className="text-2xs font-medium text-subtext">{percent}%</p>
+          <p className="text-sm font-medium text-subtext">{percent}%</p>
 
           <Progress value={parseFloat(percent)} className="w-full bg-bg-900 h-1.25" progressClassName="bg-main" />
         </div>

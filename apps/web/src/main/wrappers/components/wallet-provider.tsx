@@ -41,6 +41,11 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
             "--ck-body-divider": "var(--color-border)",
             "--ck-font-family": defaultFont.style.fontFamily,
             "--ck-modal-box-shadow": "none",
+
+            // Mobile
+            "--ck-body-background-tertiary": "var(--color-bg)",
+            "--ck-tertiary-box-shadow": "inset 0 0 0 1px var(--color-border)",
+            "--ck-secondary-button-background": "var(--color-bg-900)",
           }}
           theme="midnight"
         >

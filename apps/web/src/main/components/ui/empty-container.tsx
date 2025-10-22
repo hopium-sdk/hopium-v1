@@ -69,7 +69,7 @@ export const EmptyContainer = ({
   const Icon = icon ?? EmptyContainerVariants[labelVariant].icon;
 
   return (
-    <div className="w-full h-full flex items-center justify-center flex-col gap-4">
+    <div className="flex flex-1 items-center justify-center flex-col gap-4">
       {Icon && <Icon className={cn(defaultCss.icon, EmptyContainerCssVariants[cssVariant].icon, iconClassName)} />}
       <div className="flex flex-col gap-2 items-center">
         <p className={cn(defaultCss.label, EmptyContainerCssVariants[cssVariant].label, labelClassName)}>

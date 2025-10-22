@@ -11,13 +11,30 @@ import { Watchlist } from "@/main/components/global/watchlist/watchlist";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/main/shadcn/components/ui/resizable";
 
 export function Sidebar({ ...props }: React.ComponentProps<typeof ScnSidebar>) {
+  return (
+    <ScnSidebar collapsible="offcanvas" {...props}>
+      <SidebarMobile />
+      <SidebarDesktop />
+    </ScnSidebar>
+  );
+}
+
+const SidebarMobile = () => {
+  return (
+    <div className="block md:hidden w-full flex flex-col overflow-hidden">
+      <SidebarInside />
+    </div>
+  );
+};
+
+const SidebarDesktop = () => {
   const [watchlistCollapsed, setWatchlistCollapsed] = useState({
-    isCollapsed: false,
+    isCollapsed: true,
     default: true,
   });
 
   return (
-    <ScnSidebar collapsible="none" {...props}>
+    <div className="hidden md:flex flex-1 flex-col overflow-hidden">
       {!watchlistCollapsed.isCollapsed ? (
         <ResizablePanelGroup direction="vertical" className="flex flex-1 flex-col overflow-hidden" autoSaveId={"sidebar"}>
           <ResizablePanel defaultSize={70} className="min-h-[300px] flex flex-col border rounded-md bg-bg">
@@ -38,9 +55,9 @@ export function Sidebar({ ...props }: React.ComponentProps<typeof ScnSidebar>) {
           </div>
         </div>
       )}
-    </ScnSidebar>
+    </div>
   );
-}
+};
 
 type T_WatchlistInside = {
   watchlistCollapsed: {
@@ -94,7 +111,7 @@ export const SidebarList = ({ items }: { items: T_SidebarList }) => {
   };
   return (
     <SidebarMenu className="flex flex-col gap-2">
-      <p className="text-xs font-medium text-subtext pl-2">{items.title}</p>
+      <p className="text-sm font-medium text-subtext pl-2">{items.title}</p>
       <div>
         {items.links.map((link) => (
           <SidebarMenuItem key={link.title}>

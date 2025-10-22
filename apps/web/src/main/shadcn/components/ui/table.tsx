@@ -6,14 +6,14 @@ import { cn } from "@/main/shadcn/lib/utils";
 
 function Table({ containerClassName, className, ...props }: React.ComponentProps<"table"> & { containerClassName?: string }) {
   return (
-    <div data-slot="table-container" className={cn("relative w-full overflow-x-auto", containerClassName)}>
+    <div data-slot="table-container" className={cn("relative overflow-x-auto w-full h-full", containerClassName)}>
       <table data-slot="table" className={cn("w-full caption-bottom text-sm", className)} {...props} />
     </div>
   );
 }
 
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return <thead data-slot="table-header" className={cn("[&_tr]:border-b", className)} {...props} />;
+  return <thead data-slot="table-header" className={cn("[&_tr]:border-b ", className)} {...props} />;
 }
 
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
@@ -28,7 +28,7 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return (
     <tr
       data-slot="table-row"
-      className={cn("hover:bg-bg-900 data-[state=selected]:bg-muted border-b transition-colors [&>td]:px-6 [&>th]:px-6", className)}
+      className={cn("hover:bg-bg-900 data-[state=selected]:bg-muted border-b transition-colors [&>td]:px-6 [&>th]:px-6 shadow-transparent", className)}
       {...props}
     />
   );
@@ -39,7 +39,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-subtext text-xs",
+        "text-foreground h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px] text-subtext text-sm",
         className
       )}
       {...props}

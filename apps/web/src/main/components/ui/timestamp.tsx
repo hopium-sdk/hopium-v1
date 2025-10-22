@@ -39,7 +39,7 @@ export const Timestamp = ({
     return (
       <Suspense>
         <div className={cn("flex items-center gap-1.5")}>
-          {withIcon && <Icons.Clock className={cn(iconClassName, color)} />}
+          {withIcon && <Icons.Clock className={cn("size-4.5", iconClassName, color)} />}
           <p className={cn(pClassName, color)}>
             <TimeAgo date={date} formatter={intlFormatter} component="span" />
           </p>

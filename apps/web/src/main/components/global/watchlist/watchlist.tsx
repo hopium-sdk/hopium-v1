@@ -35,17 +35,17 @@ export const Watchlist = ({ collapsed, setCollapsed }: T_Watchlist) => {
 
   return (
     <div className="w-full flex flex-1 flex-col overflow-hidden">
-      <div className={cn("flex items-center justify-between py-2 px-4", collapsed.isCollapsed ? "" : "border-b")}>
-        <div className="flex items-center gap-2">
-          <Icons.Watchlist className="size-3.5" />
+      <div className={cn("flex items-center justify-between py-3 px-4", collapsed.isCollapsed ? "" : "border-b")}>
+        <div className="flex items-center gap-1.5">
+          <Icons.Watchlist className="size-4.5" />
           <p className="text-sm font-medium">Watchlist</p>
         </div>
-        <div className="flex items-center gap-2">
-          <div className="size-4 flex items-center justify-center text-subtext hover:text-text cursor-pointer" onClick={() => setEditMode(!editMode)}>
-            {!collapsed.isCollapsed && <Icons.Edit className="size-3.5" />}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center text-subtext hover:text-text cursor-pointer" onClick={() => setEditMode(!editMode)}>
+            {!collapsed.isCollapsed && <Icons.Edit className="size-4" />}
           </div>
-          <div className="size-4 flex items-center justify-center text-subtext hover:text-text cursor-pointer" onClick={handleCollapseClick}>
-            {collapsed.isCollapsed ? <Icons.ChevronUp className="size-4" /> : <Icons.Minus className="size-3.5" />}
+          <div className="flex items-center justify-center text-subtext hover:text-text cursor-pointer" onClick={handleCollapseClick}>
+            {collapsed.isCollapsed ? <Icons.ChevronUp className="size-4.5" /> : <Icons.Minus className="size-3.5" />}
           </div>
         </div>
       </div>
@@ -97,10 +97,6 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
   const [removeLoading, setRemoveLoading] = useState(false);
   const router = useRouter();
 
-  const getChangePercent = () => {
-    return 0;
-  };
-
   const handleClick = () => {
     if (!editMode) {
       router.push(`/etf/${item.etfId}`);
@@ -129,21 +125,15 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
               <EtfImage address={item.etf.contracts.etfTokenAddress} withBox boxClassName="size-8" iconClassName="size-5" />
             </div>
             <div className="flex flex-col">
-              <p className="text-xs font-medium uppercase">{item.etf.details.ticker}</p>
-              <p className="text-xs text-subtext">{item.etf.details.name}</p>
+              <p className="text-sm font-medium uppercase">{item.etf.details.ticker}</p>
+              <p className="text-sm font-medium text-subtext">{item.etf.details.name}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {!editMode && (
               <div className="flex flex-col items-end gap-0.25">
                 <div className="flex items-center gap-1">
-                  <NumberDiv
-                    symbolType={"usd"}
-                    number={item.etf.stats.price.usd}
-                    className={cn("gap-1")}
-                    iconClassName="size-2.5"
-                    pClassName={cn("text-2xs")}
-                  />
+                  <NumberDiv symbolType={"usd"} number={item.etf.stats.price.usd} pClassName={cn("text-sm")} />
                 </div>
 
                 {/* <div className="flex items-center gap-2">

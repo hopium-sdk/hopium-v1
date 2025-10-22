@@ -21,9 +21,9 @@ export const CopyIcon = ({ data, className }: { data: string; className?: string
   return (
     <>
       {copied ? (
-        <Icons.Check className={cn("w-3.5 h-3.5 text-main", className)} />
+        <Icons.Check className={cn("size-4 text-main", className)} />
       ) : (
-        <Icons.Copy className={cn("w-3.5 h-3.5 text-main hover:text-main/70 cursor-pointer", className)} onClick={handleCopy} />
+        <Icons.Copy className={cn("size-4 text-main hover:text-main/70 cursor-pointer", className)} onClick={handleCopy} />
       )}
     </>
   );

@@ -1,4 +1,4 @@
-import { SidebarInset, SidebarProvider as ScnSidebarProvider } from "@/main/shadcn/components/ui/sidebar";
+import { SidebarProvider as ScnSidebarProvider } from "@/main/shadcn/components/ui/sidebar";
 import { Sidebar } from "@/main/components/global/sidebar/sidebar";
 
 export const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
@@ -12,9 +12,7 @@ export const SidebarProvider = ({ children }: { children: React.ReactNode }) => 
       }
     >
       <Sidebar className="py-1 pl-1" />
-      {/* <SidebarInset> */}
-      <div className="flex flex-1 flex-col">{children}</div>
-      {/* </SidebarInset> */}
+      <div className="flex flex-1 flex-col overflow-hidden">{children}</div>
     </ScnSidebarProvider>
   );
 };

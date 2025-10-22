@@ -17,7 +17,7 @@ export { PiCircleFill as Circle } from "react-icons/pi";
 //Navigation
 export { PiMagnifyingGlassBold as Search } from "react-icons/pi";
 export { PiMagnifyingGlassBold as Explorer } from "react-icons/pi";
-export { BiCopy as Copy } from "react-icons/bi";
+export { PiCopySimpleBold as Copy } from "react-icons/pi";
 export { MdLogout as Logout } from "react-icons/md";
 export { PiLinkSimpleBreakBold as Link } from "react-icons/pi";
 export { TbClock as Clock } from "react-icons/tb";
@@ -33,6 +33,11 @@ export { CgTrashEmpty as Trash } from "react-icons/cg";
 export { RxDragHandleDots2 as DragHandle } from "react-icons/rx";
 export { BiError as Error } from "react-icons/bi";
 export { BiX as X } from "react-icons/bi";
+export { PiListBold as SidebarHandle } from "react-icons/pi";
+export { HiOutlineChartSquareBar as Chart } from "react-icons/hi";
+export { TbLayoutList as Details2 } from "react-icons/tb";
+export { PiBookOpenBold as Docs } from "react-icons/pi";
+export { LuBookmark as About } from "react-icons/lu";
 
 //Profile
 export { PiGhostBold as User } from "react-icons/pi";
@@ -74,7 +79,7 @@ export { PiDiamondBold as Holders } from "react-icons/pi";
 export { RiLayoutBottom2Line as Overview } from "react-icons/ri";
 export { BiChart as Stats } from "react-icons/bi";
 export { TbBrandTabler as Details } from "react-icons/tb";
-export { PiStarBold as Watchlist } from "react-icons/pi";
+export { PiBookmarkSimpleBold as Watchlist } from "react-icons/pi";
 export { TbBrandTabler as Contract } from "react-icons/tb";
 
 //Rewards

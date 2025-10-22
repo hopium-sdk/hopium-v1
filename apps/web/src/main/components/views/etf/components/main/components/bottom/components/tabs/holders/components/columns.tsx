@@ -25,14 +25,14 @@ export const getHoldersColumns = ({ etf, etfSupply }: { etf: C_EtfWithAssetsAndP
       header: "Balance",
       cell: ({ row }) => {
         const value = row.original.balance;
-        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"coin"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     {
       header: "Value",
       cell: ({ row }) => {
         const value = row.original.balance * etf.etf.stats.price.usd;
-        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-xs" blink />;
+        return <NumberDiv number={value} symbolType={"usd"} displayZero={true} pClassName="text-sm" blink />;
       },
     },
     {
@@ -44,7 +44,7 @@ export const getHoldersColumns = ({ etf, etfSupply }: { etf: C_EtfWithAssetsAndP
         }
         return (
           <div className="flex flex-col items-start gap-1">
-            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-xs" />
+            <NumberDiv number={value} symbolType={"percent"} displayZero={true} pClassName="text-sm" />
             <Progress value={value} className="w-2/3 bg-bg-900 h-1.25" progressClassName="bg-main" />
           </div>
         );

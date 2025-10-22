@@ -1,7 +1,7 @@
 "use client";
 import { Icons } from "@/main/utils/icons";
 import { ColumnDef, flexRender, Row, Table as TableType } from "@tanstack/react-table";
-import { Table, TableCell, TableHead, TableRow } from "@/main/shadcn/components/ui/table";
+import { Table, TableCell, TableHead, TableHeader, TableRow } from "@/main/shadcn/components/ui/table";
 import { cn } from "../../shadcn/lib/utils";
 import { TableVirtuoso } from "react-virtuoso";
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -123,7 +123,7 @@ export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReferen
   const showLoadingFirst = derived.isLoadingFirstPage;
 
   return (
-    <div className="h-full flex flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col overflow-hidden">
       {showLoadingFirst ? (
         <LoadingRows num_rows={loadingNumRows} row_height={loadingRowHeight} />
       ) : data.length > 0 ? (
@@ -206,7 +206,7 @@ export function DataTable<TData, TValue>({
   }, [onScroll]);
 
   return (
-    <div className="relative flex flex-1 flex-col overflow-hidden">
+    <div className="flex flex-1 flex-col overflow-hidden">
       <TableVirtuoso
         totalCount={rows.length}
         endReached={canLoadMore ? loadMoreData : undefined}
@@ -270,7 +270,7 @@ const TableHeaderItems = <TData, TValue>({ table }: { table: TableType<TData> })
   return (
     <>
       {table.getHeaderGroups().map((headerGroup) => (
-        <TableRow key={headerGroup.id} className="sticky top-0 bg-bg shadow-[0_1px_0_#ffffff] shadow-border hover:bg-bg">
+        <TableRow key={headerGroup.id} className="sticky top-0 bg-bg shadow-[0_1px_0_#ffffff] hover:bg-bg">
           {headerGroup.headers.map((header) => (
             <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>
           ))}
@@ -311,14 +311,14 @@ export const EmptyTable = <TData, TValue>({
 
   return (
     <>
-      <table>
-        <thead>
+      <Table containerClassName="h-fit">
+        <TableHeader>
           <TableRow className="border-b">
             {headers.map((header, index) => (
               <TableHead key={index}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>
             ))}
           </TableRow>
-        </thead>
+        </TableHeader>
         {type === "table" && (
           <tbody>
             {Array.from({ length: tableMinRows }).map((_, index) => (
@@ -326,7 +326,7 @@ export const EmptyTable = <TData, TValue>({
             ))}
           </tbody>
         )}
-      </table>
+      </Table>
       {type === "container" && <EmptyContainer cssVariant={containerCssVariant} labelVariant={containerLabelVariant} showSubtext={containerShowSubtext} />}
     </>
   );

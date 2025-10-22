@@ -35,7 +35,7 @@ export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   };
 
   return (
-    <SidebarBox title="Overview" icon={<Icons.Overview />} right={<WatchlistButton etf={etf} />}>
+    <SidebarBox title="Overview" icon={<Icons.Overview className="size-4.5" />} right={<WatchlistButton etf={etf} />}>
       <div className="w-full grid grid-cols-2 gap-2">
         <NumberTab
           title={"Price USD"}
@@ -103,12 +103,12 @@ const WatchlistButton = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
         <Icons.Loading className="size-3.5 animate-spin" />
       ) : (
         <SubscriptDiv
-          baseItem={<Icons.Watchlist className="size-3.5" />}
-          subscriptItem={<p className="text-sm font-medium">{isInWatchlist({ etfId: etf.etf.details.etfId }) ? "-" : "+"}</p>}
+          baseItem={<Icons.Watchlist className="size-4" />}
+          subscriptItem={<p className="text-md font-medium">{isInWatchlist({ etfId: etf.etf.details.etfId }) ? "-" : "+"}</p>}
           subscriptClassName="-top-2"
         />
       )}
-      <p className="text-xs font-medium">Watchlist</p>
+      <p className="text-sm font-medium">Watchlist</p>
     </div>
   );
 };

@@ -60,7 +60,7 @@ export const AvatarImage = ({ address, boxClassName, iconClassName, iconColor, w
 
   const render = () => {
     const IconComponent = icons[iconVariant];
-    return <IconComponent className={cn("size-4", iconColor ?? color?.text, iconClassName)} />;
+    return <IconComponent className={cn("size-4.5", iconColor ?? color?.text, iconClassName)} />;
   };
 
   if (withBox) {
@@ -113,8 +113,8 @@ export const Avatar = ({
             iconVariant={iconVariant}
           />
         )}
-        <p className={cn("text-xs font-medium", withLinkColor ? "text-main" : color?.text, pClassName)}>{formatAddress(address)}</p>
-        {withLinkIcon && <Icons.ArrowUpRight className={cn("w-3.5 h-3.5 text-main -ml-0.5", withLinkColor ? "text-main" : color?.text, linkIconClassName)} />}
+        <p className={cn("text-sm font-medium", withLinkColor ? "text-main" : color?.text, pClassName)}>{formatAddress(address)}</p>
+        {withLinkIcon && <Icons.ArrowUpRight className={cn("size-4 text-main -ml-0.5", withLinkColor ? "text-main" : color?.text, linkIconClassName)} />}
       </div>
     );
   };
