@@ -21,7 +21,7 @@ export const EtfTabsBar = ({ tabSelected, setTabSelected, etfBottomCollapsed, se
   };
 
   return (
-    <div className={cn("flex w-full items-center justify-between gap-2 px-4 py-1", etfBottomCollapsed ? "" : "border-b")}>
+    <div className={cn("flex w-full items-center justify-between gap-2 px-6 py-1", etfBottomCollapsed ? "" : "border-b")}>
       <Tabs value={tabSelected} onValueChange={handleTabChange}>
         <TabsList className="w-full border-0 gap-1">
           {etfTabOptions.map((option, index) => (
@@ -29,7 +29,7 @@ export const EtfTabsBar = ({ tabSelected, setTabSelected, etfBottomCollapsed, se
               key={index}
               value={option.label}
               className={cn(
-                "px-5 rounded-lg py-1.25",
+                "px-5 rounded-box py-1.25",
                 etfBottomCollapsed ? "dark:data-[state=active]:bg-transparent dark:data-[state=active]:text-subtext" : ""
               )}
               onClick={() => setEtfBottomCollapsed(false)}

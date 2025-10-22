@@ -336,7 +336,9 @@ export const EmptyTable = <TData, TValue>({
         <TableHeader>
           <TableRow className="border-b">
             {headers.map((header, index) => (
-              <TableHead key={index}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>
+              <TableHead key={index} className="bg-bg hover:bg-bg">
+                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+              </TableHead>
             ))}
           </TableRow>
         </TableHeader>

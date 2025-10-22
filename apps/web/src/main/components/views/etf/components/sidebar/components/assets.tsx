@@ -21,7 +21,7 @@ export const EtfAssets = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 
   return (
     <SidebarBox title="Underlying Assets" icon={<Icons.Assets className="size-4.5" />}>
-      <div className="w-full border rounded-lg overflow-hidden">
+      <div className="w-full border rounded-box overflow-hidden">
         <TokenTable assetsWithWeight={assetsWithWeight} />
       </div>
     </SidebarBox>

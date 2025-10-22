@@ -24,14 +24,16 @@ export const Footer = () => {
       </div>
       <div className="flex-1" />
       <div className="flex items-center gap-2.5">
-        <Button variant="ghost" size="icon" className="text-subtext p-0">
-          <Icons.Twitter className="size-4.25" />
-        </Button>
         <p className="text-border pl-1">|</p>
-        {/* <Button variant="ghost" size="icon" className="text-subtext p-0">
-          <Icons.Discord className="size-4.75" />
-        </Button>
-        <p className="text-subtext pl-1">|</p> */}
+        <div className="flex items-center gap-0">
+          <Button variant="ghost" size="icon" className="text-subtext p-0">
+            <Icons.Twitter className="size-4.25" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-subtext p-0">
+            <Icons.Discord className="size-4.75" />
+          </Button>
+        </div>
+        <p className="text-border pl-1">|</p>
         <ThemeSwitcher />
       </div>
     </div>
@@ -43,21 +45,23 @@ const ThemeSwitcher = () => {
 
   const css = {
     icon: "size-4.25",
+    trigger: "data-[state=active]:bg-bg-800",
   };
 
   if (!hydrated) {
     return null;
   }
+
   return (
     <Tabs value={selectedTheme}>
-      <TabsList className="gap-0.5">
-        <TabsTrigger value="light" onClick={() => setTheme("light")}>
+      <TabsList className="gap-0.5 border-0 bg-bg-900">
+        <TabsTrigger value="light" onClick={() => setTheme("light")} className={css.trigger}>
           <Icons.Sun className={css.icon} />
         </TabsTrigger>
-        <TabsTrigger value="dark" onClick={() => setTheme("dark")}>
+        <TabsTrigger value="dark" onClick={() => setTheme("dark")} className={css.trigger}>
           <Icons.Moon className={css.icon} />
         </TabsTrigger>
-        <TabsTrigger value="system" onClick={() => setTheme("system")}>
+        <TabsTrigger value="system" onClick={() => setTheme("system")} className={css.trigger}>
           <Icons.Monitor className={css.icon} />
         </TabsTrigger>
       </TabsList>

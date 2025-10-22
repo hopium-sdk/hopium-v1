@@ -60,7 +60,7 @@ const EtfMobile = ({ etfWithAssetsAndPools }: { etfWithAssetsAndPools: C_EtfWith
               <TabsTrigger
                 key={index}
                 value={option.label}
-                className={cn("px-5 rounded-lg py-1 w-full flex flex-col gap-1 data-[state=active]:bg-bg data-[state=active]:text-main")}
+                className={cn("px-5 rounded-box py-1 w-full flex flex-col gap-1 data-[state=active]:bg-bg data-[state=active]:text-main")}
               >
                 {option.icon}
                 <p className={cn("text-xs")}>{option.label}</p>
@@ -87,11 +87,11 @@ const EtfMobile = ({ etfWithAssetsAndPools }: { etfWithAssetsAndPools: C_EtfWith
 
 const EtfDesktop = ({ etfWithAssetsAndPools }: { etfWithAssetsAndPools: C_EtfWithAssetsAndPools }) => {
   return (
-    <div className="flex-1 overflow-hidden hidden lg:flex gap-1">
+    <div className="flex-1 overflow-hidden hidden lg:flex gap-box">
       <div className="flex flex-1 flex-col overflow-hidden">
         <EtfMain etf={etfWithAssetsAndPools} />
       </div>
-      <div className="flex w-[350px] flex-col overflow-hidden border rounded-lg">
+      <div className="flex w-[350px] flex-col overflow-hidden rounded-box">
         <EtfSidebar etf={etfWithAssetsAndPools} />
       </div>
     </div>

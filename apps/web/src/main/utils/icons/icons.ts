@@ -58,7 +58,7 @@ export { RiTwitterXLine as Twitter } from "react-icons/ri";
 export { PiTelegramLogoBold as Telegram } from "react-icons/pi";
 export { PiGlobeSimpleBold as Website } from "react-icons/pi";
 export { TbCurrencyEthereum as Ether } from "react-icons/tb";
-export { RiDiscordFill as Discord } from "react-icons/ri";
+export { PiDiscordLogoBold as Discord } from "react-icons/pi";
 
 //-------Specific-------//
 

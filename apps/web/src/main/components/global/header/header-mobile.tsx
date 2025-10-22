@@ -21,7 +21,7 @@ export const HeaderMobile = () => {
   };
 
   return (
-    <div className="h-13 border-b-0 items-center justify-between px-6 bg-bg flex lg:hidden">
+    <div className="h-13 border-b items-center justify-between px-6 bg-bg flex lg:hidden">
       {pathname.startsWith("/search") ? (
         <SearchMobile handleSearchClose={handleSearchClose} />
       ) : (

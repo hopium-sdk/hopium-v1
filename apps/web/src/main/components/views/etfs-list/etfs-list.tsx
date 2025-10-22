@@ -43,7 +43,7 @@ export const EtfsList = ({ type, query }: T_EtfsList) => {
   };
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden lg:border lg:rounded-lg bg-bg">
+    <div className="flex flex-1 flex-col overflow-hidden lg:rounded-box bg-bg">
       <RealtimeTable<C_EtfWithAssetsAndPools, string, typeof CONVEX.api.fns.etf.getEtfList.default>
         queryMode="paginated"
         queryResult={result}
