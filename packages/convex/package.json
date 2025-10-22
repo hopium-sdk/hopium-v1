@@ -24,7 +24,7 @@
   "dependencies": {
     "assert": "^2.1.0",
     "convex": "^1.27.5",
-    "ethers": "^6.15.0"
+    "ethers": "5.7"
   },
   "peerDependencies": {
     "react": "19.1.0",

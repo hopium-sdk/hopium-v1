@@ -50,6 +50,7 @@ export const useDataFeed = ({ etf, setIsReady }: { etf: C_EtfWithAssetsAndPools;
         onSymbolResolvedCallback(symbolInfo);
       });
     },
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     getBars: (symbolInfo, resolution, periodParams, onHistoryCallback, _) => {
       setTimeout(async () => {
         const timeframe = convertResolution(resolution);
@@ -77,11 +78,13 @@ export const useDataFeed = ({ etf, setIsReady }: { etf: C_EtfWithAssetsAndPools;
         );
       });
     },
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     subscribeBars: (symbolInfo, resolution, onRealtimeCallback, subscriberUID, onResetCacheNeededCallback) => {
       const timeframe = convertResolution(resolution);
       timeframeRef.current = timeframe;
       liveCbRef.current = onRealtimeCallback;
     },
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     unsubscribeBars: (_) => {},
   };
 

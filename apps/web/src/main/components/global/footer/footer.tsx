@@ -6,7 +6,7 @@ import { usePrices } from "@/main/wrappers/components/prices-provider";
 import { numberToUsd } from "@repo/common/utils/currency";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
 import { Tabs, TabsList, TabsTrigger } from "@/main/shadcn/components/ui/tabs";
-import { PiMonitor, PiMonitorFill, PiMoon, PiMoonFill, PiSun, PiSunFill } from "react-icons/pi";
+import { PiMonitor, PiMoon, PiSun } from "react-icons/pi";
 
 export const Footer = () => {
   const { ethUsdPrice } = usePrices();

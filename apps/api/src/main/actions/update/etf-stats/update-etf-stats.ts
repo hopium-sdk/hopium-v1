@@ -16,6 +16,7 @@ export const _updateEtfStats = async () => {
       }),
     ]);
 
+    // eslint-disable-next-line  @typescript-eslint/no-unused-vars
     const { _id, _creationTime, ...rest } = etf;
 
     return {

@@ -4,7 +4,9 @@ import { arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable, v
 import { CSS } from "@dnd-kit/utilities";
 
 type T_ReorderList = {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   items: any[];
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   setItems: (items: any[]) => void;
   handleReorder: ({ id, index }: { id: string; index: number }) => Promise<void>;
   id_key: string;
@@ -52,6 +54,7 @@ export const ReorderListItem = ({
   handleClick,
   children,
 }: {
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   item: any;
   id_key: string;
   handleClick?: () => void;

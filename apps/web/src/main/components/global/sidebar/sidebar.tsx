@@ -91,7 +91,7 @@ const SidebarInside = () => {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent className="px-4 flex flex-col gap-4 mt-2">
+      <SidebarContent className="px-4 flex flex-col gap-4 mt-2 pb-4">
         <Suspense>
           {sidebarList.map((list) => (
             <SidebarList key={list.title} items={list} />
@@ -117,7 +117,7 @@ export const SidebarList = ({ items }: { items: T_SidebarList }) => {
           <SidebarMenuItem key={link.title}>
             <Link href={link.url}>
               <SidebarMenuButton tooltip={link.title} className={cn("hover:bg-transparent hover:text-main", isLinkActive(link) && "text-main")}>
-                {link.icon && <link.icon />}
+                <div className="flex items-center justify-center">{link.icon && <link.icon className={cn("size-4.5")} />}</div>
                 <span className="text-sm font-medium">{link.title}</span>
               </SidebarMenuButton>
             </Link>

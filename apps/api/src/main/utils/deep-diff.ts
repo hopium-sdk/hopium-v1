@@ -2,10 +2,10 @@
  * Deeply compares two objects and returns only the changed fields.
  * Returns null if there are no changes.
  */
-export function deepDiff<T extends Record<string, any>>(oldData: T, newData: T): Partial<T> | null {
+export function deepDiff<T extends Record<string, unknown>>(oldData: T, newData: T): Partial<T> | null {
   let hasChanges = false;
 
-  const diff: Record<string, any> = {};
+  const diff: Record<string, unknown> = {};
 
   for (const key of Object.keys(newData)) {
     const oldVal = oldData[key];
@@ -26,12 +26,12 @@ export function deepDiff<T extends Record<string, any>>(oldData: T, newData: T):
   return hasChanges ? (diff as Partial<T>) : null;
 }
 
-function isObject(value: any): value is Record<string, any> {
+function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /** Handles NaN, arrays, and simple types */
-function isEqual(a: any, b: any): boolean {
+function isEqual(a: unknown, b: unknown): boolean {
   if (Array.isArray(a) && Array.isArray(b)) {
     if (a.length !== b.length) return false;
     return a.every((val, i) => isEqual(val, b[i]));

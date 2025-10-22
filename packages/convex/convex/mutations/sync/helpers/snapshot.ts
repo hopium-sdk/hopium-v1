@@ -9,6 +9,7 @@ export async function snapshot(
     table: T_TableName;
     docId: string;
     existed: boolean;
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     before: any | null;
   }
 ) {

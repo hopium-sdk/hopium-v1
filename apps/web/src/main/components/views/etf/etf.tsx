@@ -11,8 +11,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/main/shadcn/components/ui/tabs";
 import { cn } from "@/main/shadcn/lib/utils";
 import { useState } from "react";
 import { EtfMetadata } from "./components/main/components/top/components/metadata";
-import { EtfChart } from "./components/main/components/top/components/chart";
-import { EtfBottom } from "./components/main/components/bottom/bottom";
 
 export const Etf = ({ etfId }: { etfId: number }) => {
   const etfWithAssetsAndPools = useQuery(CONVEX.api.fns.etf.getEtfWithAssetsAndPools.default, {

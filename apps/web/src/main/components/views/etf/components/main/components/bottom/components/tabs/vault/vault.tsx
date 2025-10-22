@@ -2,10 +2,8 @@ import { RealtimeTable } from "@/main/components/ui/table";
 import { C_Etf, C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { getVaultColumns } from "./components/columns";
 import { usePrices } from "@/main/wrappers/components/prices-provider";
-import { Row } from "@tanstack/react-table";
 import { getExplorerAddressUrl } from "@repo/common/utils/explorer";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
-import { useRouter } from "next/navigation";
 
 export type T_EtfVaultToken = C_Etf["details"]["assets"][number] & {
   tokenName: string;
@@ -13,7 +11,6 @@ export type T_EtfVaultToken = C_Etf["details"]["assets"][number] & {
 };
 
 export const EtfVault = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
-  const router = useRouter();
   const { ethUsdPrice } = usePrices();
 
   const result: T_EtfVaultToken[] = etf.etf.details.assets.map((asset) => {

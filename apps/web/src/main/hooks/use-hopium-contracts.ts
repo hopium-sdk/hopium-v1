@@ -48,7 +48,8 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
           functionName: "mintEtfTokens",
           args: [BigInt(etf.details.etfId), address as `0x${string}`],
           value: amount,
-          chainId,
+          chain,
+          account: address,
         });
       } else {
         const amount = parseUnits(inputAmount.toString(), 18);
@@ -57,7 +58,8 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
           address: etfRouterAddress,
           functionName: "redeemEtfTokens",
           args: [BigInt(etf.details.etfId), amount, address as `0x${string}`],
-          chainId,
+          chain,
+          account: address,
         });
       }
 

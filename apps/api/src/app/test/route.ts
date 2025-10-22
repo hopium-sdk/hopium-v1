@@ -1,6 +1,5 @@
 import { fetchAssetDetailsFromGeckoTerminal } from "@/main/actions/sync/utils/assets/fetch-asset-details";
 import { decodeVaultBalanceLog } from "@/main/actions/sync/utils/logs/filter-logs/vault-balance";
-import { QN } from "@/main/lib/qn";
 import { tryRoute } from "@/main/utils/tryRoute";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -3,8 +3,10 @@ import { v } from "convex/values";
 import { _updateSyncStatus } from "../sync/fns/updateSyncStatus";
 
 // Remove Convex meta so we can patch/insert safely
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 function stripMeta<T extends Record<string, any> | null | undefined>(doc: T): Omit<NonNullable<T>, "_id" | "_creationTime"> | null {
   if (!doc) return null;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   const { _id, _creationTime, ...rest } = doc as any;
   return rest;
 }

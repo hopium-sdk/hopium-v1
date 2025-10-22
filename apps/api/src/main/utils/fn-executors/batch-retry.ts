@@ -28,7 +28,7 @@ export async function batchRetry<T>(opts: T_BatchRetry<T>): Promise<T[]> {
     return new Promise<U>((resolve, reject) => {
       const t = setTimeout(() => {
         const err = new Error("Global timeout while awaiting task");
-        (err as any).__globalTimeout = true;
+        (err as unknown as Record<string, unknown>).__globalTimeout = true;
         reject(err);
       }, ms);
       p.then(
@@ -47,14 +47,14 @@ export async function batchRetry<T>(opts: T_BatchRetry<T>): Promise<T[]> {
   while (remaining > 0) {
     if (timeLeft() <= 0) {
       const err = new Error("Timed out before resolving all tasks");
-      (err as any).errors = errors.slice(); // expose errors instead of partialResults
+      (err as unknown as Record<string, unknown>).errors = errors.slice(); // expose errors instead of partialResults
       throw err;
     }
 
     const group = queue.shift();
     if (!group || group.items.length === 0) {
       const err = new Error("Stalled: no groups to process but tasks remain");
-      (err as any).errors = errors.slice();
+      (err as unknown as Record<string, unknown>).errors = errors.slice();
       throw err;
     }
 
@@ -79,10 +79,11 @@ export async function batchRetry<T>(opts: T_BatchRetry<T>): Promise<T[]> {
     let settled: Array<{ i: number; ok: true; val: T } | { i: number; ok: false; err: unknown }>;
     try {
       settled = await Promise.all(attempts);
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e && e.__globalTimeout) {
         const err = new Error("Timed out before resolving all tasks");
-        (err as any).errors = errors.slice();
+        (err as unknown as Record<string, unknown>).errors = errors.slice();
         throw err;
       }
       // Treat as if every item in the group failed with the same error
@@ -107,7 +108,7 @@ export async function batchRetry<T>(opts: T_BatchRetry<T>): Promise<T[]> {
     if (failures.length > 0) {
       if (timeLeft() <= 0) {
         const err = new Error("Timed out before resolving all tasks");
-        (err as any).errors = errors.slice();
+        (err as unknown as Record<string, unknown>).errors = errors.slice();
         throw err;
       }
       const nextLevel = group.retryLevel + 1;

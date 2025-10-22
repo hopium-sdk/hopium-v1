@@ -16,9 +16,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import { getExplorerAddressUrl } from "@repo/common/utils/explorer";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { toast } from "sonner";
-import { Sheet, SheetTitle, SheetContent, SheetHeader, SheetDescription } from "@/main/shadcn/components/ui/sheet";
-import { useState } from "react";
-import { Drawer, DrawerDescription, DrawerTitle, DrawerContent, DrawerHeader, DrawerTrigger } from "@/main/shadcn/components/ui/drawer";
+import { Drawer, DrawerTitle, DrawerContent, DrawerHeader, DrawerTrigger } from "@/main/shadcn/components/ui/drawer";
 
 export const ConnectWalletButton = () => {
   return (
@@ -149,7 +147,7 @@ const AvatarAddressBar = ({ address, variant = "default", withSubtext = false }:
         icon: "size-5",
       },
       p: "text-sm font-medium",
-      subtext: "text-sm text-subtext",
+      subtext: "text-sm text-subtext font-normal",
     },
     lg: {
       avatar: {
@@ -157,7 +155,7 @@ const AvatarAddressBar = ({ address, variant = "default", withSubtext = false }:
         icon: "size-6",
       },
       p: "text-sm font-medium",
-      subtext: "text-sm text-subtext",
+      subtext: "text-sm text-subtext font-normal",
     },
   };
 

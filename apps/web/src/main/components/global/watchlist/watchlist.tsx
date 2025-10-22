@@ -115,14 +115,14 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
     return (
       <div className={cn("w-full flex flex-col px-3 py-2 border-b hover:bg-bg-900", editMode ? "" : "cursor-pointer")} onClick={handleClick}>
         <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             {editMode && (
               <div className="size-4 flex items-center justify-center text-subtext hover:text-text cursor-move">
-                <Icons.DragHandle className="size-3.5" />
+                <Icons.DragHandle className="size-4" />
               </div>
             )}
             <div className="size-8">
-              <EtfImage address={item.etf.contracts.etfTokenAddress} withBox boxClassName="size-8" iconClassName="size-5" />
+              <EtfImage address={item.etf.contracts.etfTokenAddress} withBox boxClassName="size-9" iconClassName="size-6" />
             </div>
             <div className="flex flex-col">
               <p className="text-sm font-medium uppercase">{item.etf.details.ticker}</p>
@@ -150,7 +150,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
             )}
             {editMode && (
               <div className="size-4 flex items-center justify-center text-subtext hover:text-text cursor-pointer" onClick={handleRemove}>
-                {removeLoading ? <Icons.Loading className="size-3.5 animate-spin" /> : <Icons.Trash className="size-3.5" />}
+                {removeLoading ? <Icons.Loading className="size-4 animate-spin" /> : <Icons.Trash className="size-4" />}
               </div>
             )}
           </div>

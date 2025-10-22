@@ -155,6 +155,7 @@ export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReferen
   );
 };
 
+// eslint-disable-next-line  @typescript-eslint/no-unused-vars
 interface DataTableProps<TData, TValue> {
   table: TableType<TData>;
   loadMoreData: () => void;
@@ -213,6 +214,7 @@ export function DataTable<TData, TValue>({
         components={{
           Table: Table,
           TableRow: (props) => {
+            // eslint-disable-next-line  react/prop-types
             const index = props["data-index"];
             const row = rows[index];
 
@@ -252,6 +254,7 @@ export function DataTable<TData, TValue>({
   );
 }
 
+// eslint-disable-next-line  @typescript-eslint/no-unused-vars
 const TableCellItems = <TData, TValue>({ row, cellClassName }: { row: Row<TData>; cellClassName?: string }) => {
   const allCells = row.getVisibleCells();
 
@@ -266,6 +269,7 @@ const TableCellItems = <TData, TValue>({ row, cellClassName }: { row: Row<TData>
   );
 };
 
+// eslint-disable-next-line  @typescript-eslint/no-unused-vars
 const TableHeaderItems = <TData, TValue>({ table }: { table: TableType<TData> }) => {
   return (
     <>
@@ -291,6 +295,7 @@ const TableScrollLoader = () => (
   </div>
 );
 
+// eslint-disable-next-line  @typescript-eslint/no-unused-vars
 export const EmptyTable = <TData, TValue>({
   table,
   type,

@@ -25,12 +25,12 @@ const options = [
   { bg950: "bg-rose-200 dark:bg-rose-950", bg500: "bg-rose-500", text: "text-rose-500" },
 ];
 
-export const getStaticColor = (address: string) => {
+export const getStaticColor = (address: string): { bg950: string; bg500: string; text: string } => {
   const hash = address.split("").reduce((acc, char) => {
     return acc + char.charCodeAt(0);
   }, 0);
 
-  return options[hash % options.length] ?? options[0];
+  return options[hash % options.length] ?? options[0]!;
 };
 
 export const getRandomColor = () => {

@@ -17,26 +17,21 @@ export default query({
     let results: C_Etf[] = [];
     const term = searchTerm.trim();
 
-    switch (term) {
-      case "":
-        results = [];
-        break;
-      case isEthAddress(term):
-        results = await ctx.db
-          .query("etfs")
-          .withIndex("by_token_address", (q) => q.eq("contracts.etfTokenAddress", normalizeAddress(term)))
-          .collect();
-        break;
-      default: {
-        const lowered = term.toLowerCase();
-        const byCap = await ctx.db.query("etfs").withIndex("by_assetsMcapUsd").order("desc").collect();
-        results = byCap.filter((etf) => {
-          const name = etf.details.name?.toLowerCase() ?? "";
-          const ticker = etf.details.ticker?.toLowerCase() ?? "";
-          return name.includes(lowered) || ticker.includes(lowered);
-        });
-        break;
-      }
+    if (term === "") {
+      results = [];
+    } else if (isEthAddress(term)) {
+      results = await ctx.db
+        .query("etfs")
+        .withIndex("by_token_address", (q) => q.eq("contracts.etfTokenAddress", normalizeAddress(term)))
+        .collect();
+    } else {
+      const lowered = term.toLowerCase();
+      const byCap = await ctx.db.query("etfs").withIndex("by_assetsMcapUsd").order("desc").collect();
+      results = byCap.filter((etf) => {
+        const name = etf.details.name?.toLowerCase() ?? "";
+        const ticker = etf.details.ticker?.toLowerCase() ?? "";
+        return name.includes(lowered) || ticker.includes(lowered);
+      });
     }
 
     const resultsWithAssetsAndPools: C_EtfWithAssetsAndPools[] = await Promise.all(

@@ -40,4 +40,5 @@ const _uniq = <T>(arr: readonly T[], path: string) => {
   return Array.from(map.values());
 };
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const _getByPath = (obj: any, path: string) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj);

@@ -65,6 +65,7 @@ export default query({
 
     // 4) Build positions for nonzero balances
     const base = Array.from(state.entries())
+      // eslint-disable-next-line  @typescript-eslint/no-unused-vars
       .filter(([_, v]) => v.balance > 0)
       .map(([etfId, { balance, avg }]) => ({
         etfId,

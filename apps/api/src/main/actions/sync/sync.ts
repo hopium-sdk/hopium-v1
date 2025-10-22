@@ -16,7 +16,7 @@ import { _syncEtfTokenTransfer } from "./fns/etf-token-transfer/sync-etf-token-t
 import { _preloadCache } from "./helpers/fns/preload-cache";
 import { _buildForSwaps } from "./fns/swap/build-for-swaps";
 
-export const sync = async ({ body }: { body: any }) => {
+export const sync = async ({ body }: { body: unknown }) => {
   const payload = qnPayloadSchema.parse(body);
   const logs = sortLogsByChainOrder({ logs: payload.logs });
   const cache = new CacheManager();

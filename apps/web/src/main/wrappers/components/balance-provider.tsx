@@ -2,7 +2,7 @@
 import getViemClient from "@/main/lib/viem";
 import { normalizeError } from "@/main/utils/error";
 import { createContext, useContext, useEffect, useState } from "react";
-import { formatEther } from "viem";
+import { Client, formatEther } from "viem";
 import { getBalance } from "viem/actions";
 import { useAccount } from "wagmi";
 
@@ -25,7 +25,7 @@ export const BalanceProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       if (!address) return;
 
-      const balanceInWei = await getBalance(client, {
+      const balanceInWei = await getBalance(client as Client, {
         address: address as `0x${string}`,
       });
 

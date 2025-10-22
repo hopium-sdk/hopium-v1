@@ -1,8 +1,8 @@
-import { createPublicClient, http } from "viem";
+import { createPublicClient, http, Chain } from "viem";
 import { base, mainnet } from "viem/chains";
-import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
+import { COMMON_CONSTANTS, T_Network } from "@repo/common/utils/constants";
 
-const networks = {
+const networks: Record<T_Network, Chain> = {
   mainnet: mainnet,
   base: base,
 };

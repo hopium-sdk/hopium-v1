@@ -96,6 +96,7 @@ class CacheMapping {
     return Array.from(this.cache[entity].values()) as T_Entities[E]["t"][];
   };
 
+  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   public convertCtoT = <E extends keyof T_Entities>({ entity, c }: { entity: E; c: T_Entities[E]["c"] }): T_Entities[E]["t"] => {
     return deepOmit<T_Entities[E]["c"]>(c, ["_id", "_creationTime"] as Path<T_Entities[E]["c"]>[]) as T_Entities[E]["t"];
   };

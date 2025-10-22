@@ -5,9 +5,9 @@ export const formatAddress = (address: string) => {
 };
 
 export const isEthAddress = (address: string) => {
-  return ethers.isAddress(address);
+  return ethers.utils.isAddress(address);
 };
 
 export const normalizeAddress = (address: string) => {
-  return ethers.getAddress(address);
+  return ethers.utils.getAddress(address);
 };

@@ -3,7 +3,6 @@ import { CacheManager } from "../../helpers/cache-manager";
 import { T_QnLog } from "../../schema";
 import { decodeVaultBalanceLog } from "../../utils/logs/filter-logs/vault-balance";
 import { formatUnits } from "viem";
-import { _calcEtfPrice } from "../../utils/etf/calc-etf-price";
 import { _updateEtfPriceAndOhlc } from "../swap/sync-swap";
 
 // NOTE: We don't need to preload pools for price update, because we already preload pool from swaps (vb and swap always take place together)

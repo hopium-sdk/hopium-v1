@@ -139,7 +139,7 @@
 .dark {
   --text: var(--fg);
   --subtext: var(--mid);
-  --bg-1000: #0d0d0d;
+  --bg-1000: #0c0c0c;
   --bg: #0f0f0f;
   /* --bg: #0e0e12; */
   --bg-900: #2e2e2e;
