@@ -85,7 +85,7 @@ const SidebarInside = () => {
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="hover:bg-transparent cursor-pointer w-fit">
               <Link href={"/"} className="flex items-center">
-                <Logo className="size-6 wiggle" />
+                <Logo className="size-6.5 wiggle" />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
