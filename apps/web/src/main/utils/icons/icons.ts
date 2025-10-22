@@ -87,5 +87,3 @@ export { PiLightningBold as Rewards } from "react-icons/pi";
 export { LuSquareChartGantt as Positions } from "react-icons/lu";
 export { TbCircleSquare as Vault } from "react-icons/tb";
 export { TbCircleSquare as Assets } from "react-icons/tb";
-
-export * as Icons from "./icons";
