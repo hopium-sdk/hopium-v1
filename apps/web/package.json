@@ -32,8 +32,9 @@
     "@reown/appkit": "^1.8.9",
     "@reown/appkit-common": "^1.8.9",
     "@reown/appkit-universal-connector": "^1.8.9",
-    "@repo/common": "*",
-    "@repo/convex": "*",
+    "@repo/common": "workspace:*",
+    "@repo/convex": "workspace:*",
+    "@repo/hopium-contracts": "workspace:*",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/pacer": "^0.15.4",
     "@tanstack/react-table": "^8.21.3",
@@ -67,8 +68,8 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

@@ -15,12 +15,12 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "viem": "^2.38.2",
-    "zod": "^4.1.12"
-  },
-  "devDependencies": {
+    "zod": "^4.1.12",
     "@repo/common": "workspace:*",
     "@repo/hopium-contracts": "workspace:*",
-    "@repo/convex": "workspace:*",
+    "@repo/convex": "workspace:*"
+  },
+  "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "typescript": "^5",
