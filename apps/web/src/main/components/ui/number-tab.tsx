@@ -14,7 +14,7 @@ type T_NumberTab = {
 
 export const NumberTab = ({ title, value, color, symbolType, noDecimals, pClassName, blink }: T_NumberTab) => {
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-0.5 border rounded-box p-1.5">
+    <div className="w-full flex flex-col items-start justify-center gap-0.5 bg-bg-900 rounded-base px-4 py-2">
       <p className="text-sm font-medium text-subtext">{title}</p>
       <NumberDiv number={value} symbolType={symbolType} color={color} noDecimals={noDecimals} pClassName={pClassName} blink={blink} />
     </div>

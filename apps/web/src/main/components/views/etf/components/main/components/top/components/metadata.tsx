@@ -27,7 +27,7 @@ export const EtfMetadata = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   };
 
   return (
-    <div className="w-full flex flex-col gap-2 border-b px-6 py-2 overflow-hidden">
+    <div className="w-full flex flex-col gap-2 border-b-2 px-6 py-2 overflow-hidden">
       <div className="w-full flex items-center justify-between gap-4 overflow-hidden">
         <div className="flex items-center gap-3">
           <EtfImage address={etf.etf.contracts.etfTokenAddress} withBox boxClassName="size-9" iconClassName="size-6" />
@@ -41,9 +41,9 @@ export const EtfMetadata = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
         <div className="w-full flex flex-1 overflow-x-auto md:justify-end">
           <div className="w-fit flex items-center justify-end gap-8 md:gap-10">
             {statsOptions.map((option) => (
-              <div key={option} className="flex flex-col text-right gap-1">
+              <div key={option} className="flex flex-col items-end text-right gap-1">
                 <p className="text-sm font-medium text-subtext whitespace-nowrap">{option}</p>
-                <div className="w-full flex items-center justify-end">
+                <div className="w-fit flex items-center justify-end">
                   {option === "Created" ? (
                     <div className="w-full flex items-center justify-end">
                       <Timestamp timestamp={etf.etf.details.createdAt} pClassName="text-sm whitespace-nowrap" color="text-text font-medium" withLink={false} />

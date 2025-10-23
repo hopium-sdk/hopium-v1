@@ -35,7 +35,7 @@ export const Watchlist = ({ collapsed, setCollapsed }: T_Watchlist) => {
 
   return (
     <div className="w-full flex flex-1 flex-col overflow-hidden">
-      <div className={cn("flex items-center justify-between py-3 px-4", collapsed.isCollapsed ? "" : "border-b")}>
+      <div className={cn("flex items-center justify-between py-3 px-4", collapsed.isCollapsed ? "" : "border-b-2")}>
         <div className="flex items-center gap-1.5">
           <Icons.Watchlist className="size-4.5" />
           <p className="text-sm font-medium">Watchlist</p>
@@ -113,7 +113,7 @@ const WatchlistItem = ({ item, editMode, removeFromWatchlist }: T_WatchlistItem)
 
   const renderItem = () => {
     return (
-      <div className={cn("w-full flex flex-col px-3 py-2 border-b hover:bg-bg-900", editMode ? "" : "cursor-pointer")} onClick={handleClick}>
+      <div className={cn("w-full flex flex-col px-3 py-2 border-b-2 hover:bg-bg-900", editMode ? "" : "cursor-pointer")} onClick={handleClick}>
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center gap-3">
             {editMode && (

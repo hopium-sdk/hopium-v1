@@ -43,7 +43,7 @@ export const NumberDiv = ({
     return (
       <>
         {Icon && <Icon className={cn("size-3", color, iconClassName)} />}
-        {symbolType == "eth" && <Icons.Ether className={cn("size-4 translate-x-0.5", color, iconClassName)} />}
+        {symbolType == "eth" && <Icons.Ether className={cn("size-4", color, iconClassName)} />}
         {symbolType == "coin" && <Icons.Coin className={cn("size-4", color, iconClassName)} />}
         <PComponent className={cn(css.number_p, color, pClassName)}>
           {bracket && <span>{"("}</span>}

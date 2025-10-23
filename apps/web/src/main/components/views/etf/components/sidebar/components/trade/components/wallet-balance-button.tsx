@@ -36,9 +36,9 @@ export const WalletBalanceButton = ({ form, amount, balanceEth, balanceToken, ac
   };
 
   return (
-    <div className="flex items-center gap-2 rounded-full px-3 py-1 border hover:bg-accent cursor-pointer" onClick={handleClick}>
+    <div className="flex items-center gap-2 rounded-full px-3 py-1 bg-bg-900 hover:bg-bg-800 cursor-pointer" onClick={handleClick}>
       {<Icons.Wallet className="size-4.5 text-subtext" />}
-      <Separator orientation="vertical" className="data-[orientation=vertical]:h-4" />
+      {/* <Separator orientation="vertical" className="data-[orientation=vertical]:h-4" /> */}
       <NumberDiv
         number={getBalanceAmount()}
         color="text-subtext"

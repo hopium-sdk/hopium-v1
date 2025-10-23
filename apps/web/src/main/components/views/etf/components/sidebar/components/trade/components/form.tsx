@@ -52,8 +52,8 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="w-full flex items-center border rounded-box overflow-hidden">
-                    <div className="w-3/12 flex items-center justify-center py-3 border-r">
+                  <div className="w-full flex items-center bg-bg-900 rounded-base overflow-hidden">
+                    <div className="w-3/12 flex items-center justify-center py-3">
                       <p className="text-sm font-medium text-subtext">Amount</p>
                     </div>
                     <div className="w-9/12 flex items-center justify-end gap-2 px-4">
@@ -95,7 +95,7 @@ export const TradeForm = ({ etf, form, formData, amount, handleClick, loading, b
 
 export const TradeButton = ({ actionSelected, loading }: { actionSelected: string; loading: string | null }) => {
   return (
-    <LoadingButton loading={loading} variant={actionSelected == "Buy" ? "buy" : "sell"} className={cn("w-full rounded-sm mt-2")} type="submit">
+    <LoadingButton loading={loading} variant={actionSelected == "Buy" ? "buy" : "sell"} className={cn("w-full mt-2")} type="submit">
       <SubscriptDiv
         baseItem={<Icons.Trade className="size-4.5" />}
         subscriptItem={<p className="text-sm font-medium">{actionSelected == "Buy" ? "+" : "-"}</p>}

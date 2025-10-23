@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque } from "next/font/google";
+import { Bricolage_Grotesque, Cedarville_Cursive } from "next/font/google";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -10,8 +10,13 @@ const bricolageGrotesque = Bricolage_Grotesque({
   subsets: ["latin"],
 });
 
+const cedarvilleCursive = Cedarville_Cursive({
+  variable: "--font-cedarville-cursive",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
 const defaultFont = bricolageGrotesque;
+const cursiveFont = cedarvilleCursive;
 
-export { defaultFont };
-
-//DM_SANS, Bricolage_Grotesque, Outfit, Karla
+export { defaultFont, cursiveFont };

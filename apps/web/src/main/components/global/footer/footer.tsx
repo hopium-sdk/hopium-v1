@@ -12,28 +12,30 @@ export const Footer = () => {
   return (
     <div className="h-10 border-t-0 flex items-center px-6 bg-bg">
       <div className="flex items-center gap-2.5">
-        <div className="flex items-center gap-2.5 bg-buy-900/70 rounded-full px-4 py-1">
+        <div className="flex items-center gap-2.5 bg-buy-900/70 rounded-full px-4 h-7.5">
           <PingCircle />
           <p className="text-sm font-medium text-green-500">Live</p>
         </div>
-        <p className="text-border pl-1">|</p>
-        <div className="flex items-center gap-1 text-subtext">
+        <Button variant="bg900" size={"sm"}>
           <Icons.Ether />
           <p className="text-sm font-medium">{numberToUsd(ethUsdPrice)}</p>
-        </div>
+          <Icons.ArrowUpRight className="size-3.5" />
+        </Button>
       </div>
       <div className="flex-1" />
       <div className="flex items-center gap-2.5">
-        <p className="text-border pl-1">|</p>
-        <div className="flex items-center gap-0">
-          <Button variant="ghost" size="icon" className="text-subtext p-0">
-            <Icons.Twitter className="size-4.25" />
+        <div className="flex items-center gap-1">
+          <Button variant="bg900" size={"sm"}>
+            <Icons.Twitter className="size-4" />
+            <p className="text-xs">Twitter</p>
+            <Icons.ArrowUpRight className="size-3.5" />
           </Button>
-          <Button variant="ghost" size="icon" className="text-subtext p-0">
-            <Icons.Discord className="size-4.75" />
+          <Button variant="bg900" size={"sm"}>
+            <Icons.Discord className="size-4" />
+            <p className="text-xs">Discord</p>
+            <Icons.ArrowUpRight className="size-3.5" />
           </Button>
         </div>
-        <p className="text-border pl-1">|</p>
         <ThemeSwitcher />
       </div>
     </div>
@@ -45,7 +47,7 @@ const ThemeSwitcher = () => {
 
   const css = {
     icon: "size-4.25",
-    trigger: "data-[state=active]:bg-bg-800",
+    trigger: "rounded-xl",
   };
 
   if (!hydrated) {

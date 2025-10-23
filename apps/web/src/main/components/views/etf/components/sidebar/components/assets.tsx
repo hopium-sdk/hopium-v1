@@ -21,7 +21,7 @@ export const EtfAssets = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 
   return (
     <SidebarBox title="Underlying Assets" icon={<Icons.Assets className="size-4.5" />}>
-      <div className="w-full border rounded-box overflow-hidden">
+      <div className="w-full rounded-base overflow-hidden">
         <TokenTable assetsWithWeight={assetsWithWeight} />
       </div>
     </SidebarBox>
@@ -31,17 +31,13 @@ export const EtfAssets = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 const TokenTable = ({ assetsWithWeight }: { assetsWithWeight: T_AssetWithWeight[] }) => {
   return (
     <Table>
-      <TableHeader>
-        <TableRow className="hover:bg-transparent">
+      <TableHeader className="border-b-2 border-bg-800">
+        <TableRow className="hover:bg-bg-900 bg-bg-900">
           <TableHead className="w-5/12 h-8 pl-3 text-subtext font-medium text-sm">Token</TableHead>
           <TableHead className="w-7/12 h-8 pr-3 text-subtext font-medium text-sm text-right">Target Weight</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
-        {assetsWithWeight.map((asset, index) => (
-          <AssetItem key={index} index={index} asset={asset} />
-        ))}
-      </TableBody>
+      <TableBody>{assetsWithWeight.map((asset, index) => asset && <AssetItem key={index} index={index} asset={asset} />)}</TableBody>
     </Table>
   );
 };
@@ -54,7 +50,7 @@ const AssetItem = ({ asset, index }: { asset: T_AssetWithWeight; index: number }
   };
 
   return (
-    <TableRow key={index} onClick={handleClick} className="cursor-pointer px-4">
+    <TableRow key={index} onClick={handleClick} className="cursor-pointer px-4 bg-bg-900 hover:bg-bg-800 border-b-2 border-bg-800">
       <TableCell className="w-5/12 pl-3">
         <div className="flex items-center gap-2.5">
           <CoinImage address={asset.address} boxClassName="size-8" />

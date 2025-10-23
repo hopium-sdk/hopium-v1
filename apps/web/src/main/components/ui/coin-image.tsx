@@ -18,7 +18,7 @@ export const CoinImage = ({ address, boxClassName }: CoinImageProps) => {
 
   return (
     <>
-      <div style={{ containerType: "inline-size" }} className={cn("w-full h-full overflow-hidden rounded-box", boxClassName, error && "hidden")}>
+      <div style={{ containerType: "inline-size" }} className={cn("w-full h-full overflow-hidden rounded-base", boxClassName, error && "hidden")}>
         <Image
           src={`${COMMON_CONSTANTS.storage_url}/token_images/${chain}/${normalizeAddress(address)}.png`}
           alt={address}

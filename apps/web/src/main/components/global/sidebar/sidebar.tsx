@@ -112,11 +112,11 @@ export const SidebarList = ({ items }: { items: T_SidebarList }) => {
   return (
     <SidebarMenu className="flex flex-col gap-2">
       <p className="text-sm font-medium text-subtext pl-2">{items.title}</p>
-      <div>
+      <div className="flex flex-col gap-0.5">
         {items.links.map((link) => (
           <SidebarMenuItem key={link.title}>
             <Link href={link.url}>
-              <SidebarMenuButton tooltip={link.title} className={cn("hover:bg-transparent hover:text-main", isLinkActive(link) && "text-main")}>
+              <SidebarMenuButton tooltip={link.title} className={cn("hover:bg-bg-900 pl-4 -translate-x-2", isLinkActive(link) && "bg-bg-900")}>
                 <div className="flex items-center justify-center">{link.icon && <link.icon className={cn("size-4.5")} />}</div>
                 <span className="text-sm font-medium">{link.title}</span>
               </SidebarMenuButton>

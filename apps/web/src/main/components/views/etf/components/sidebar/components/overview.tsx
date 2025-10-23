@@ -35,11 +35,12 @@ export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 
   return (
     <SidebarBox title="Overview" icon={<Icons.Overview className="size-4.5" />} right={<WatchlistButton etf={etf} />}>
-      <div className="w-full grid grid-cols-2 gap-2">
+      <div className="w-full grid grid-cols-2 gap-1 pt-2">
         <NumberTab
           title={"Price USD"}
           value={getValue(0)}
-          color={getValue(0) == 0 ? "text-subtext" : getValue(0) > 0 ? "text-green-500" : "text-red-500"}
+          pClassName="text-md"
+          color={getValue(0) == 0 ? "text-subtext" : getValue(0) > 0 ? "text-buy" : "text-sell"}
           symbolType={"usd"}
           blink
         />
@@ -47,7 +48,8 @@ export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
         <NumberTab
           title={"Price ETH"}
           value={getValue(1)}
-          color={getValue(1) == 0 ? "text-subtext" : getValue(1) > 0 ? "text-green-500" : "text-red-500"}
+          pClassName="text-md"
+          color={getValue(1) == 0 ? "text-subtext" : getValue(1) > 0 ? "text-buy" : "text-sell"}
           symbolType={"eth"}
           blink
         />

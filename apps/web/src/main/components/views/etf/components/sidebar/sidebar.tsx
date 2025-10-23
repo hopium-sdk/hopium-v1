@@ -8,7 +8,7 @@ export const EtfSidebar = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   return (
     <div className="w-full flex flex-1 flex-col overflow-hidden bg-bg">
       <div className="flex flex-1 flex-col overflow-y-auto">
-        <div className="py-4 px-6">
+        <div className="pt-4 pb-2 px-6">
           <EtfOverview etf={etf} />
         </div>
 

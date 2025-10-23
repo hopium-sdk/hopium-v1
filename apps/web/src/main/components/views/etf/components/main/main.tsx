@@ -17,7 +17,7 @@ export const EtfMain = ({ etf, showMetadata = true }: { etf: C_EtfWithAssetsAndP
               <EtfTop etf={etf} showMetadata={showMetadata} />
             </div>
           </ResizablePanel>
-          <ResizableHandle className="bg-transparent hover:bg-transparent pt-box border-b lg:border-0" />
+          <ResizableHandle className="pt-box" />
           <ResizablePanel defaultSize={30} className="min-h-[150px]">
             <div className="w-full h-full flex flex-col overflow-hidden lg:rounded-box bg-bg">
               <EtfBottom etf={etf} etfBottomCollapsed={etfBottomCollapsed} setEtfBottomCollapsed={setEtfBottomCollapsed} />

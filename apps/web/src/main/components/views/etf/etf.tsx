@@ -53,14 +53,14 @@ const EtfMobile = ({ etfWithAssetsAndPools }: { etfWithAssetsAndPools: C_EtfWith
     };
 
     return (
-      <div className="flex w-full h-fit items-center justify-between gap-2 px-4 py-1 border-t bg-bg">
+      <div className="flex w-full h-fit items-center justify-between gap-2 px-4 py-1 border-t-2 bg-bg">
         <Tabs value={tabSelected} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="w-full border-0 gap-1">
+          <TabsList className="w-full bg-bg gap-1">
             {tabOptions.map((option, index) => (
               <TabsTrigger
                 key={index}
                 value={option.label}
-                className={cn("px-5 rounded-box py-1 w-full flex flex-col gap-1 data-[state=active]:bg-bg data-[state=active]:text-main")}
+                className={cn("px-5 rounded-base py-1 w-full flex flex-col gap-1 data-[state=active]:bg-bg data-[state=active]:text-text")}
               >
                 {option.icon}
                 <p className={cn("text-xs")}>{option.label}</p>

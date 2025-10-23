@@ -4,6 +4,7 @@ import { CopyIcon } from "@/main/components/ui/copy-icon";
 import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { Avatar } from "@/main/components/ui/avatar";
 import { SidebarBox } from "../ui/box";
+import { cn } from "@/main/shadcn/lib/utils";
 
 export const EtfDetails = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const options = ["Token", "Vault"];
@@ -15,9 +16,9 @@ export const EtfDetails = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
 
   return (
     <SidebarBox title="Contracts" icon={<Icons.Details className="size-4.5" />}>
-      <div className="w-full border-b">
-        {options.map((option) => (
-          <div key={option} className="w-full flex items-center justify-between border-t py-2">
+      <div className="w-full flex flex-col bg-bg-900 rounded-base overflow-hidden">
+        {options.map((option, index) => (
+          <div key={index} className={cn("w-full flex items-center justify-between py-1.5 px-4", index < options.length - 1 ? "border-b-2 border-bg-800" : "")}>
             <div className="w-4/12 flex flex-col">
               <p className={css.title}>{option}</p>
             </div>

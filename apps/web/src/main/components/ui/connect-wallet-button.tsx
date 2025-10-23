@@ -66,7 +66,7 @@ const ConnectedBoxMobile = ({ address, copyAddress, disconnect }: { address: str
   const css = {
     div: "flex items-center gap-2 py-4 px-5",
     icon: "size-4",
-    p: "text-xs font-medium",
+    p: "text-sm font-medium",
   };
   return (
     <>
@@ -76,11 +76,11 @@ const ConnectedBoxMobile = ({ address, copyAddress, disconnect }: { address: str
         </DrawerTrigger>
         <DrawerContent>
           <div className="mx-auto w-full max-w-sm min-h-96">
-            <DrawerHeader className="border-b">
+            <DrawerHeader className="border-b-2">
               <DrawerTitle className="hidden">Wallet</DrawerTitle>
               <AvatarAddressBar address={address || ""} variant="lg" withSubtext />
             </DrawerHeader>
-            <div className="flex flex-col divide-y border-b">
+            <div className="flex flex-col divide-y-2 border-b-2">
               <div className={cn(css.div)} onClick={() => copyAddress()}>
                 <Icons.Copy className={cn(css.icon)} />
                 <p className={cn(css.p)}>Copy Address</p>

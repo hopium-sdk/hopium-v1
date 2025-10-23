@@ -238,12 +238,7 @@ export function DataTable<TData, TValue>({
               <TableRow
                 {...props}
                 id={index?.toString?.() ?? String(index)}
-                className={cn(
-                  "border-b",
-                  index == 0 && isBlinkable && "blink",
-                  handleClick && "cursor-pointer",
-                  row !== undefined && getRowClassName?.({ row, index })
-                )}
+                className={cn(index == 0 && isBlinkable && "blink", handleClick && "cursor-pointer", row !== undefined && getRowClassName?.({ row, index }))}
                 onClick={() => (handleClick && row ? handleClick(row) : undefined)}
               >
                 {row && <TableCellItems row={row} cellClassName={cellClassName} />}
@@ -290,7 +285,7 @@ const TableHeaderItems = <TData, TValue>({ table }: { table: TableType<TData> })
   return (
     <>
       {table.getHeaderGroups().map((headerGroup) => (
-        <TableRow key={headerGroup.id} className="sticky top-0 bg-bg shadow-[0_1px_0_#ffffff] hover:bg-bg">
+        <TableRow key={headerGroup.id} className="sticky top-0 bg-bg hover:bg-bg">
           {headerGroup.headers.map((header) => (
             <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>
           ))}
@@ -334,9 +329,9 @@ export const EmptyTable = <TData, TValue>({
     <>
       <Table containerClassName="h-fit">
         <TableHeader>
-          <TableRow className="border-b">
+          <TableRow>
             {headers.map((header, index) => (
-              <TableHead key={index} className="bg-bg hover:bg-bg">
+              <TableHead key={index} className="bg-bg hover:bg-bg border-b-2 border-bg-900">
                 {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
               </TableHead>
             ))}
