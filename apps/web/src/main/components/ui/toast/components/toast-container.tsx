@@ -25,7 +25,7 @@ export const ToastContainer = ({ id, title, description, url, urlType, icon, but
           <div className="w-full flex items-center justify-between">
             <div className={cn("flex items-center gap-1.5", color ? color : "text-green-500")}>
               {icon ?? <Icons.CheckCircle className="size-4.5" />}
-              <p className="text-sm font-semibold">{title}</p>
+              <p className="text-sm font-medium">{title}</p>
             </div>
             <button onClick={() => sonnerToast.dismiss(id)} className="text-subtext hover:text-white transition-colors" aria-label="Dismiss">
               <Icons.X className="size-5" />

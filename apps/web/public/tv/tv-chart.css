@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
+
+body {
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 400;
+}
+
+:root:not(.theme-dark) {
+  --bg-1000: oklch(0.95 0 0);
+  --bg: oklch(1 0 0);
+  --bg-900: oklch(0.95 0 0);
+  --bg-800: oklch(0.9 0 0);
+  --fg: oklch(0 0 0);
+  --text: var(--fg);
+  --subtext: oklch(0.5 0 0);
+  --main: var(--fg);
+  --main-900: var(--fg);
+
+  --tv-color-platform-background: var(--bg-1000);
+  --tv-color-pane-background: var(--bg);
+  --tv-color-toolbar-button-background-hover: var(--bg-900);
+  --tv-color-toolbar-button-background-expanded: var(--bg-900);
+  --tv-color-toolbar-button-background-active: var(--bg-900);
+  --tv-color-toolbar-button-background-active-hover: var(--bg-900);
+  --tv-color-toolbar-button-text: var(--text);
+  --tv-color-toolbar-button-text-hover: var(--text);
+  --tv-color-toolbar-button-text-active: var(--main);
+  --tv-color-toolbar-button-text-active-hover: var(--main);
+  --tv-color-item-active-text: rgb(6, 255, 6);
+  --tv-color-toolbar-toggle-button-background-active: var(--main);
+  --tv-color-toolbar-toggle-button-background-active-hover: magenta;
+  --tv-color-toolbar-divider-background: var(--bg-800);
+  --tv-color-toolbar-save-layout-loader: var(--bg-800);
+
+  --tv-color-popup-background: var(--bg-900);
+  --tv-color-popup-element-text: var(--text);
+  --tv-color-popup-element-text-hover: var(--text);
+  --tv-color-popup-element-background-hover: var(--bg-800);
+  --tv-color-popup-element-divider-background: var(--bg-800);
+  --tv-color-popup-element-secondary-text: var(--text);
+  --tv-color-popup-element-hint-text: var(--text);
+  --tv-color-popup-element-text-active: var(--text);
+  --tv-color-popup-element-background-active: var(--bg-800);
+  --tv-color-popup-element-toolbox-text: var(--text);
+  --tv-color-popup-element-toolbox-text-hover: var(--text);
+  --tv-color-popup-element-toolbox-text-active-hover: var(--text);
+  --tv-color-popup-element-toolbox-background-hover: rgb(222, 89, 132);
+  --tv-color-popup-element-toolbox-background-active-hover: magenta;
+}
+
+.theme-dark:root {
+  --bg-1000: oklch(0.1 0 0);
+  --bg: oklch(0.175 0 0);
+  --bg-900: oklch(0.275 0 0);
+  --bg-800: oklch(0.375 0 0);
+  --bg-700: oklch(0.475 0 0);
+  --fg: oklch(1 0 0);
+  --text: var(--fg);
+  --subtext: oklch(0.5 0 0);
+  --main: var(--fg);
+  --main-900: var(--fg);
+
+  --tv-color-platform-background: var(--bg-1000);
+  --tv-color-pane-background: var(--bg);
+  --tv-color-toolbar-button-background-hover: var(--bg-900);
+  --tv-color-toolbar-button-background-expanded: var(--bg-900);
+  --tv-color-toolbar-button-background-active: var(--bg-900);
+  --tv-color-toolbar-button-background-active-hover: var(--bg-900);
+  --tv-color-toolbar-button-text: var(--text);
+  --tv-color-toolbar-button-text-hover: var(--text);
+  --tv-color-toolbar-button-text-active: var(--main);
+  --tv-color-toolbar-button-text-active-hover: var(--main);
+  --tv-color-item-active-text: rgb(6, 255, 6);
+  --tv-color-toolbar-toggle-button-background-active: var(--main);
+  --tv-color-toolbar-toggle-button-background-active-hover: var(--bg-700);
+  --tv-color-toolbar-divider-background: var(--bg-800);
+  --tv-color-toolbar-save-layout-loader: var(--bg-800);
+
+  --tv-color-popup-background: var(--bg-900);
+  --tv-color-popup-element-text: var(--text);
+  --tv-color-popup-element-text-hover: var(--text);
+  --tv-color-popup-element-background-hover: var(--bg-800);
+  --tv-color-popup-element-divider-background: var(--bg-800);
+  --tv-color-popup-element-secondary-text: var(--text);
+  --tv-color-popup-element-hint-text: var(--text);
+  --tv-color-popup-element-text-active: var(--text);
+  --tv-color-popup-element-background-active: var(--bg-800);
+  --tv-color-popup-element-toolbox-text: var(--text);
+  --tv-color-popup-element-toolbox-text-hover: var(--text);
+  --tv-color-popup-element-toolbox-text-active-hover: var(--text);
+  --tv-color-popup-element-toolbox-background-hover: var(--bg-700);
+  --tv-color-popup-element-toolbox-background-active-hover: var(--bg-700);
+}

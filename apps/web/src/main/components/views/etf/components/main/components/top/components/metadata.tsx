@@ -33,7 +33,7 @@ export const EtfMetadata = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
           <EtfImage address={etf.etf.contracts.etfTokenAddress} withBox boxClassName="size-9" iconClassName="size-6" />
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <p className="text-sm font-semibold uppercase">{etf.etf.details.ticker}</p>
+              <p className="text-sm font-medium uppercase">{etf.etf.details.ticker}</p>
             </div>
             <p className="text-sm font-medium text-subtext">{etf.etf.details.name}</p>
           </div>

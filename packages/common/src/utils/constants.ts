@@ -41,5 +41,5 @@ export const COMMON_CONSTANTS: T_COMMON_CONSTANTS = {
     mainnet: "https://etherscan.io",
     base: "https://basescan.org",
   },
-  storage_url: "https://rhzo270gblcou0le.public.blob.vercel-storage.com",
+  storage_url: "https://storage.hopium.exchange",
 };

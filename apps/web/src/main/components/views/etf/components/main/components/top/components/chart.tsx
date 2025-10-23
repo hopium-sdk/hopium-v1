@@ -7,6 +7,7 @@ import { SUPPORTED_RESOLUTIONS } from "./hooks/lib/getConfig";
 import { cn } from "@/main/shadcn/lib/utils";
 import { LoadingDiv } from "@/main/components/ui/loading-div";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
+import { defaultFont } from "@/main/utils/fonts";
 
 export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const { hydrated, theme } = useSafeTheme();
@@ -33,6 +34,8 @@ export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
       theme: theme === "light" ? "light" : "dark",
       favorites: { intervals: SUPPORTED_RESOLUTIONS },
       disabled_features: ["header_quick_search"],
+      custom_css_url: "/tv/tv-chart.css",
+      custom_font_family: "Bricolage Grotesque",
     };
 
     const w = new widget(opts);
