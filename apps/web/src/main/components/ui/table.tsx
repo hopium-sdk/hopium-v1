@@ -17,13 +17,13 @@ type CommonProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   isBlinkable?: boolean;
   isPausable?: boolean; // ignored in 'query' mode
-  loading: {
+  loading?: {
     type?: "spinner" | "rows";
     numRows?: number;
     rowHeight?: string;
     logoSize?: string;
   };
-  empty: {
+  empty?: {
     type?: "table" | "container";
     tableMinRows?: number;
     containerCssVariant?: keyof typeof EmptyContainerCssVariants;
