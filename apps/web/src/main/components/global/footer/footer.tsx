@@ -27,12 +27,12 @@ export const Footer = () => {
         <div className="flex items-center gap-1">
           <Button variant="bg900" size={"sm"}>
             <Icons.Twitter className="size-4" />
-            <p className="text-xs">Twitter</p>
+            <p className="text-sm">Twitter</p>
             <Icons.ArrowUpRight className="size-3.5" />
           </Button>
           <Button variant="bg900" size={"sm"}>
             <Icons.Discord className="size-4" />
-            <p className="text-xs">Discord</p>
+            <p className="text-sm">Discord</p>
             <Icons.ArrowUpRight className="size-3.5" />
           </Button>
         </div>

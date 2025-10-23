@@ -10,7 +10,7 @@ type T_Modal = {
   modalOpen?: boolean;
   setModalOpen?: (open: boolean) => void;
   title: string;
-  description: string;
+  description?: string;
   buttonText?: string;
   buttonVariant?: "button" | "link";
   buttonVariantOption?: VariantProps<typeof buttonVariants>["variant"];
@@ -64,7 +64,7 @@ export const Modal = ({
             {modalIcon && modalIcon}
             {title}
           </DialogTitle>
-          <DialogDescription className="text-sm text-subtext font-medium">{description}</DialogDescription>
+          {description && <DialogDescription className="text-sm text-subtext font-medium">{description}</DialogDescription>}
         </DialogHeader>
         <DialogBody className={bodyClassName ? bodyClassName : ""}>{children}</DialogBody>
       </DialogContent>

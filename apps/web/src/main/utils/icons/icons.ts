@@ -43,6 +43,7 @@ export { HiOutlineChartSquareBar as Chart } from "react-icons/hi";
 export { TbLayoutList as Details2 } from "react-icons/tb";
 export { PiBookOpenBold as Docs } from "react-icons/pi";
 export { LuBookmark as About } from "react-icons/lu";
+export { PiInfoBold as Info } from "react-icons/pi";
 
 //Profile
 export { PiGhostBold as User } from "react-icons/pi";

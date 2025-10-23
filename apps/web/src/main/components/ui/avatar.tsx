@@ -4,28 +4,29 @@ import { cn } from "@/main/shadcn/lib/utils";
 import { Icons } from "@/main/utils/icons";
 import Link from "next/link";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
+import Logo from "./logo";
 
 const options = [
-  { bg950: "bg-blue-200 dark:bg-blue-950", bg500: "bg-blue-500", text: "text-blue-500" },
-  { bg950: "bg-green-200 dark:bg-green-950", bg500: "bg-green-500", text: "text-green-500" },
-  { bg950: "bg-yellow-200 dark:bg-yellow-950", bg500: "bg-yellow-500", text: "text-yellow-500" },
-  { bg950: "bg-red-200 dark:bg-red-950", bg500: "bg-red-500", text: "text-red-500" },
-  { bg950: "bg-orange-200 dark:bg-orange-950", bg500: "bg-orange-500", text: "text-orange-500" },
-  { bg950: "bg-pink-200 dark:bg-pink-950", bg500: "bg-pink-500", text: "text-pink-500" },
-  { bg950: "bg-gray-200 dark:bg-gray-950", bg500: "bg-gray-500", text: "text-gray-500" },
-  { bg950: "bg-teal-200 dark:bg-teal-950", bg500: "bg-teal-500", text: "text-teal-500" },
-  { bg950: "bg-lime-200 dark:bg-lime-950", bg500: "bg-lime-500", text: "text-lime-500" },
-  { bg950: "bg-indigo-200 dark:bg-indigo-950", bg500: "bg-indigo-500", text: "text-indigo-500" },
-  { bg950: "bg-fuchsia-200 dark:bg-fuchsia-950", bg500: "bg-fuchsia-500", text: "text-fuchsia-500" },
-  { bg950: "bg-violet-200 dark:bg-violet-950", bg500: "bg-violet-500", text: "text-violet-500" },
-  { bg950: "bg-cyan-200 dark:bg-cyan-950", bg500: "bg-cyan-500", text: "text-cyan-500" },
-  { bg950: "bg-emerald-200 dark:bg-emerald-950", bg500: "bg-emerald-500", text: "text-emerald-500" },
-  { bg950: "bg-sky-200 dark:bg-sky-950", bg500: "bg-sky-500", text: "text-sky-500" },
-  { bg950: "bg-amber-200 dark:bg-amber-950", bg500: "bg-amber-500", text: "text-amber-500" },
-  { bg950: "bg-rose-200 dark:bg-rose-950", bg500: "bg-rose-500", text: "text-rose-500" },
+  { bg950: "bg-green-200 dark:bg-green-950", bg500: "bg-green-500", text: "text-green-500", var: "var(--color-green-500)" },
+  { bg950: "bg-yellow-200 dark:bg-yellow-950", bg500: "bg-yellow-500", text: "text-yellow-500", var: "var(--color-yellow-500)" },
+  { bg950: "bg-red-200 dark:bg-red-950", bg500: "bg-red-500", text: "text-red-500", var: "var(--color-rose-500)" },
+  { bg950: "bg-cyan-200 dark:bg-cyan-950", bg500: "bg-cyan-500", text: "text-cyan-500", var: "var(--color-cyan-500)" },
+  { bg950: "bg-sky-200 dark:bg-sky-950", bg500: "bg-sky-500", text: "text-sky-500", var: "var(--color-sky-500)" },
+  { bg950: "bg-amber-200 dark:bg-amber-950", bg500: "bg-amber-500", text: "text-amber-500", var: "var(--color-amber-500)" },
+  { bg950: "bg-pink-200 dark:bg-pink-950", bg500: "bg-pink-500", text: "text-pink-500", var: "var(--color-pink-500)" },
+  { bg950: "bg-teal-200 dark:bg-teal-950", bg500: "bg-teal-500", text: "text-teal-500", var: "var(--color-teal-500)" },
+  { bg950: "bg-violet-200 dark:bg-violet-950", bg500: "bg-violet-500", text: "text-violet-500", var: "var(--color-violet-500)" },
+  { bg950: "bg-lime-200 dark:bg-lime-950", bg500: "bg-lime-500", text: "text-lime-500", var: "var(--color-lime-500)" },
+  { bg950: "bg-indigo-200 dark:bg-indigo-950", bg500: "bg-indigo-500", text: "text-indigo-500", var: "var(--color-indigo-500)" },
+  { bg950: "bg-blue-200 dark:bg-blue-950", bg500: "bg-blue-500", text: "text-blue-500", var: "var(--color-blue-500)" },
+  { bg950: "bg-orange-200 dark:bg-orange-950", bg500: "bg-orange-500", text: "text-orange-500", var: "var(--color-orange-500)" },
+  { bg950: "bg-fuchsia-200 dark:bg-fuchsia-950", bg500: "bg-fuchsia-500", text: "text-fuchsia-500", var: "var(--color-fuchsia-500)" },
+  { bg950: "bg-emerald-200 dark:bg-emerald-950", bg500: "bg-emerald-500", text: "text-emerald-500", var: "var(--color-emerald-500)" },
+  { bg950: "bg-gray-200 dark:bg-gray-950", bg500: "bg-gray-500", text: "text-gray-500", var: "var(--color-gray-500)" },
+  { bg950: "bg-rose-200 dark:bg-rose-950", bg500: "bg-rose-500", text: "text-rose-500", var: "var(--color-rose-500)" },
 ];
 
-export const getStaticColor = (address: string): { bg950: string; bg500: string; text: string } => {
+export const getStaticColor = (address: string): { bg950: string; bg500: string; text: string; var: string } => {
   const hash = address.split("").reduce((acc, char) => {
     return acc + char.charCodeAt(0);
   }, 0);
@@ -55,12 +56,18 @@ export const AvatarImage = ({ address, boxClassName, iconClassName, iconColor, w
     user: Icons.User,
     coin: Icons.Coin,
     contract: Icons.Contract,
-    etf: Icons.Etf,
+    etf: Logo,
   } as const;
 
   const render = () => {
     const IconComponent = icons[iconVariant];
-    return <IconComponent className={cn("size-4.5", iconColor ?? color?.text, iconClassName)} />;
+    return (
+      <IconComponent
+        className={cn("size-4.5", iconColor ?? (iconVariant === "etf" ? "" : color?.text), iconClassName)}
+        color={iconVariant === "etf" ? color?.var : undefined}
+        variant={iconVariant === "etf" ? "outline" : undefined}
+      />
+    );
   };
 
   if (withBox) {

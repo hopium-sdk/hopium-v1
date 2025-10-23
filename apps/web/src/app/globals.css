@@ -18,6 +18,7 @@
   --color-main: var(--main);
   --color-main-900: var(--main-900);
   --color-rewards: var(--rewards);
+  --color-rewards-600: var(--rewards-600);
   --color-rewards-900: var(--rewards-900);
 
   --color-buy: var(--buy);
@@ -97,6 +98,7 @@
   --main-900: var(--color-indigo-200);
 
   --rewards: var(--color-teal-500);
+  --rewards-600: var(--color-teal-700);
   --rewards-900: var(--color-teal-200);
 
   --buy: var(--color-green-500);
@@ -160,6 +162,7 @@
   --main-900: var(--color-indigo-950);
 
   --rewards: var(--color-teal-500);
+  --rewards-600: var(--color-teal-700);
   --rewards-900: var(--color-teal-950);
 
   --buy: var(--color-green-500);

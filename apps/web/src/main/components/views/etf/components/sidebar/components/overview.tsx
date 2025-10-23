@@ -6,8 +6,10 @@ import { useState } from "react";
 import { NumberTab } from "@/main/components/ui/number-tab";
 import { SubscriptDiv } from "@/main/components/ui/subscript-div";
 import { SidebarBox } from "../ui/box";
+import { useAccount } from "wagmi";
 
 export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
+  const { address } = useAccount();
   // const [livePrice, setLivePrice] = useState({ etfPriceWeth: 0, etfPriceUsd: 0 });
 
   // const fetchLiveUsdPrice = async () => {
@@ -34,7 +36,7 @@ export const EtfOverview = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   };
 
   return (
-    <SidebarBox title="Overview" icon={<Icons.Overview className="size-4.5" />} right={<WatchlistButton etf={etf} />}>
+    <SidebarBox title="Overview" icon={<Icons.Overview className="size-4.5" />} right={address ? <WatchlistButton etf={etf} /> : null}>
       <div className="w-full grid grid-cols-2 gap-1 pt-2">
         <NumberTab
           title={"Price USD"}
