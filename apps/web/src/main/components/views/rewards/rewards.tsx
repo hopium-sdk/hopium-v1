@@ -1,6 +1,6 @@
 import { cn } from "@/main/shadcn/lib/utils";
 import { Modal } from "../../ui/modal";
-import { Coin } from "./components/ui/coin/coin";
+import { Coin } from "../../ui/graphics/coin/coin";
 import { cursiveFont } from "@/main/utils/fonts";
 import { Icons } from "@/main/utils/icons";
 import { useAccount } from "wagmi";

@@ -1,4 +1,5 @@
 "use client";
+import "./wallet.css";
 import { WagmiProvider, createConfig } from "wagmi";
 import { base } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

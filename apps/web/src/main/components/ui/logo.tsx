@@ -1,9 +1,11 @@
 import { cn } from "@/main/shadcn/lib/utils";
 import React from "react";
 
-const Logo = ({ className, color, variant = "fill" }: React.ComponentProps<"div"> & { color?: string; variant?: "fill" | "outline" }) => {
+const Logo = ({ className, color, variant = "fill", ...props }: React.ComponentProps<"div"> & { color?: string; variant?: "fill" | "outline" }) => {
   return (
-    <div className={cn(className)}>{variant === "fill" ? <LogoFillSvg color={color || "var(--fg)"} /> : <LogoOutlineSvg color={color || "var(--fg)"} />}</div>
+    <div className={cn(className)} {...props}>
+      {variant === "fill" ? <LogoFillSvg color={color || "var(--fg)"} /> : <LogoOutlineSvg color={color || "var(--fg)"} />}
+    </div>
   );
 };
 

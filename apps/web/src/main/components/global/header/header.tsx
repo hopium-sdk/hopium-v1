@@ -38,12 +38,12 @@ const Links = () => {
     {
       label: "About",
       href: "/about",
-      icon: <Icons.About />,
+      icon: <Icons.About className="size-4.5" />,
     },
     {
       label: "Docs",
       href: "/docs",
-      icon: <Icons.Docs />,
+      icon: <Icons.Docs className="size-4.5" />,
     },
   ];
 
@@ -58,7 +58,7 @@ const Links = () => {
               link.label === "Docs" ? "gap-2" : "gap-1.75"
             )}
           >
-            {link.icon}
+            <div className="flex items-center justify-center">{link.icon}</div>
             <p className="text-sm font-medium whitespace-nowrap">{link.label}</p>
           </div>
         </Link>

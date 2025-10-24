@@ -17,7 +17,9 @@ export const Footer = () => {
           <p className="text-sm font-medium text-green-500">Live</p>
         </div>
         <Button variant="bg900" size={"sm"}>
-          <Icons.Ether />
+          <div className="flex items-center">
+            <Icons.Ether className="size-4.25" />
+          </div>
           <p className="text-sm font-medium">{numberToUsd(ethUsdPrice)}</p>
           <Icons.ArrowUpRight className="size-3.5" />
         </Button>

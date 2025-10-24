@@ -10,6 +10,7 @@ export { ChevronsUpDown as ChevronsUpDown } from "lucide-react";
 export { ArrowRight as ArrowRight } from "lucide-react";
 export { ArrowLeft as ArrowLeft } from "lucide-react";
 export { PiArrowUpRightBold as ArrowUpRight } from "react-icons/pi";
+export { PiArrowsLeftRightBold as ArrowLeftRight } from "react-icons/pi";
 
 //Shapes
 export { PiCircleFill as Circle } from "react-icons/pi";
@@ -42,7 +43,7 @@ export { PiListBold as SidebarHandle } from "react-icons/pi";
 export { HiOutlineChartSquareBar as Chart } from "react-icons/hi";
 export { TbLayoutList as Details2 } from "react-icons/tb";
 export { PiBookOpenBold as Docs } from "react-icons/pi";
-export { LuBookmark as About } from "react-icons/lu";
+export { RiAiGenerate as About } from "react-icons/ri";
 export { PiInfoBold as Info } from "react-icons/pi";
 
 //Profile
