@@ -33,6 +33,7 @@ export const AffiliateHeader = () => {
               number={getOptionValue(option)}
               symbolType={option === "Total Earnings" ? "eth" : undefined}
               pClassName="text-md font-medium"
+              iconClassName="size-4.5"
               className="text-buy"
             />
           </div>

@@ -17,6 +17,8 @@ import { _preloadCache } from "./helpers/fns/preload-cache";
 import { _buildForSwaps } from "./fns/swap/build-for-swaps";
 import { isEtfAffiliateAddedLog, isEtfAffiliateFeeTransferredLog } from "./utils/logs/filter-logs/etf-affiliate";
 import { _syncAffiliates } from "./fns/affiliates/sync-affiliates";
+import { isPlatformFeeTransferLog } from "./utils/logs/filter-logs/platform-fee-transfer";
+import { _savePlatformFeeTransfers } from "./fns/platform-fee-transfer/save-platform-fee-transfer";
 
 export const sync = async ({ body }: { body: unknown }) => {
   const payload = qnPayloadSchema.parse(body);
@@ -62,6 +64,7 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
   const vaultBalanceLogs = logs.filter((log) => isVaultBalanceLog({ log, cache }));
   const etfTokenTransferLogs = logs.filter((log) => isEtfTokenTransferLog({ log, cache }));
   const etfAffiliateLogs = logs.filter((log) => isEtfAffiliateFeeTransferredLog({ log, cache }) || isEtfAffiliateAddedLog({ log, cache }));
+  const platformFeeTransferLogs = logs.filter((log) => isPlatformFeeTransferLog({ log, cache }));
 
   await _preloadCache({ etfDeployedLogs, poolChangedLogs, swapLogs, vaultBalanceLogs, etfTokenTransferLogs, cache });
 
@@ -91,6 +94,10 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
 
   if (etfAffiliateLogs.length > 0) {
     await _syncAffiliates({ logs: etfAffiliateLogs, cache });
+  }
+
+  if (platformFeeTransferLogs.length > 0) {
+    _savePlatformFeeTransfers({ logs: platformFeeTransferLogs, cache });
   }
 };
 

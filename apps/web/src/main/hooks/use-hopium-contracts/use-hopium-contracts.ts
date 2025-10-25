@@ -1,5 +1,5 @@
 "use client";
-import { useAccount, useWriteContract, useSwitchChain } from "wagmi";
+import { useAccount, useWriteContract, useSwitchChain, useReadContract } from "wagmi";
 import { getChainId, waitForTx } from "../../lib/wagmi";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { TOAST } from "../../components/ui/toast/toast";
@@ -8,6 +8,7 @@ import { normalizeError } from "../../utils/error";
 import { _buySellFn, _buySellToastFn } from "./fns/buy-sell";
 import { _createCouponFn, _createCouponToastFn } from "./fns/create-coupon";
 import { useCoupon } from "@/main/hooks/use-coupon";
+import { _createEtfFn, _createEtfToastFn } from "./fns/create-etf";
 
 export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: string | null) => void }) => {
   const { address } = useAccount();
@@ -73,9 +74,16 @@ export const useHopiumContracts = ({ setLoading }: { setLoading: (loading: strin
     await _executeFn({ fn, toastFn });
   };
 
+  const createEtf = async ({ name, ticker, assets }: { name: string; ticker: string; assets: { tokenAddress: `0x${string}`; weightBips: number }[] }) => {
+    const fn = () => _createEtfFn({ name, ticker, assets, setLoading, address, chain, writeContractAsync });
+    const toastFn = () => _createEtfToastFn({ name, ticker });
+    await _executeFn({ fn, toastFn });
+  };
+
   return {
     buyEtf,
     sellEtf,
     createCoupon,
+    createEtf,
   };
 };

@@ -3,8 +3,7 @@ import { HOPIUM } from "@/main/lib/hopium";
 import { uploadImageFromUrl } from "@/main/fns/blob/upload-image-from-url/upload-image-from-url";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
 import { normalizeAddress } from "@repo/common/utils/address";
-
-const chain = COMMON_CONSTANTS.networkSelected == "mainnet" ? "eth" : "base";
+import { fetchAssetDetailsFromGeckoTerminal } from "@repo/common/utils/asset-details";
 
 export const fetchAssetDetails = async ({ tokenAddress }: { tokenAddress: string }) => {
   try {
@@ -37,31 +36,5 @@ export const fetchAssetDetails = async ({ tokenAddress }: { tokenAddress: string
     };
 
     return token;
-  }
-};
-
-export const fetchAssetDetailsFromGeckoTerminal = async ({ tokenAddress }: { tokenAddress: string }) => {
-  const response = await fetch(`https://api.geckoterminal.com/api/v2/networks/${chain}/tokens/${tokenAddress}`);
-  const data = await response.json();
-
-  if (
-    data &&
-    data.data &&
-    data.data &&
-    data.data.attributes &&
-    data.data.attributes.name &&
-    data.data.attributes.symbol &&
-    data.data.attributes.decimals &&
-    data.data.attributes.image_url
-  ) {
-    return {
-      address: tokenAddress,
-      name: data.data.attributes.name,
-      symbol: data.data.attributes.symbol,
-      decimals: data.data.attributes.decimals,
-      image_url: data.data.attributes.image_url,
-    };
-  } else {
-    throw new Error("Failed to fetch asset details from Gecko Terminal");
   }
 };

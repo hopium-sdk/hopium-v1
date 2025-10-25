@@ -36,7 +36,7 @@ export const getCreatedCouponsColumns = ({
               setShareLinkModalOpen(true);
             }}
           >
-            <Icons.Share className="size-4" />
+            <Icons.Share className="size-4.5" />
             <p className="text-sm font-medium">Share</p>
           </div>
         );

@@ -2,12 +2,13 @@ import { type Abi, getContract, type GetContractReturnType, type Client } from "
 import { getViemClient } from "../lib/viem";
 import { _addresses } from "./addresses";
 import { ABI } from "./abi";
-import type { T_NETWORK } from "../utils/constants";
+import { CONSTANTS, type T_NETWORK } from "../utils/constants";
 
 type ContractsReturnType = {
   abis: typeof ABI;
   addresses: ReturnType<typeof _addresses>;
   contracts: {
+    directory: () => Promise<GetContractReturnType<typeof ABI.directory, Client>>;
     uniswapOracle: () => Promise<GetContractReturnType<typeof ABI.uniswapOracle, Client>>;
     etfFactory: () => Promise<GetContractReturnType<typeof ABI.etfFactory, Client>>;
     etfOracle: () => Promise<GetContractReturnType<typeof ABI.etfOracle, Client>>;
@@ -30,6 +31,7 @@ export const _contracts = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: st
     abis: ABI,
     addresses,
     contracts: {
+      directory: lazy(ABI.directory, () => Promise.resolve(CONSTANTS.addresses.directory[network] as `0x${string}`)),
       uniswapOracle: lazy(ABI.uniswapOracle, addresses.uniswapOracle),
       etfFactory: lazy(ABI.etfFactory, addresses.etfFactory),
       etfOracle: lazy(ABI.etfOracle, addresses.etfOracle),

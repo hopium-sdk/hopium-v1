@@ -22,8 +22,11 @@ import type * as fns_etfToken_getEtfTokenActivity from "../fns/etfToken/getEtfTo
 import type * as fns_etfToken_getEtfVolume from "../fns/etfToken/getEtfVolume.js";
 import type * as fns_etfToken_getTokenBalanceByAddress from "../fns/etfToken/getTokenBalanceByAddress.js";
 import type * as fns_etfToken_getTokenHolders from "../fns/etfToken/getTokenHolders.js";
+import type * as fns_etfToken_getTotalVolume from "../fns/etfToken/getTotalVolume.js";
 import type * as fns_ohlc_getHistorical from "../fns/ohlc/getHistorical.js";
 import type * as fns_ohlc_getLatest from "../fns/ohlc/getLatest.js";
+import type * as fns_platformFees_getPlatformFeeTransfers from "../fns/platformFees/getPlatformFeeTransfers.js";
+import type * as fns_platformFees_getTotalPlatformFees from "../fns/platformFees/getTotalPlatformFees.js";
 import type * as fns_pools_getWethUsdPrice from "../fns/pools/getWethUsdPrice.js";
 import type * as fns_sync_fns_getAssetsByAddresses from "../fns/sync/fns/getAssetsByAddresses.js";
 import type * as fns_sync_fns_getEtfsByIds from "../fns/sync/fns/getEtfsByIds.js";
@@ -43,6 +46,7 @@ import type * as mutations_sync_fns_upsertAffiliateTransfers from "../mutations/
 import type * as mutations_sync_fns_upsertAffiliates from "../mutations/sync/fns/upsertAffiliates.js";
 import type * as mutations_sync_fns_upsertAssets from "../mutations/sync/fns/upsertAssets.js";
 import type * as mutations_sync_fns_upsertEtfs from "../mutations/sync/fns/upsertEtfs.js";
+import type * as mutations_sync_fns_upsertPlatformFeeTransfers from "../mutations/sync/fns/upsertPlatformFeeTransfers.js";
 import type * as mutations_sync_fns_upsertPools from "../mutations/sync/fns/upsertPools.js";
 import type * as mutations_sync_fns_upsertTokenTransfers from "../mutations/sync/fns/upsertTokenTransfers.js";
 import type * as mutations_sync_helpers_snapshot from "../mutations/sync/helpers/snapshot.js";
@@ -56,6 +60,7 @@ import type * as schema_assets from "../schema/assets.js";
 import type * as schema_etf from "../schema/etf.js";
 import type * as schema_etfTokenTranfers from "../schema/etfTokenTranfers.js";
 import type * as schema_ohlc from "../schema/ohlc.js";
+import type * as schema_platformFeeTransfers from "../schema/platformFeeTransfers.js";
 import type * as schema_pools from "../schema/pools.js";
 import type * as schema_sync_snapshot from "../schema/sync/snapshot.js";
 import type * as schema_sync_syncStatus from "../schema/sync/syncStatus.js";
@@ -90,8 +95,11 @@ declare const fullApi: ApiFromModules<{
   "fns/etfToken/getEtfVolume": typeof fns_etfToken_getEtfVolume;
   "fns/etfToken/getTokenBalanceByAddress": typeof fns_etfToken_getTokenBalanceByAddress;
   "fns/etfToken/getTokenHolders": typeof fns_etfToken_getTokenHolders;
+  "fns/etfToken/getTotalVolume": typeof fns_etfToken_getTotalVolume;
   "fns/ohlc/getHistorical": typeof fns_ohlc_getHistorical;
   "fns/ohlc/getLatest": typeof fns_ohlc_getLatest;
+  "fns/platformFees/getPlatformFeeTransfers": typeof fns_platformFees_getPlatformFeeTransfers;
+  "fns/platformFees/getTotalPlatformFees": typeof fns_platformFees_getTotalPlatformFees;
   "fns/pools/getWethUsdPrice": typeof fns_pools_getWethUsdPrice;
   "fns/sync/fns/getAssetsByAddresses": typeof fns_sync_fns_getAssetsByAddresses;
   "fns/sync/fns/getEtfsByIds": typeof fns_sync_fns_getEtfsByIds;
@@ -111,6 +119,7 @@ declare const fullApi: ApiFromModules<{
   "mutations/sync/fns/upsertAffiliates": typeof mutations_sync_fns_upsertAffiliates;
   "mutations/sync/fns/upsertAssets": typeof mutations_sync_fns_upsertAssets;
   "mutations/sync/fns/upsertEtfs": typeof mutations_sync_fns_upsertEtfs;
+  "mutations/sync/fns/upsertPlatformFeeTransfers": typeof mutations_sync_fns_upsertPlatformFeeTransfers;
   "mutations/sync/fns/upsertPools": typeof mutations_sync_fns_upsertPools;
   "mutations/sync/fns/upsertTokenTransfers": typeof mutations_sync_fns_upsertTokenTransfers;
   "mutations/sync/helpers/snapshot": typeof mutations_sync_helpers_snapshot;
@@ -124,6 +133,7 @@ declare const fullApi: ApiFromModules<{
   "schema/etf": typeof schema_etf;
   "schema/etfTokenTranfers": typeof schema_etfTokenTranfers;
   "schema/ohlc": typeof schema_ohlc;
+  "schema/platformFeeTransfers": typeof schema_platformFeeTransfers;
   "schema/pools": typeof schema_pools;
   "schema/sync/snapshot": typeof schema_sync_snapshot;
   "schema/sync/syncStatus": typeof schema_sync_syncStatus;

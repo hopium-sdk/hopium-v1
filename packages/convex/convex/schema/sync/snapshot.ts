@@ -11,7 +11,8 @@ export const SnapshotSchema = {
     v.literal("ohlc"),
     v.literal("etf_token_transfers"),
     v.literal("affiliate_transfers"),
-    v.literal("affiliates")
+    v.literal("affiliates"),
+    v.literal("platform_fee_transfers")
   ),
   // Your global table-unique identifier, same field on every table
   docId: v.string(),
@@ -25,4 +26,4 @@ export const SnapshotSchema = {
 
 export const snapshotsTable = defineTable(SnapshotSchema).index("by_block", ["blockNumber"]).index("by_block_table_docId", ["blockNumber", "table", "docId"]);
 
-export type T_TableName = "etfs" | "assets" | "pools" | "ohlc" | "etf_token_transfers" | "affiliate_transfers" | "affiliates";
+export type T_TableName = "etfs" | "assets" | "pools" | "ohlc" | "etf_token_transfers" | "affiliate_transfers" | "affiliates" | "platform_fee_transfers";

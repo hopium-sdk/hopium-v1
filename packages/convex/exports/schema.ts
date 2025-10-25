@@ -10,3 +10,9 @@ export { type T_OhlcUpdates } from "../convex/mutations/sync/fns/updateOhlcs";
 export { OHLC_TIMEFRAMES, type T_OhlcTimeframe } from "../convex/schema/ohlc";
 export { type C_AffiliateTransfers, type T_AffiliateTransfers, getAffiliateTransferId } from "../convex/schema/affiliateTransfers";
 export { type C_Affiliate, type T_Affiliate } from "../convex/schema/affiliates";
+export {
+  type C_PlatformFeeTransfers,
+  type T_PlatformFeeTransfers,
+  getPlatformFeeTransferId,
+  type T_PlatformFeeTransferWithEtf,
+} from "../convex/schema/platformFeeTransfers";

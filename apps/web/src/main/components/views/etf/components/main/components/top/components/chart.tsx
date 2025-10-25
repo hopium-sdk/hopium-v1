@@ -7,7 +7,6 @@ import { SUPPORTED_RESOLUTIONS } from "./hooks/lib/getConfig";
 import { cn } from "@/main/shadcn/lib/utils";
 import { LoadingDiv } from "@/main/components/ui/loading-div";
 import { useSafeTheme } from "@/main/wrappers/components/theme-provider";
-import { defaultFont } from "@/main/utils/fonts";
 
 export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const { hydrated, theme } = useSafeTheme();
@@ -25,7 +24,7 @@ export const EtfChart = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
     const opts: ChartingLibraryWidgetOptions = {
       load_last_chart: true,
       datafeed: dataFeed, // stable by etf.id
-      interval: "1" as ResolutionString,
+      interval: "60" as ResolutionString,
       container: containerRef.current,
       library_path: "/tv/charting_library/",
       locale: "en",

@@ -100,7 +100,7 @@ const Rewards = () => {
           <p className={cn("text-lg whitespace-nowrap", cursiveFont.className)}>Rewards</p>
 
           {rewards && rewards > 0 ? (
-            <div className="flex items-center justify-center gap-1 bg-rewards/10 px-4 h-7 rounded-base-sm">
+            <div className="flex items-center justify-center gap-1 bg-rewards/20 dark:bg-rewards/10 px-4 h-7 rounded-base-sm">
               <Icons.Rewards className="size-4" />
               <p className="text-sm font-medium whitespace-nowrap ">
                 {rewards.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}

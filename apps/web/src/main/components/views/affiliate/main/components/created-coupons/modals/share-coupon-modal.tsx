@@ -22,7 +22,7 @@ export const ShareCouponModal = ({ modalOpen, setModalOpen, shareCode }: { modal
               data={shareLink}
               title="Coupon link copied"
               description="You can now share this link with your friends and community."
-              className="text-subtext"
+              className="text-subtext size-4.5"
             />
           </div>
         </div>

@@ -37,6 +37,9 @@ export const _updateOhlcs = async (ctx: MutationCtx, ohlcUpdates: T_OhlcUpdates[
     const ts = normalizeTs(u.timestamp);
     const volume = u.volume ?? 0;
 
+    // 🛡️ Skip non-positive prices entirely
+    if (!(u.price > 0)) continue;
+
     for (const timeframe of OHLC_TIMEFRAMES) {
       const bucketTimestamp = getBucketTimestamp(ts, timeframe);
       const key = `${u.etfId}:${timeframe}:${bucketTimestamp}`;

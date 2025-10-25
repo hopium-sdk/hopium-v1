@@ -17,5 +17,5 @@ export type C_AffiliateTransfers = Doc<"affiliate_transfers">;
 export type T_AffiliateTransfers = Omit<Doc<"affiliate_transfers">, "_id" | "_creationTime">;
 
 export const getAffiliateTransferId = ({ blockNumber, txHash, logIndex }: { blockNumber: number; txHash: string; logIndex: number }) => {
-  return `${blockNumber}-${txHash}-${logIndex}`;
+  return `affiliate-transfer-${blockNumber}-${txHash}-${logIndex}`;
 };

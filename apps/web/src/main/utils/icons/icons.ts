@@ -23,7 +23,7 @@ export { PiMonitorBold as Monitor } from "react-icons/pi";
 //Navigation
 export { PiMagnifyingGlassBold as Search } from "react-icons/pi";
 export { PiMagnifyingGlassBold as Explorer } from "react-icons/pi";
-export { PiCopySimpleBold as Copy } from "react-icons/pi";
+export { PiCopyBold as Copy } from "react-icons/pi";
 export { MdLogout as Logout } from "react-icons/md";
 export { PiLinkSimpleBreakBold as Link } from "react-icons/pi";
 export { TbClock as Clock } from "react-icons/tb";
@@ -47,7 +47,11 @@ export { RiAiGenerate as About } from "react-icons/ri";
 export { PiInfoBold as Info } from "react-icons/pi";
 export { TbLayoutList as Activity } from "react-icons/tb";
 export { RiLeafLine as Create } from "react-icons/ri";
-export { TbLocation as Share } from "react-icons/tb";
+export { PiArrowSquareUpRightBold as Share } from "react-icons/pi";
+export { TbDeviceMobile as Mobile } from "react-icons/tb";
+export { PiAtBold as At } from "react-icons/pi";
+export { TbEqual as Equal } from "react-icons/tb";
+export { PiPercentBold as Percent } from "react-icons/pi";
 
 //Profile
 export { PiGhostBold as User } from "react-icons/pi";

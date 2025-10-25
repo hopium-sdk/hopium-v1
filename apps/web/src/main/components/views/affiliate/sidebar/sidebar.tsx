@@ -46,7 +46,7 @@ export const AffiliateSidebar = () => {
   return (
     <div className="w-full flex flex-1 flex-col overflow-y-auto px-6 py-4">
       {/* Header Graphic */}
-      <div className="w-full h-[150px] bg-teal-900/50 rounded-base flex items-center justify-center">
+      <div className="w-full h-[150px] bg-teal-200/50 dark:bg-teal-900/50 rounded-base flex items-center justify-center">
         <Icons.Coupon className="size-30 text-teal-500" />
       </div>
 

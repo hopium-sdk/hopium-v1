@@ -170,6 +170,31 @@ export const etfFactoryAbi = [
         type: "uint256",
       },
       {
+        indexed: false,
+        internalType: "uint256",
+        name: "ethAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "usdValue",
+        type: "uint256",
+      },
+    ],
+    name: "PlatformFeeTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+      {
         components: [
           {
             internalType: "address",
@@ -276,6 +301,24 @@ export const etfFactoryAbi = [
       },
     ],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "ethAmount",
+        type: "uint256",
+      },
+    ],
+    name: "emitPlatformFeeTransferredEvent",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

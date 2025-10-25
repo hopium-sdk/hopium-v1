@@ -16,7 +16,7 @@ export const getSymbolInfo = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
     session: "24x7",
     timezone: "Etc/UTC",
     minmov: 1,
-    pricescale: 10_000_000,
+    pricescale: calculatePriceScale(etf),
     visible_plots_set: "ohlc",
     supported_resolutions: getConfig().supported_resolutions,
     data_status: "streaming",
@@ -24,4 +24,20 @@ export const getSymbolInfo = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
     has_intraday: true,
   };
   return symbolInfo;
+};
+
+const calculatePriceScale = (etf: C_EtfWithAssetsAndPools) => {
+  const usdPrice = etf.etf.stats.price.usd;
+
+  if (usdPrice < 0.001) {
+    return 10_000_000;
+  } else if (usdPrice < 0.01) {
+    return 1_000_000;
+  } else if (usdPrice < 0.1) {
+    return 100_000;
+  } else if (usdPrice < 1) {
+    return 10_000;
+  } else {
+    return 1_000;
+  }
 };

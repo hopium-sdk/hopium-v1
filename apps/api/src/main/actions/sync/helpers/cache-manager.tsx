@@ -5,6 +5,7 @@ import { C_Pool, T_Pool } from "../../../../../../../packages/convex/convex/sche
 import { normalizeAddress } from "@repo/common/utils/address";
 import { HOPIUM } from "@/main/lib/hopium";
 import { C_Affiliate, C_AffiliateTransfers, T_Affiliate, T_AffiliateTransfers } from "@repo/convex/schema";
+import { C_PlatformFeeTransfers, T_PlatformFeeTransfers } from "@repo/convex/schema";
 
 type T_Entities = {
   etf: { c: C_Etf; t: T_Etf };
@@ -14,6 +15,7 @@ type T_Entities = {
   ohlc_updates: { c: T_OhlcUpdates; t: T_OhlcUpdates };
   affiliate_transfers: { c: C_AffiliateTransfers; t: T_AffiliateTransfers };
   affiliate: { c: C_Affiliate; t: T_Affiliate };
+  platform_fee_transfers: { c: C_PlatformFeeTransfers; t: T_PlatformFeeTransfers };
 };
 
 // ---------- NEW: per-block staging shape ----------
@@ -25,6 +27,7 @@ type BlockStage = {
   ohlc_updates: T_OhlcUpdates[]; // append list
   affiliate_transfers: Map<string, T_AffiliateTransfers>; // append list
   affiliate: Map<string, T_Affiliate>;
+  platform_fee_transfers: Map<string, T_PlatformFeeTransfers>; // append list
 };
 
 const newBlockStage = (): BlockStage => ({
@@ -35,6 +38,7 @@ const newBlockStage = (): BlockStage => ({
   ohlc_updates: [],
   affiliate_transfers: new Map(),
   affiliate: new Map(),
+  platform_fee_transfers: new Map(),
 });
 
 class CacheMapping {
@@ -46,6 +50,7 @@ class CacheMapping {
     ohlc_updates: new Map(),
     affiliate_transfers: new Map(),
     affiliate: new Map(),
+    platform_fee_transfers: new Map(),
   };
 
   // ---------- NEW: per-block staging ----------
@@ -100,6 +105,9 @@ class CacheMapping {
         case "affiliate":
           stage.affiliate.set(id, value as T_Affiliate);
           break;
+        case "platform_fee_transfers":
+          stage.platform_fee_transfers.set(id, value as T_PlatformFeeTransfers); // append each transfer
+          break;
       }
     }
   };
@@ -131,6 +139,7 @@ class CacheMapping {
       ohlcUpdates: stage.ohlc_updates.slice(),
       affiliateTransfers: Array.from(stage.affiliate_transfers.values()),
       affiliates: Array.from(stage.affiliate.values()),
+      platformFeeTransfers: Array.from(stage.platform_fee_transfers.values()),
     }));
   };
 

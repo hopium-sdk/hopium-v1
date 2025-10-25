@@ -32,6 +32,16 @@ export const EmptyContainerVariants = {
     description: "Start earning by referring users",
     icon: Icons.Activity,
   },
+  mobileNotSupported: {
+    label: "Not supported on mobile",
+    description: "Use a desktop browser to access this section",
+    icon: Icons.Mobile,
+  },
+  unauthorized: {
+    label: "Unauthorized",
+    description: "You are not authorized to access this section",
+    icon: Icons.Error,
+  },
 };
 
 type T_EmptyContainer = {
