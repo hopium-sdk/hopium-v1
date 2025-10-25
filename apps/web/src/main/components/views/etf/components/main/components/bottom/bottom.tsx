@@ -5,6 +5,7 @@ import { EtfHolders } from "./components/tabs/holders/holders";
 import { useState } from "react";
 import { EtfPositions } from "./components/tabs/positions/positions";
 import { EtfVault } from "./components/tabs/vault/vault";
+import { EtfActivity } from "./components/tabs/activity/activity";
 
 type T_EtfBottom = {
   etf: C_EtfWithAssetsAndPools;
@@ -28,6 +29,7 @@ export const EtfBottom = ({ etf, etfBottomCollapsed, setEtfBottomCollapsed }: T_
           {tabSelected === "Positions" && <EtfPositions />}
           {tabSelected === "Holders" && <EtfHolders etf={etf} />}
           {tabSelected === "Vault" && <EtfVault etf={etf} />}
+          {tabSelected === "Activity" && <EtfActivity etf={etf} />}
         </>
       )}
     </div>

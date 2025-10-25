@@ -1,30 +1,21 @@
 import { Icons } from "@/main/utils/icons";
-import { useState } from "react";
+import { TOAST } from "./toast/toast";
 import { cn } from "@/main/shadcn/lib/utils";
 
-export const copyToClipboard = (text: string) => {
-  navigator.clipboard.writeText(text);
+type T_CopyIcon = {
+  data: string;
+  title?: string;
+  description?: string;
+  className?: string;
 };
-
-export const CopyIcon = ({ data, className }: { data: string; className?: string }) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    copyToClipboard(data);
-    setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 1000);
+export const CopyIcon = ({ data, title, description, className }: T_CopyIcon) => {
+  const copyAddress = () => {
+    navigator.clipboard.writeText(data);
+    TOAST.showSuccessToast({
+      title: title ?? "Address copied",
+      description: description ?? "The address has been copied to your clipboard",
+    });
   };
 
-  return (
-    <>
-      {copied ? (
-        <Icons.Check className={cn("size-4 text-main", className)} />
-      ) : (
-        <Icons.Copy className={cn("size-4 text-main hover:text-main/70 cursor-pointer", className)} onClick={handleCopy} />
-      )}
-    </>
-  );
+  return <Icons.Copy className={cn("size-4 cursor-pointer text-main hover:opacity-70", className)} onClick={copyAddress} />;
 };

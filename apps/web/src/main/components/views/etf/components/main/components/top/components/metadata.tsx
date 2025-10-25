@@ -46,7 +46,12 @@ export const EtfMetadata = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
                 <div className="w-fit flex items-center justify-end">
                   {option === "Created" ? (
                     <div className="w-full flex items-center justify-end">
-                      <Timestamp timestamp={etf.etf.details.createdAt} pClassName="text-sm whitespace-nowrap" color="text-text font-medium" withLink={false} />
+                      <Timestamp
+                        timestamp={etf.etf.details.createdAt}
+                        pClassName="text-sm whitespace-nowrap"
+                        className="text-text font-medium"
+                        withLink={false}
+                      />
                     </div>
                   ) : (
                     <NumberDiv

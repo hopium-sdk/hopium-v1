@@ -4,12 +4,12 @@ import { cn } from "@/main/shadcn/lib/utils";
 
 export const Hero = () => {
   const css = {
-    pHero: "text-7xl font-light text-white",
+    pHero: "text-6xl lg:text-7xl font-light text-white text-center",
     pHeroSub: "text-xl font-light text-white mt-8 max-w-2xl text-center",
   };
   return (
     <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-20">
+      <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center z-20 px-5 lg:p-0">
         <p className={css.pHero}>The New Standard</p>
         <p className={css.pHero}>For Investment</p>
         <p className={css.pHeroSub}>

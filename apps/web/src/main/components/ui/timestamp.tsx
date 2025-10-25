@@ -14,20 +14,9 @@ type T_Timestamp = {
   linkClassName?: string;
   pClassName?: string;
   linkHref?: string;
-  color?: string;
 };
 
-export const Timestamp = ({
-  timestamp,
-  withIcon = true,
-  withLink = true,
-  className,
-  iconClassName,
-  linkClassName,
-  pClassName,
-  linkHref,
-  color = "text-subtext",
-}: T_Timestamp) => {
+export const Timestamp = ({ timestamp, withIcon = true, withLink = true, className, iconClassName, linkClassName, pClassName, linkHref }: T_Timestamp) => {
   const date = new Date(timestamp.toString().length === 10 ? timestamp * 1000 : timestamp);
 
   const intlFormatter = makeIntlFormatter({
@@ -39,11 +28,11 @@ export const Timestamp = ({
     return (
       <Suspense>
         <div className={cn("flex items-center gap-1.5")}>
-          {withIcon && <Icons.Clock className={cn("size-4.5", iconClassName, color)} />}
-          <p className={cn(pClassName, color)}>
+          {withIcon && <Icons.Clock className={cn("size-4.5", iconClassName)} />}
+          <p className={cn(pClassName)}>
             <TimeAgo date={date} formatter={intlFormatter} component="span" />
           </p>
-          {withLink && <Icons.ArrowUpRight className={cn("size-3.5", linkClassName, color)} />}
+          {withLink && <Icons.ArrowUpRight className={cn("size-3.5", linkClassName)} />}
         </div>
       </Suspense>
     );
@@ -52,11 +41,11 @@ export const Timestamp = ({
   return (
     <>
       {withLink ? (
-        <Link href={linkHref ?? ""} target="_blank" className={cn("flex items-center gap-2 hover:opacity-70", className, color)}>
+        <Link href={linkHref ?? ""} target="_blank" className={cn("flex items-center gap-2 hover:opacity-70 text-subtext", className)}>
           {render()}
         </Link>
       ) : (
-        <div className={cn("flex items-center gap-2", className, color)}>{render()}</div>
+        <div className={cn("flex items-center gap-2 text-subtext", className)}>{render()}</div>
       )}
     </>
   );

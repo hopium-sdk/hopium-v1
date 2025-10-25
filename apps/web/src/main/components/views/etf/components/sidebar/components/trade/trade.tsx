@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ActionButtons } from "./components/action-buttons";
 import { WalletBalanceButton } from "./components/wallet-balance-button";
 import { TradeForm } from "./components/form";
-import { useHopiumContracts } from "@/main/hooks/use-hopium-contracts";
+import { useHopiumContracts } from "@/main/hooks/use-hopium-contracts/use-hopium-contracts";
 import { useBalanceEth } from "@/main/wrappers/components/balance-provider";
 import { SidebarBox } from "../../ui/box";
 import { useBalanceEtf } from "@/main/hooks/use-balance-etf";

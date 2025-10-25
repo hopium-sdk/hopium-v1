@@ -23,6 +23,7 @@ export const _syncEtfTokenTransfer = ({ log, cache }: { log: T_QnLog; cache: Cac
       usd: Number(formatUnits(decodedLog.args.etfUsdPrice, 18)),
     },
     txHash: log.transactionHash,
+    timestamp: log.timestamp,
   };
 
   cache.addEntity({ entity: "etf_token_transfer", id: etfTokenTransfer.docId, value: etfTokenTransfer, blockNumber: Number(log.blockNumber) });

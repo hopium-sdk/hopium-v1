@@ -6,6 +6,7 @@ import { RealtimeTable } from "../../ui/table";
 import { getEtfListColumns } from "./components/columns";
 import { Row } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
+import { LoadingDiv } from "../../ui/loading-div";
 
 const PAGE_SIZE = 20;
 
@@ -41,6 +42,10 @@ export const EtfsList = ({ type, query }: T_EtfsList) => {
   const handleClick = (row: Row<C_EtfWithAssetsAndPools>) => {
     router.push(`/etf/${row.original.etf.details.etfId}`);
   };
+
+  if (result === undefined) {
+    return <LoadingDiv />;
+  }
 
   return (
     <div className="flex flex-1 flex-col overflow-hidden lg:rounded-box bg-bg">

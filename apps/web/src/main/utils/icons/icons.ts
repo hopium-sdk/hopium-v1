@@ -45,6 +45,9 @@ export { TbLayoutList as Details2 } from "react-icons/tb";
 export { PiBookOpenBold as Docs } from "react-icons/pi";
 export { RiAiGenerate as About } from "react-icons/ri";
 export { PiInfoBold as Info } from "react-icons/pi";
+export { TbLayoutList as Activity } from "react-icons/tb";
+export { RiLeafLine as Create } from "react-icons/ri";
+export { TbLocation as Share } from "react-icons/tb";
 
 //Profile
 export { PiGhostBold as User } from "react-icons/pi";
@@ -71,6 +74,7 @@ export { BiWater as MostLiquidity } from "react-icons/bi";
 export { TbCloudFog as MostCap } from "react-icons/tb";
 export { TbDice2 as LeastTokens } from "react-icons/tb";
 export { TbDice4 as MostTokens } from "react-icons/tb";
+export { TbGiftCard as Affiliate } from "react-icons/tb";
 
 //Sidebar Category Icons
 export { RiBtcLine as Crypto } from "react-icons/ri";
@@ -94,3 +98,6 @@ export { PiLightningBold as Rewards } from "react-icons/pi";
 export { LuSquareChartGantt as Positions } from "react-icons/lu";
 export { TbCircleSquare as Vault } from "react-icons/tb";
 export { TbCircleSquare as Assets } from "react-icons/tb";
+
+//Affiliate
+export { RiCoupon3Line as Coupon } from "react-icons/ri";

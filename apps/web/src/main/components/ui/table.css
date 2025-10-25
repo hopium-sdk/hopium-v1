@@ -1,0 +1,12 @@
+.blink-row {
+  animation: blink-row 0.5s linear;
+}
+
+@keyframes blink-row {
+  0% {
+    background-color: var(--main-900);
+  }
+  100% {
+    background-color: transparent;
+  }
+}

@@ -14,6 +14,7 @@ type T_Modal = {
   buttonText?: string;
   buttonVariant?: "button" | "link";
   buttonVariantOption?: VariantProps<typeof buttonVariants>["variant"];
+  buttonSize?: VariantProps<typeof buttonVariants>["size"];
   className?: string;
   bodyClassName?: string;
   triggerClassName?: string;
@@ -33,6 +34,7 @@ export const Modal = ({
   buttonText,
   buttonVariant,
   buttonVariantOption,
+  buttonSize,
   className,
   bodyClassName,
   triggerClassName,
@@ -45,9 +47,13 @@ export const Modal = ({
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       {buttonVisible && (
-        <DialogTrigger onClick={onClick} className="w-full">
+        <DialogTrigger onClick={onClick} className="w-fit">
           {buttonVariant == "button" ? (
-            <ButtonDiv variant={buttonVariantOption ? buttonVariantOption : "default"} className={cn(triggerClassName ? triggerClassName : "")}>
+            <ButtonDiv
+              variant={buttonVariantOption ? buttonVariantOption : "default"}
+              size={buttonSize ? buttonSize : "default"}
+              className={cn(triggerClassName ? triggerClassName : "")}
+            >
               {buttonIcon && buttonIcon}
               <p className={cn("text-sm", triggerPClassName ? triggerPClassName : "")}>{buttonText}</p>
             </ButtonDiv>
@@ -59,7 +65,7 @@ export const Modal = ({
         </DialogTrigger>
       )}
       <DialogContent className={cn("bg-bg", className ? className : "")}>
-        <DialogHeader>
+        <DialogHeader className="border-b-2 pb-4">
           <DialogTitle className="flex items-center gap-2">
             {modalIcon && modalIcon}
             {title}

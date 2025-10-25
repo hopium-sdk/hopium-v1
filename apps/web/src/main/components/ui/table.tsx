@@ -1,4 +1,6 @@
 "use client";
+"use no memo";
+import "./table.css";
 import { Icons } from "@/main/utils/icons";
 import { ColumnDef, flexRender, Row, Table as TableType } from "@tanstack/react-table";
 import { Table, TableCell, TableHead, TableHeader, TableRow } from "@/main/shadcn/components/ui/table";
@@ -135,7 +137,7 @@ export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReferen
   const showLoadingFirst = derived.isLoadingFirstPage;
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden">
+    <div className="h-full flex flex-1 flex-col overflow-hidden">
       {showLoadingFirst ? (
         loadingConfig.type === "rows" ? (
           <LoadingRows num_rows={loadingConfig.numRows} row_height={loadingConfig.rowHeight} />
@@ -154,7 +156,6 @@ export const RealtimeTable = <TData, TValue, Query extends PaginatedQueryReferen
             handleClick={handleClick}
             getRowClassName={getRowClassName}
             cellClassName={cellClassName}
-            canLoadMore={derived.canLoadMore}
           />
         </Suspense>
       ) : (

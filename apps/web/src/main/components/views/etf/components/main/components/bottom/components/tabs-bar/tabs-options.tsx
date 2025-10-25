@@ -1,6 +1,6 @@
 import { Icons } from "@/main/utils/icons";
 
-export type T_Tab_Option = "Positions" | "Holders" | "Vault";
+export type T_Tab_Option = "Positions" | "Holders" | "Vault" | "Activity";
 
 export type T_Tab_Options = {
   label: T_Tab_Option;
@@ -19,5 +19,9 @@ export const etfTabOptions: T_Tab_Options[] = [
   {
     label: "Vault",
     icon: <Icons.Vault />,
+  },
+  {
+    label: "Activity",
+    icon: <Icons.Activity />,
   },
 ];

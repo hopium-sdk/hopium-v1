@@ -4,7 +4,7 @@ import { Search } from "@/main/components/global/search/search";
 import { Icons } from "@/main/utils/icons";
 import { cn } from "@/main/shadcn/lib/utils";
 import { useAccount } from "wagmi";
-import { Suspense, useState } from "react";
+import React, { Suspense, useState } from "react";
 import { CONVEX } from "@/main/lib/convex";
 import { useQuery } from "convex/react";
 import Link from "next/link";
@@ -13,7 +13,18 @@ import { cursiveFont } from "@/main/utils/fonts";
 import { RewardsModal } from "../../views/rewards/rewards";
 
 export const Header = () => {
-  const items: (() => React.ReactNode)[] = [Links, Rewards, ConnectWalletButton];
+  const items = [
+    {
+      component: <Links />,
+    },
+    {
+      component: <Rewards />,
+    },
+    {
+      component: <ConnectWalletButton />,
+    },
+  ];
+
   return (
     <div className="h-13 border-b-0 items-center justify-between px-6 bg-bg hidden lg:flex gap-4">
       <div className="w-full flex items-center">
@@ -22,10 +33,8 @@ export const Header = () => {
         </Suspense>
       </div>
       <div className="flex items-center justify-end gap-4">
-        {items.map((Item, index) => (
-          <div key={index}>
-            <Item />
-          </div>
+        {items.map((item, index) => (
+          <React.Fragment key={index}>{item.component}</React.Fragment>
         ))}
       </div>
     </div>
@@ -39,6 +48,11 @@ const Links = () => {
       label: "About",
       href: "/about",
       icon: <Icons.About className="size-4.5" />,
+    },
+    {
+      label: "Affiliate",
+      href: "/affiliate",
+      icon: <Icons.Coupon className="size-4.5" />,
     },
     {
       label: "Docs",

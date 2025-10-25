@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { Doc } from "../_generated/dataModel";
 import { defineTable } from "convex/server";
+import { C_Etf } from "./etf";
 
 export const EtfTokenTransfersSchema = {
   docId: v.string(),
@@ -16,10 +17,12 @@ export const EtfTokenTransfersSchema = {
   transactionIndex: v.number(),
   logIndex: v.number(),
   txHash: v.string(),
+  timestamp: v.number(),
 };
 
 export const etfTokenTransfersTable = defineTable(EtfTokenTransfersSchema)
   .index("by_docId", ["docId"])
+  .index("by_etfId", ["etfId"])
   .index("by_etf_from", ["etfId", "fromAddress"])
   .index("by_etf_to", ["etfId", "toAddress"])
   .index("by_from", ["fromAddress"])

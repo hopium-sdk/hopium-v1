@@ -71,26 +71,7 @@ export const etfAffiliateAbi = [
         type: "uint256",
       },
     ],
-    name: "AffiliateFeeTransfered",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "string",
-        name: "code",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "owner",
-        type: "address",
-      },
-    ],
-    name: "AffiliateRemoved",
+    name: "AffiliateFeeTransferred",
     type: "event",
   },
   {
@@ -109,24 +90,12 @@ export const etfAffiliateAbi = [
   {
     inputs: [
       {
-        components: [
-          {
-            internalType: "string",
-            name: "code",
-            type: "string",
-          },
-          {
-            internalType: "address",
-            name: "owner",
-            type: "address",
-          },
-        ],
-        internalType: "struct EtfAffiliate.Affiliate[]",
-        name: "affiliates",
-        type: "tuple[]",
+        internalType: "address",
+        name: "_directory",
+        type: "address",
       },
     ],
-    name: "addAffiliates",
+    name: "changeDirectoryAddress",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -134,12 +103,17 @@ export const etfAffiliateAbi = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "code",
+        type: "string",
+      },
+      {
         internalType: "address",
-        name: "_directory",
+        name: "owner",
         type: "address",
       },
     ],
-    name: "changeDirectoryAddress",
+    name: "createAffiliate",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -201,6 +175,25 @@ export const etfAffiliateAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "string",
+        name: "code",
+        type: "string",
+      },
+    ],
+    name: "isCodeTaken",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "owner",
     outputs: [
@@ -211,19 +204,6 @@ export const etfAffiliateAbi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string[]",
-        name: "codes",
-        type: "string[]",
-      },
-    ],
-    name: "removeAffiliates",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
 ] as const;

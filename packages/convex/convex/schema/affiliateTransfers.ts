@@ -8,9 +8,10 @@ export const AffiliateTransfersSchema = {
   owner: v.string(),
   ethAmount: v.number(),
   txHash: v.string(),
+  timestamp: v.number(),
 };
 
-export const affiliateTransfersTable = defineTable(AffiliateTransfersSchema).index("by_docId", ["docId"]).index("by_owner", ["owner"]);
+export const affiliateTransfersTable = defineTable(AffiliateTransfersSchema).index("by_docId", ["docId"]).index("by_owner", ["owner", "timestamp"]);
 
 export type C_AffiliateTransfers = Doc<"affiliate_transfers">;
 export type T_AffiliateTransfers = Omit<Doc<"affiliate_transfers">, "_id" | "_creationTime">;

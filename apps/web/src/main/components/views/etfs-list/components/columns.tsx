@@ -84,7 +84,7 @@ export const getEtfListColumns = () => {
       },
     },
     {
-      header: "Age",
+      header: "Created",
       cell: ({ row }) => {
         const value = row.original.etf.details.createdAt;
         return <Timestamp timestamp={value} withLink={false} pClassName="text-sm font-medium" />;

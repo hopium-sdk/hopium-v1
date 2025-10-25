@@ -15,31 +15,41 @@ import {
 import { useAccount, useDisconnect } from "wagmi";
 import { getExplorerAddressUrl } from "@repo/common/utils/explorer";
 import { COMMON_CONSTANTS } from "@repo/common/utils/constants";
-import { toast } from "sonner";
 import { Drawer, DrawerTitle, DrawerContent, DrawerHeader, DrawerTrigger } from "@/main/shadcn/components/ui/drawer";
+import { TOAST } from "./toast/toast";
+import { useIsMobile } from "@/main/shadcn/hooks/use-mobile";
 
-export const ConnectWalletButton = () => {
+export const ConnectWalletButton = ({ alwaysFullWidth = false }: { alwaysFullWidth?: boolean }) => {
   return (
     <ConnectKitButton.Custom>
       {({ isConnected, show, address }) => {
-        return isConnected ? <ConnectedBox address={address || ""} /> : <ConnectButton show={show || (() => {})} />;
+        return isConnected ? <ConnectedBox address={address || ""} /> : <ConnectButton show={show || (() => {})} alwaysFullWidth={alwaysFullWidth} />;
       }}
     </ConnectKitButton.Custom>
   );
 };
 
-const ConnectButton = ({ show }: { show: () => void }) => {
-  return (
-    <>
-      <div className="md:hidden" onClick={show}>
-        <Icons.Wallet className="size-5" />
-      </div>
-      <Button size={"default"} onClick={show} className="hidden md:flex">
+const ConnectButton = ({ show, alwaysFullWidth = false }: { show: () => void; alwaysFullWidth?: boolean }) => {
+  const { isMobile } = useIsMobile();
+
+  const DesktopButton = () => {
+    return (
+      <Button size={"default"} onClick={show}>
         <Icons.Wallet className="size-4" />
         <p className="text-sm">Connect Wallet</p>
       </Button>
-    </>
-  );
+    );
+  };
+
+  const MobileButton = () => {
+    return (
+      <div onClick={show}>
+        <Icons.Wallet className="size-5" />
+      </div>
+    );
+  };
+
+  return <>{alwaysFullWidth ? <DesktopButton /> : isMobile ? <MobileButton /> : <DesktopButton />}</>;
 };
 
 const ConnectedBox = ({ address }: { address: string }) => {
@@ -47,7 +57,10 @@ const ConnectedBox = ({ address }: { address: string }) => {
 
   const copyAddress = () => {
     navigator.clipboard.writeText(address);
-    toast.success("Address copied to clipboard");
+    TOAST.showSuccessToast({
+      title: "Address copied",
+      description: "Your address has been copied to your clipboard",
+    });
   };
 
   return (

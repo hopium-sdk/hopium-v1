@@ -6,7 +6,7 @@ import { cn } from "@/main/shadcn/lib/utils";
 
 function Table({ containerClassName, className, ...props }: React.ComponentProps<"table"> & { containerClassName?: string }) {
   return (
-    <div data-slot="table-container" className={cn("relative overflow-x-auto w-full h-full", containerClassName)}>
+    <div data-slot="table-container" className={cn("relative overflow-x-auto w-full", containerClassName)}>
       <table data-slot="table" className={cn("w-full caption-bottom text-sm", className)} {...props} />
     </div>
   );

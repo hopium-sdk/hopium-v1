@@ -1,7 +1,6 @@
 import { NumberDiv } from "@/main/components/ui/number-div";
 import { CONSTANTS } from "@/main/lib/constants";
 import { Icons } from "@/main/utils/icons";
-import { Separator } from "@/main/shadcn/components/ui/separator";
 import { UseFormReturn } from "react-hook-form";
 import z from "zod";
 import { NUMBERS_WEB } from "@/main/utils/numbers";

@@ -1,10 +1,10 @@
 import { Icons } from "@/main/utils/icons";
 import { Timestamp } from "@/main/components/ui/timestamp";
-import { CopyIcon } from "@/main/components/ui/copy-icon";
 import { C_EtfWithAssetsAndPools } from "@repo/convex/schema";
 import { Avatar } from "@/main/components/ui/avatar";
 import { SidebarBox } from "../ui/box";
 import { cn } from "@/main/shadcn/lib/utils";
+import { CopyIcon } from "@/main/components/ui/copy-icon";
 
 export const EtfDetails = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
   const options = ["Token", "Vault"];
@@ -24,7 +24,7 @@ export const EtfDetails = ({ etf }: { etf: C_EtfWithAssetsAndPools }) => {
             </div>
             <div className="w-8/12 flex flex-col items-end">
               {option === "Created" ? (
-                <Timestamp timestamp={etf.etf.details.createdAt} className={css.value} color="text-subtext" withLink={false} />
+                <Timestamp timestamp={etf.etf.details.createdAt} className={css.value} withLink={false} />
               ) : (
                 <div className="flex items-center justify-end gap-2">
                   {

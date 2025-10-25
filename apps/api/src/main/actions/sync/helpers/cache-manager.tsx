@@ -4,7 +4,7 @@ import { C_Asset, C_Etf, C_EtfTokenTransfer, T_Asset, T_Etf, T_EtfTokenTransfer,
 import { C_Pool, T_Pool } from "../../../../../../../packages/convex/convex/schema/pools";
 import { normalizeAddress } from "@repo/common/utils/address";
 import { HOPIUM } from "@/main/lib/hopium";
-import { C_AffiliateTransfers, T_AffiliateTransfers } from "@repo/convex/schema";
+import { C_Affiliate, C_AffiliateTransfers, T_Affiliate, T_AffiliateTransfers } from "@repo/convex/schema";
 
 type T_Entities = {
   etf: { c: C_Etf; t: T_Etf };
@@ -13,6 +13,7 @@ type T_Entities = {
   pool: { c: C_Pool; t: T_Pool };
   ohlc_updates: { c: T_OhlcUpdates; t: T_OhlcUpdates };
   affiliate_transfers: { c: C_AffiliateTransfers; t: T_AffiliateTransfers };
+  affiliate: { c: C_Affiliate; t: T_Affiliate };
 };
 
 // ---------- NEW: per-block staging shape ----------
@@ -23,6 +24,7 @@ type BlockStage = {
   etf_token_transfers: Map<string, T_EtfTokenTransfer>;
   ohlc_updates: T_OhlcUpdates[]; // append list
   affiliate_transfers: Map<string, T_AffiliateTransfers>; // append list
+  affiliate: Map<string, T_Affiliate>;
 };
 
 const newBlockStage = (): BlockStage => ({
@@ -32,6 +34,7 @@ const newBlockStage = (): BlockStage => ({
   etf_token_transfers: new Map(),
   ohlc_updates: [],
   affiliate_transfers: new Map(),
+  affiliate: new Map(),
 });
 
 class CacheMapping {
@@ -42,6 +45,7 @@ class CacheMapping {
     pool: new Map(),
     ohlc_updates: new Map(),
     affiliate_transfers: new Map(),
+    affiliate: new Map(),
   };
 
   // ---------- NEW: per-block staging ----------
@@ -93,6 +97,9 @@ class CacheMapping {
         case "affiliate_transfers":
           stage.affiliate_transfers.set(id, value as T_AffiliateTransfers); // append each transfer
           break;
+        case "affiliate":
+          stage.affiliate.set(id, value as T_Affiliate);
+          break;
       }
     }
   };
@@ -123,6 +130,7 @@ class CacheMapping {
       etfTokenTransfers: Array.from(stage.etf_token_transfers.values()),
       ohlcUpdates: stage.ohlc_updates.slice(),
       affiliateTransfers: Array.from(stage.affiliate_transfers.values()),
+      affiliates: Array.from(stage.affiliate.values()),
     }));
   };
 

@@ -7,7 +7,7 @@ import { toast as sonnerToast } from "sonner";
 export type T_ToastContainer = {
   id: string | number;
   title: string;
-  description: string;
+  description?: string;
   url?: string;
   urlType?: "internal" | "external";
   icon?: React.ReactNode;
@@ -19,7 +19,7 @@ export type T_ToastContainer = {
 
 export const ToastContainer = ({ id, title, description, url, urlType, icon, buttonVisible = false, buttonIcon, buttonText, color }: T_ToastContainer) => {
   return (
-    <div className={cn("relative w-full md:min-w-[364px] flex flex-col rounded-box bg-bg border p-4", buttonVisible ? "gap-3" : "")}>
+    <div className={cn("relative w-full md:min-w-[364px] flex flex-col rounded-base bg-bg border p-4", buttonVisible ? "gap-3" : "")}>
       <div className="w-full flex flex-1 items-center">
         <div className="w-full flex flex-col gap-1">
           <div className="w-full flex items-center justify-between">
@@ -31,7 +31,7 @@ export const ToastContainer = ({ id, title, description, url, urlType, icon, but
               <Icons.X className="size-5" />
             </button>
           </div>
-          <p className="mt-1 text-xs text-subtext">{description}</p>
+          {description ? <p className="mt-1 text-xs text-subtext">{description}</p> : null}
         </div>
       </div>
 

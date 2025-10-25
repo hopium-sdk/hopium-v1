@@ -8,6 +8,16 @@ export const upsertPoolsToQn = async ({ addresses }: { addresses: string[] }) =>
   });
 };
 
+export const removeAllPoolsFromQn = async () => {
+  const pools = await QN.getKvList({ key: CONSTANTS.qn.poolKey });
+  if (pools.length > 0) {
+    await QN.removeFromKvList({
+      key: CONSTANTS.qn.poolKey,
+      values: pools,
+    });
+  }
+};
+
 export const getPoolsListFromQn = async () => {
   return await QN.getKvList({ key: CONSTANTS.qn.poolKey });
 };

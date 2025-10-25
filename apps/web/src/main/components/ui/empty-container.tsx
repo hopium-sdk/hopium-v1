@@ -22,6 +22,16 @@ export const EmptyContainerVariants = {
     description: "Try a different search",
     icon: Icons.Search,
   },
+  affiliateCreatedCodes: {
+    label: "No codes created yet",
+    description: "Create a code to start earning",
+    icon: Icons.Create,
+  },
+  activity: {
+    label: "No activity yet",
+    description: "Start earning by referring users",
+    icon: Icons.Activity,
+  },
 };
 
 type T_EmptyContainer = {
