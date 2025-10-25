@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   const titleClass = cn("text-[6rem] font-bold uppercase");
   return (
-    <div className="flex flex-1 flex-col items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center bg-bg">
       <div className="flex items-center justify-center">
         <p className={cn(titleClass, "pb-0 rotate-12")}>o</p>
         <p className={cn(titleClass, "pb-5 -rotate-12")}>o</p>
@@ -20,9 +20,10 @@ export default function NotFound() {
       </div>
 
       <p className="text-md -mt-6">{"This is awkward... this page doesn't exist."}</p>
-      <Link href="/" className="mt-10 flex items-center gap-1 underline underline-offset-4 text-main hover:opacity-80">
-        Return home
-        <Icons.ArrowRight className="w-4 h-4" />
+      <Link href="/" className="mt-10 flex items-center gap-2 bg-bg-900 rounded-base px-4 py-2 hover:opacity-80">
+        <Icons.Dashboard className="size-4.5" />
+        <p className="text-sm">Return home</p>
+        <Icons.ChevronRight className="size-4" />
       </Link>
     </div>
   );

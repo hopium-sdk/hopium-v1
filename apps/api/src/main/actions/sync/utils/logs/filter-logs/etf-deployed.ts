@@ -1,6 +1,8 @@
 import { decodeEventLog } from "viem";
 import { HOPIUM } from "@/main/lib/hopium";
 import { T_QnLog } from "../../../schema";
+import { CacheManager } from "../../../helpers/cache-manager";
+import { normalizeAddress } from "@repo/common/utils/address";
 
 export const decodeEtfDeployedLog = ({ log }: { log: T_QnLog }) => {
   const decoded = decodeEventLog({
@@ -12,11 +14,12 @@ export const decodeEtfDeployedLog = ({ log }: { log: T_QnLog }) => {
   return decoded;
 };
 
-export const isEtfDeployedLog = ({ log }: { log: T_QnLog }): boolean => {
+export const isEtfDeployedLog = ({ log, cache }: { log: T_QnLog; cache: CacheManager }): boolean => {
   try {
     const decoded = decodeEtfDeployedLog({ log });
 
-    if (decoded.eventName === "EtfDeployed") {
+    const etfFactoryAddress = cache.getAddress({ key: "etfFactory" });
+    if (decoded.eventName === "EtfDeployed" && normalizeAddress(log.address) === etfFactoryAddress) {
       return true;
     }
     return false;

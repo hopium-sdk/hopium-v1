@@ -95,7 +95,7 @@
   --fg-900: oklch(0.1 0 0);
   --fg-800: oklch(0.2 0 0);
   --main: var(--color-indigo-500);
-  --main-600: var(--color-indigo-400);
+  --main-600: var(--color-indigo-600);
   --main-900: var(--color-indigo-200);
 
   --rewards: var(--color-yellow-500);

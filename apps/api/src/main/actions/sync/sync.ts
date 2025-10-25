@@ -20,6 +20,7 @@ export const sync = async ({ body }: { body: unknown }) => {
   const payload = qnPayloadSchema.parse(body);
   const logs = sortLogsByChainOrder({ logs: payload.logs });
   const cache = new CacheManager();
+  await cache.preloadAddresses();
 
   const firstBlockNumber = logs.length > 0 ? Number(logs[0]?.blockNumber) : 0;
   const lastBlockNumber = logs.length > 0 ? Number(logs[logs.length - 1]?.blockNumber) : 0;
@@ -53,11 +54,11 @@ const handleUpdateMutations = async ({ cache }: { cache: CacheManager }) => {
 };
 
 const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManager }) => {
-  const etfDeployedLogs = logs.filter((log) => isEtfDeployedLog({ log }));
-  const poolChangedLogs = logs.filter((log) => isPoolChangedLog({ log }));
+  const etfDeployedLogs = logs.filter((log) => isEtfDeployedLog({ log, cache }));
+  const poolChangedLogs = logs.filter((log) => isPoolChangedLog({ log, cache }));
   const swapLogs = logs.filter((log) => isV2SyncLog({ log }) || isV3SwapLog({ log }));
-  const vaultBalanceLogs = logs.filter((log) => isVaultBalanceLog({ log }));
-  const etfTokenTransferLogs = logs.filter((log) => isEtfTokenTransferLog({ log }));
+  const vaultBalanceLogs = logs.filter((log) => isVaultBalanceLog({ log, cache }));
+  const etfTokenTransferLogs = logs.filter((log) => isEtfTokenTransferLog({ log, cache }));
 
   await _preloadCache({ etfDeployedLogs, poolChangedLogs, swapLogs, vaultBalanceLogs, etfTokenTransferLogs, cache });
 
@@ -72,11 +73,11 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
       _syncSwap({ log, cache, poolEtfMap, etfAssetPoolMap });
     }
 
-    if (isEtfTokenTransferLog({ log })) {
+    if (isEtfTokenTransferLog({ log, cache })) {
       _syncEtfTokenTransfer({ log, cache });
     }
 
-    if (isVaultBalanceLog({ log })) {
+    if (isVaultBalanceLog({ log, cache })) {
       await _syncVaultBalance({ log, cache, etfAssetPoolMap });
     }
   }

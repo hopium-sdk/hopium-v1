@@ -8,7 +8,7 @@ export const Detf = () => {
   };
   return (
     <div className="w-full h-fit flex flex-col items-center justify-center pb-15">
-      <div className="pt-20 pb-14">
+      <div className="pt-30 pb-14">
         <p className="text-center text-3xl">What are dETFs?</p>
         <p className="text-center text-lg mt-4 max-w-2xl">
           A dETF is a decentralized token that represents <span className="text-main">a collection of tokens.</span> It lets people invest in multiple assets

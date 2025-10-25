@@ -3,6 +3,7 @@ import { deepOmit, Path } from "deep-pick-omit";
 import { C_Asset, C_Etf, C_EtfTokenTransfer, T_Asset, T_Etf, T_EtfTokenTransfer, T_OhlcUpdates } from "@repo/convex/schema";
 import { C_Pool, T_Pool } from "../../../../../../../packages/convex/convex/schema/pools";
 import { normalizeAddress } from "@repo/common/utils/address";
+import { HOPIUM } from "@/main/lib/hopium";
 
 type T_Entities = {
   etf: { c: C_Etf; t: T_Etf };
@@ -120,7 +121,37 @@ class CacheMapping {
   public clearStagedBlocks = () => this.perBlock.clear();
 }
 
-export class CacheManager extends CacheMapping {
+type T_AddressKey = keyof typeof HOPIUM.contracts.addresses;
+class CacheAddresses extends CacheMapping {
+  public readonly addresses: Map<T_AddressKey, string> = new Map();
+
+  public preloadAddresses = async () => {
+    const fetchers = HOPIUM.contracts.addresses;
+
+    const entries = await Promise.all(
+      (Object.entries(fetchers) as [T_AddressKey, () => Promise<string>][]).map(async ([key, fn]) => {
+        const addr = await fn();
+        return [key, addr] as const;
+      })
+    );
+
+    for (const [key, addr] of entries) {
+      this.addresses.set(key, normalizeAddress(addr));
+    }
+
+    return Object.fromEntries(this.addresses);
+  };
+
+  public getAddress = ({ key }: { key: T_AddressKey }): string => {
+    const address = this.addresses.get(key);
+    if (!address) {
+      throw new Error(`Address for ${key} not found`);
+    }
+    return address;
+  };
+}
+
+export class CacheManager extends CacheAddresses {
   public readonly etfSupplyMap: Map<string, number> = new Map();
 
   public updateEthUsdPoolAddress = ({ address }: { address: string }) => {

@@ -1,6 +1,8 @@
 import { decodeEventLog } from "viem";
 import { HOPIUM } from "@/main/lib/hopium";
 import { T_QnLog } from "../../../schema";
+import { CacheManager } from "../../../helpers/cache-manager";
+import { normalizeAddress } from "@repo/common/utils/address";
 
 export const decodePoolChangedLog = ({ log }: { log: T_QnLog }) => {
   const decoded = decodeEventLog({
@@ -12,11 +14,12 @@ export const decodePoolChangedLog = ({ log }: { log: T_QnLog }) => {
   return decoded;
 };
 
-export const isPoolChangedLog = ({ log }: { log: T_QnLog }): boolean => {
+export const isPoolChangedLog = ({ log, cache }: { log: T_QnLog; cache: CacheManager }): boolean => {
   try {
     const decoded = decodePoolChangedLog({ log });
- 
-    if (decoded.eventName === "PoolChanged") {
+
+    const poolFinderAddress = cache.getAddress({ key: "poolFinder" });
+    if (decoded.eventName === "PoolChanged" && normalizeAddress(log.address) === poolFinderAddress) {
       return true;
     }
     return false;

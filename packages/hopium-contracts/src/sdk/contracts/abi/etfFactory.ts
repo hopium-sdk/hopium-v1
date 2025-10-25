@@ -161,6 +161,37 @@ export const etfFactoryAbi = [
     type: "event",
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "tokenAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "tokenAmount",
+            type: "uint256",
+          },
+        ],
+        indexed: false,
+        internalType: "struct Storage.TokenBalance[]",
+        name: "updatedBalances",
+        type: "tuple[]",
+      },
+    ],
+    name: "VaultBalanceChanged",
+    type: "event",
+  },
+  {
     inputs: [],
     name: "Directory",
     outputs: [
@@ -245,6 +276,19 @@ export const etfFactoryAbi = [
       },
     ],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "etfId",
+        type: "uint256",
+      },
+    ],
+    name: "emitVaultBalanceEvent",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
