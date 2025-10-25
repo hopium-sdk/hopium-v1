@@ -10,6 +10,8 @@ import { _upsertTokenTransfers } from "./fns/upsertTokenTransfers";
 import { _upsertPools } from "./fns/upsertPools";
 import { _updateOhlcs } from "./fns/updateOhlcs";
 import { _updateSyncStatus } from "./fns/updateSyncStatus";
+import { AffiliateTransfersSchema } from "../../schema/affiliateTransfers";
+import { _upsertAffiliateTransfers } from "./fns/upsertAffiliateTransfers";
 
 const BlockPayload = v.object({
   blockNumber: v.number(),
@@ -25,6 +27,7 @@ const BlockPayload = v.object({
       volume: v.optional(v.number()), // optional, since your _updateOhlcs supports it
     })
   ),
+  affiliateTransfers: v.array(v.object(AffiliateTransfersSchema)),
 });
 
 export default mutation({
@@ -43,7 +46,7 @@ export default mutation({
     const deduped = Array.from(new Map(sorted.map((b) => [b.blockNumber, b])).values());
 
     for (const b of deduped) {
-      const { blockNumber, etfs, etfTokenTransfers, assets, pools, ohlcUpdates } = b;
+      const { blockNumber, etfs, etfTokenTransfers, assets, pools, ohlcUpdates, affiliateTransfers } = b;
 
       // Each helper already does snapshot(...) per doc for this block
       await _upsertAssets(ctx, assets, blockNumber);
@@ -51,7 +54,7 @@ export default mutation({
       await _upsertTokenTransfers(ctx, etfTokenTransfers, blockNumber);
       await _upsertPools(ctx, pools, blockNumber);
       await _updateOhlcs(ctx, ohlcUpdates, blockNumber);
-
+      await _upsertAffiliateTransfers(ctx, affiliateTransfers, blockNumber);
       // Option A: advance sync status per block (monotonic)
       // await _updateSyncStatus(ctx, blockNumber);
     }

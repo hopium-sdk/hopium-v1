@@ -42,28 +42,24 @@ export const Detf = () => {
 
 export const Coins = () => {
   return (
-    <div className="flex flex-row items-center justify-center gap-2 float">
-      <div className="-translate-y-4 translate-x-24">
-        <Sphere size={40} color="#a53bff" />
-      </div>
-
-      <div className="translate-y-10 translate-x-2">
-        <Sphere size={40} color="#ff9a9a" />
-      </div>
-      <div className="translate-y-26 -translate-x-14">
-        <Sphere size={40} color="#9affbe" />
-      </div>
-      <div className="translate-y-8 translate-x-8">
+    <div className="flex flex-row items-center justify-center gap-2 rotate-5 float -translate-x-5 mt-12">
+      <div className="translate-y-8 translate-x-6">
         <Sphere size={40} color="#ffcf3b" />
       </div>
-      <div className="-translate-y-6 -translate-x-6">
+      <div className="-translate-y-3 translate-x-6">
         <Sphere size={40} color="#ff5454" />
       </div>
-      <div className="translate-y-25 -translate-x-15">
+      <div className="translate-y-10 translate-x-2">
+        <Sphere size={40} color="#9affbe" />
+      </div>
+      <div className="-translate-y-6">
         <Sphere size={40} color="#aaff3b" />
       </div>
-      <div className="translate-y-18 -translate-x-44">
-        <Sphere size={40} color="#aaff3b" />
+      <div className="translate-y-10 -translate-x-4">
+        <Sphere size={40} color="#a53bff" />
+      </div>
+      <div className="translate-y-0 -translate-x-5">
+        <Sphere size={40} color="#ff9a9a" />
       </div>
     </div>
   );

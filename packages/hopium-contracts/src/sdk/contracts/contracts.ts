@@ -13,6 +13,7 @@ type ContractsReturnType = {
     etfOracle: () => Promise<GetContractReturnType<typeof ABI.etfOracle, Client>>;
     etfTokenEvents: () => Promise<GetContractReturnType<typeof ABI.etfTokenEvents, Client>>;
     erc20: ({ address }: { address: `0x${string}` }) => Promise<GetContractReturnType<typeof ABI.erc20, Client>>;
+    etfAffiliate: () => Promise<GetContractReturnType<typeof ABI.etfAffiliate, Client>>;
   };
 };
 
@@ -33,6 +34,7 @@ export const _contracts = ({ network, rpcUrl }: { network: T_NETWORK; rpcUrl: st
       etfFactory: lazy(ABI.etfFactory, addresses.etfFactory),
       etfOracle: lazy(ABI.etfOracle, addresses.etfOracle),
       etfTokenEvents: lazy(ABI.etfTokenEvents, addresses.etfTokenEvents),
+      etfAffiliate: lazy(ABI.etfAffiliate, addresses.etfAffiliate),
       // no directory lookup needed; keep it tiny:
       erc20: ({ address }: { address: `0x${string}` }) => Promise.resolve(getContract({ address, abi: ABI.erc20, client })),
     },

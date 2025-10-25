@@ -4,6 +4,7 @@ import { C_Asset, C_Etf, C_EtfTokenTransfer, T_Asset, T_Etf, T_EtfTokenTransfer,
 import { C_Pool, T_Pool } from "../../../../../../../packages/convex/convex/schema/pools";
 import { normalizeAddress } from "@repo/common/utils/address";
 import { HOPIUM } from "@/main/lib/hopium";
+import { C_AffiliateTransfers, T_AffiliateTransfers } from "@repo/convex/schema";
 
 type T_Entities = {
   etf: { c: C_Etf; t: T_Etf };
@@ -11,6 +12,7 @@ type T_Entities = {
   etf_token_transfer: { c: C_EtfTokenTransfer; t: T_EtfTokenTransfer };
   pool: { c: C_Pool; t: T_Pool };
   ohlc_updates: { c: T_OhlcUpdates; t: T_OhlcUpdates };
+  affiliate_transfers: { c: C_AffiliateTransfers; t: T_AffiliateTransfers };
 };
 
 // ---------- NEW: per-block staging shape ----------
@@ -20,6 +22,7 @@ type BlockStage = {
   pools: Map<string, T_Pool>;
   etf_token_transfers: Map<string, T_EtfTokenTransfer>;
   ohlc_updates: T_OhlcUpdates[]; // append list
+  affiliate_transfers: Map<string, T_AffiliateTransfers>; // append list
 };
 
 const newBlockStage = (): BlockStage => ({
@@ -28,6 +31,7 @@ const newBlockStage = (): BlockStage => ({
   pools: new Map(),
   etf_token_transfers: new Map(),
   ohlc_updates: [],
+  affiliate_transfers: new Map(),
 });
 
 class CacheMapping {
@@ -37,6 +41,7 @@ class CacheMapping {
     etf_token_transfer: new Map(),
     pool: new Map(),
     ohlc_updates: new Map(),
+    affiliate_transfers: new Map(),
   };
 
   // ---------- NEW: per-block staging ----------
@@ -85,6 +90,9 @@ class CacheMapping {
         case "ohlc_updates":
           stage.ohlc_updates.push(value as T_OhlcUpdates); // append each tick/update
           break;
+        case "affiliate_transfers":
+          stage.affiliate_transfers.set(id, value as T_AffiliateTransfers); // append each transfer
+          break;
       }
     }
   };
@@ -114,6 +122,7 @@ class CacheMapping {
       pools: Array.from(stage.pools.values()),
       etfTokenTransfers: Array.from(stage.etf_token_transfers.values()),
       ohlcUpdates: stage.ohlc_updates.slice(),
+      affiliateTransfers: Array.from(stage.affiliate_transfers.values()),
     }));
   };
 

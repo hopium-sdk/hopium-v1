@@ -7,6 +7,7 @@ import { watchlistTable } from "./schema/watchlist";
 import { ohlcTable } from "./schema/ohlc";
 import { poolsTable } from "./schema/pools";
 import { snapshotsTable } from "./schema/sync/snapshot";
+import { affiliateTransfersTable } from "./schema/affiliateTransfers";
 
 export const allSchemas = {
   etfs: etfsTable,
@@ -15,6 +16,7 @@ export const allSchemas = {
   ohlc: ohlcTable,
   etf_token_transfers: etfTokenTransfersTable,
   watchlist: watchlistTable,
+  affiliate_transfers: affiliateTransfersTable,
 
   //Sync
   snapshots: snapshotsTable,

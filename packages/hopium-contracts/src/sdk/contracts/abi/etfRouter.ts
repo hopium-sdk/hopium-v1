@@ -12,11 +12,6 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
-    name: "CapacityExceeded",
-    type: "error",
-  },
-  {
-    inputs: [],
     name: "DeltaError",
     type: "error",
   },
@@ -27,12 +22,7 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
-    name: "EmptyBuf",
-    type: "error",
-  },
-  {
-    inputs: [],
-    name: "EmptyCand",
+    name: "EmptyArr",
     type: "error",
   },
   {
@@ -47,12 +37,22 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
+    name: "InvalidPerc",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "NoMintedAmount",
     type: "error",
   },
   {
     inputs: [],
     name: "SupplyZero",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "TargetGtTvl",
     type: "error",
   },
   {
@@ -74,6 +74,24 @@ export const etfRouterAbi = [
     inputs: [],
     name: "ZeroReceiver",
     type: "error",
+  },
+  {
+    inputs: [],
+    name: "ZeroTvl",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "AFFILIATE_USER_DISCOUNT_PERC",
+    outputs: [
+      {
+        internalType: "uint16",
+        name: "",
+        type: "uint16",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
@@ -103,7 +121,7 @@ export const etfRouterAbi = [
   },
   {
     inputs: [],
-    name: "PLATFORM_FEE",
+    name: "PLATFORM_FEE_BIPS",
     outputs: [
       {
         internalType: "uint16",
@@ -144,7 +162,12 @@ export const etfRouterAbi = [
     inputs: [
       {
         internalType: "uint16",
-        name: "newFee",
+        name: "newFeeBips",
+        type: "uint16",
+      },
+      {
+        internalType: "uint16",
+        name: "affUserDiscountPerc",
         type: "uint16",
       },
     ],
@@ -196,6 +219,11 @@ export const etfRouterAbi = [
         internalType: "address",
         name: "receiver",
         type: "address",
+      },
+      {
+        internalType: "string",
+        name: "affiliateCode",
+        type: "string",
       },
     ],
     name: "mintEtfTokens",
@@ -263,6 +291,11 @@ export const etfRouterAbi = [
         internalType: "address payable",
         name: "receiver",
         type: "address",
+      },
+      {
+        internalType: "string",
+        name: "affiliateCode",
+        type: "string",
       },
     ],
     name: "redeemEtfTokens",

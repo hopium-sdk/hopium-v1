@@ -6,7 +6,7 @@ export const About = () => {
   return (
     <div className="flex flex-1 flex-col bg-bg overflow-y-auto">
       <div className="h-fit flex flex-1 flex-col">
-        <div className="w-full h-full px-6 py-4">
+        <div className="w-full h-full">
           <Hero />
         </div>
         <Detf />

@@ -8,6 +8,7 @@ import { etfRouterAbi } from "./abi/etfRouter";
 import { etfTokenEventsAbi } from "./abi/etfTokenEvents";
 import { uniswapV3PoolAbi } from "./abi/uniswapV3Pool";
 import { uniswapV2PoolAbi } from "./abi/uniswapV2Pool";
+import { etfAffiliateAbi } from "./abi/etfAffiliate";
 
 export const ABI = {
   directory: directoryAbi,
@@ -20,4 +21,5 @@ export const ABI = {
   etfTokenEvents: etfTokenEventsAbi,
   uniswapV2Pool: uniswapV2PoolAbi,
   uniswapV3Pool: uniswapV3PoolAbi,
+  etfAffiliate: etfAffiliateAbi,
 };

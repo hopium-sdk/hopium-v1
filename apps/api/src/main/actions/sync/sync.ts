@@ -15,6 +15,8 @@ import { isEtfTokenTransferLog } from "./utils/logs/filter-logs/etf-token-transf
 import { _syncEtfTokenTransfer } from "./fns/etf-token-transfer/sync-etf-token-transfer";
 import { _preloadCache } from "./helpers/fns/preload-cache";
 import { _buildForSwaps } from "./fns/swap/build-for-swaps";
+import { isEtfAffiliateFeeTransferedLog } from "./utils/logs/filter-logs/etf-affiliate";
+import { _syncAffiliates } from "./fns/affiliates/sync-affiliates";
 
 export const sync = async ({ body }: { body: unknown }) => {
   const payload = qnPayloadSchema.parse(body);
@@ -59,6 +61,7 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
   const swapLogs = logs.filter((log) => isV2SyncLog({ log }) || isV3SwapLog({ log }));
   const vaultBalanceLogs = logs.filter((log) => isVaultBalanceLog({ log, cache }));
   const etfTokenTransferLogs = logs.filter((log) => isEtfTokenTransferLog({ log, cache }));
+  const etfAffiliateLogs = logs.filter((log) => isEtfAffiliateFeeTransferedLog({ log, cache }));
 
   await _preloadCache({ etfDeployedLogs, poolChangedLogs, swapLogs, vaultBalanceLogs, etfTokenTransferLogs, cache });
 
@@ -84,6 +87,10 @@ const handleSync = async ({ logs, cache }: { logs: T_QnLog[]; cache: CacheManage
 
   if (poolChangedLogs.length > 0) {
     await _saveNewPools({ logs: poolChangedLogs, cache });
+  }
+
+  if (etfAffiliateLogs.length > 0) {
+    await _syncAffiliates({ logs: etfAffiliateLogs, cache });
   }
 };
 

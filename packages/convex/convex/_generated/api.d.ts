@@ -8,11 +8,6 @@
  * @module
  */
 
-import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
-} from "convex/server";
 import type * as fns_etf_getAllEtfs from "../fns/etf/getAllEtfs.js";
 import type * as fns_etf_getEtfList from "../fns/etf/getEtfList.js";
 import type * as fns_etf_getEtfListByTag from "../fns/etf/getEtfListByTag.js";
@@ -39,6 +34,7 @@ import type * as mutations__handleReorg_handle from "../mutations/_handleReorg/h
 import type * as mutations_etf_updateEtfs from "../mutations/etf/updateEtfs.js";
 import type * as mutations_sync_fns_updateOhlcs from "../mutations/sync/fns/updateOhlcs.js";
 import type * as mutations_sync_fns_updateSyncStatus from "../mutations/sync/fns/updateSyncStatus.js";
+import type * as mutations_sync_fns_upsertAffiliateTransfers from "../mutations/sync/fns/upsertAffiliateTransfers.js";
 import type * as mutations_sync_fns_upsertAssets from "../mutations/sync/fns/upsertAssets.js";
 import type * as mutations_sync_fns_upsertEtfs from "../mutations/sync/fns/upsertEtfs.js";
 import type * as mutations_sync_fns_upsertPools from "../mutations/sync/fns/upsertPools.js";
@@ -48,6 +44,7 @@ import type * as mutations_sync_sync from "../mutations/sync/sync.js";
 import type * as mutations_watchlist_addToWatchlist from "../mutations/watchlist/addToWatchlist.js";
 import type * as mutations_watchlist_removeFromWatchlist from "../mutations/watchlist/removeFromWatchlist.js";
 import type * as mutations_watchlist_reorderWatchlist from "../mutations/watchlist/reorderWatchlist.js";
+import type * as schema_affiliateTransfers from "../schema/affiliateTransfers.js";
 import type * as schema_assets from "../schema/assets.js";
 import type * as schema_etf from "../schema/etf.js";
 import type * as schema_etfTokenTranfers from "../schema/etfTokenTranfers.js";
@@ -56,6 +53,12 @@ import type * as schema_pools from "../schema/pools.js";
 import type * as schema_sync_snapshot from "../schema/sync/snapshot.js";
 import type * as schema_sync_syncStatus from "../schema/sync/syncStatus.js";
 import type * as schema_watchlist from "../schema/watchlist.js";
+
+import type {
+  ApiFromModules,
+  FilterApi,
+  FunctionReference,
+} from "convex/server";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -92,6 +95,7 @@ declare const fullApi: ApiFromModules<{
   "mutations/etf/updateEtfs": typeof mutations_etf_updateEtfs;
   "mutations/sync/fns/updateOhlcs": typeof mutations_sync_fns_updateOhlcs;
   "mutations/sync/fns/updateSyncStatus": typeof mutations_sync_fns_updateSyncStatus;
+  "mutations/sync/fns/upsertAffiliateTransfers": typeof mutations_sync_fns_upsertAffiliateTransfers;
   "mutations/sync/fns/upsertAssets": typeof mutations_sync_fns_upsertAssets;
   "mutations/sync/fns/upsertEtfs": typeof mutations_sync_fns_upsertEtfs;
   "mutations/sync/fns/upsertPools": typeof mutations_sync_fns_upsertPools;
@@ -101,6 +105,7 @@ declare const fullApi: ApiFromModules<{
   "mutations/watchlist/addToWatchlist": typeof mutations_watchlist_addToWatchlist;
   "mutations/watchlist/removeFromWatchlist": typeof mutations_watchlist_removeFromWatchlist;
   "mutations/watchlist/reorderWatchlist": typeof mutations_watchlist_reorderWatchlist;
+  "schema/affiliateTransfers": typeof schema_affiliateTransfers;
   "schema/assets": typeof schema_assets;
   "schema/etf": typeof schema_etf;
   "schema/etfTokenTranfers": typeof schema_etfTokenTranfers;
@@ -110,11 +115,15 @@ declare const fullApi: ApiFromModules<{
   "schema/sync/syncStatus": typeof schema_sync_syncStatus;
   "schema/watchlist": typeof schema_watchlist;
 }>;
+declare const fullApiWithMounts: typeof fullApi;
+
 export declare const api: FilterApi<
-  typeof fullApi,
+  typeof fullApiWithMounts,
   FunctionReference<any, "public">
 >;
 export declare const internal: FilterApi<
-  typeof fullApi,
+  typeof fullApiWithMounts,
   FunctionReference<any, "internal">
 >;
+
+export declare const components: {};
